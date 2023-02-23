@@ -14,7 +14,7 @@ module.exports = {
         filename: 'bundle.js',
         path: path.resolve(__dirname, './dist'),
         chunkFilename: "[chunkhash].js",
-        clean: true,
+        clean: true,//打包到dist文件之前将dist文件内容清除
         assetModuleFilename: 'images/[name].[contenthash][ext]' //图片输出的名称以及存放位置
     },
     target: 'web',
@@ -49,24 +49,31 @@ module.exports = {
                 }
             },
             //所有.ts或者.tsx结尾的扩展名都必须经过awesome-typescript-loader处理
-            // {
-            //     test: /\.js$/,
-            //     exclude: /node_modules/,//因为代码运行过程中不仅有业务代码也有node_modules中的代码，但是node_modules中代码不需要将es6代码转换成es5代码，所以要把这部分给排除
-            //     use: {
-            //         loader: 'babel-loader',
-            //         options: {
-            //             presets: ['@babel/preset-env'],
-            //             plugins: [
-            //                 ['@babel/plugin-transform-runtime']
-            //             ]
-            //         }
-            //     }
-            // },
+            {
+                test: /\.js$/,
+                exclude: /node_modules/,//因为代码运行过程中不仅有业务代码也有node_modules中的代码，但是node_modules中代码不需要将es6代码转换成es5代码，所以要把这部分给排除
+                use: {
+                    loader: 'babel-loader?cacheDirectory',
+                    // options: {
+                    //     "presets": [
+                    //         "@babel/preset-env"
+                    //     ],
+                    //     plugins: [
+                    //         ['@babel/plugin-transform-runtime']
+                    //     ]
+                    // }
+                }
+            },
             // { test: /\.tsx?$/, loader: "awesome-typescript-loader" },
             // { enforce: "pre", test: /\.js$/, loader: "source-map-loader" },
             { test: /\.(css|less)$/, use: [MiniCssExtractPlugin.loader, 'css-loader', 'less-loader'] },
             // { test: /\.ts$/, use: 'ts-loader' },
-            { test: /\.(woff|woff2?|ttf|eot|otf)(\?.*)?$/i, type: 'asset/resource' },
+            {
+                test: /\.(woff|woff2?|ttf|eot|otf)(\?.*)?$/i, type: 'asset/resource',
+                generator: { //generator也是配置图片打包路径以及名称，如果output中设置assetModuleFilename了，generator也设置了，那么generator的优先级高于assetModuleFilename
+                    filename: 'fonts/[name]-[contenthash][ext]'
+                },
+            },
             { test: /\.(csv|tsv)$/, use: 'csv-loader' },
             { test: /\.xml$/, use: 'xml-loader' },
             { test: /\.toml$/, type: 'json', parser: { parse: toml.parse } },
@@ -77,7 +84,12 @@ module.exports = {
     },
     plugins: [
         // new webpack.ProgressPlugin(),
-        new HtmlWebpackPlugin({ template: './src/index.html', filename: 'app.html', inject: 'body' }),
+        new HtmlWebpackPlugin({
+            template: './src/index.html',
+            filename: 'index.html',
+            inject: 'body',
+            title: 'app'
+        }),
         new webpack.HotModuleReplacementPlugin(),
         new MiniCssExtractPlugin({
             filename: 'css/[contenthash].css'
@@ -118,7 +130,7 @@ module.exports = {
         port: 9000,
     },
     optimization: {
-        minimize: true,
+        // minimize: true,
         // minimizer: [new CssMinimizerWebpackPlugin()] //这个用于生产环境下css压缩,只有设置 mode: 'production'的时候有效 ，设置环境变量的时候区分
     }
 

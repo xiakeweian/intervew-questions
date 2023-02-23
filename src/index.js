@@ -11,6 +11,7 @@ import toml from '../public/data/data.toml'
 import yaml from '../public/data/data.yaml'
 import json from '../public/data/data.json5'
 import HelloWorld from './HelloWorld.js'
+import printMe from './print.js';
 function component () {
     const element = document.createElement('div');
     const img = document.createElement('img')
@@ -60,8 +61,18 @@ function component () {
     element.appendChild(spanDom)
 
 
+    const btn = document.createElement('button');
+    btn.innerHTML = 'Click me and check the console!';
+    btn.onclick = printMe;
+
+    element.appendChild(btn);
+
+
     return element;
 }
 
 document.body.appendChild(component());
+// const divDom = document.createElement('div')
+// divDom.style.cssText = 'width:200px;height:200px;background:orange;'
+// document.body.appendChild(divDom)
 
