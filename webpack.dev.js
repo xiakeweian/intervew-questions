@@ -9,13 +9,17 @@ const json5 = require('json5');
 
 module.exports = {
     mode: 'development',
-    entry: path.resolve(__dirname, "./src/index.js"),
+    // entry: path.resolve(__dirname, "./src/index.js"),
     output: {
-        filename: 'bundle.js',
+        filename: '[name].bundle.js',
         path: path.resolve(__dirname, './dist'),
         chunkFilename: "[chunkhash].js",
         clean: true,//打包到dist文件之前将dist文件内容清除
         assetModuleFilename: 'images/[name].[contenthash][ext]' //图片输出的名称以及存放位置
+    },
+    entry: {
+        index: path.resolve(__dirname, "./src/index.js"),
+        another: './src/another-module.js',
     },
     target: 'web',
     module: {
