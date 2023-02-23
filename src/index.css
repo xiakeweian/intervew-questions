@@ -1,0 +1,35 @@
+@font-face {
+    font-family: 'PingFangSC-Regular';
+    src: url('../public/fonts/苹方黑体-准-简.ttf');
+    font-weight: normal;
+    font-style: normal;
+    font-display: swap;
+  }
+  @font-face {
+    font-family: 'BMWTypeNextLatin-Regular';
+    src: url('../public/fonts/BMWTypeNextLatin-Regular.otf');
+    font-weight: normal;
+    font-style: normal;
+    font-display: swap;
+  }
+  @font-face {
+    font-family: 'BMWTypeNextLatinTT-Regular';
+    src: url('../public/fonts/BMWTypeNextLatinTT-Regular.ttf');
+    font-weight: normal;
+    font-style: normal;
+    font-display: swap;
+  }
+p {
+    background:orange!important;
+}
+.font {
+    font-family:BMWTypeNextLatin-Regular;
+    font-size:20px;
+    color:green;
+}
+
+.list-img {
+    background-image:url(../public/images/8.jpeg);
+    width:500px;
+    height:300px;
+}

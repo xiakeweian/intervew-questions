@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+  <style>
+    *{
+      padding: 0;
+      margin: 0;
+    }
+
+    .info-list {
+
+      width: 60%;
+      margin: 100px 300px;
+
+    }
+
+    .info-item {
+
+      display: flex;
+      line-height: 30px;
+      height: 30px;
+      list-style: disc inside;
+      position: relative;
+
+    }
+
+    .info-item:before {
+
+      content: "";
+      display: inline-block;
+      background-color: rgb(41, 128, 208);
+      width: 5px;
+      height: 5px;
+      margin-top: 12.5px;
+      margin-right: 5px;
+      position: absolute;
+      left: 0;
+      top: 0;
+      z-index: 100;
+
+    }
+
+    .info-content {
+
+      font-size: 14px;
+      font-family: "Microsoft YaHei";
+      color: rgb(12, 6, 6);
+      display: inline-block;
+
+    }
+
+    .info-content:nth-child(1) {
+
+      margin-right: 10px;
+      position: absolute;
+      top: 0;
+      left: 10px;
+      z-index: 99;
+      background: #fff;
+      padding-right: 20px;
+      max-width: 50%;
+      text-overflow: ellipsis;
+      overflow: hidden;
+      white-space: nowrap;
+
+    }
+
+    .info-content:nth-child(2) {
+
+      border-top: 1px dashed rgb(106, 120, 132);
+      position: absolute;
+      top: 15px;
+      right: 0;
+      margin: 0 5px;
+      width: 95%;
+
+    }
+
+    .info-content:nth-child(3) {
+
+      position: absolute;
+      right: 0px;
+      padding: 0 10px;
+      padding-left: 20px;
+      z-index: 100;
+      text-align: right;
+      background: #fff;
+
+    }
+  </style>
+</head>
+
+<body>
+  <ul class='info-list'>
+    <li class='info-item'>
+      <div class='info-content info-content-text'>
+        上天派我来消灭你
+      </div>
+      <div class='info-content info-content-ellipsis'></div>
+      <div class='info-content info-content-date'>
+        2018-09-07
+      </div>
+    </li>
+    <li class='info-item'>
+      <div class='info-content info-content-text'>
+         上天派我来消灭你上天派我来消灭你上天派我来消灭你上天派我来消灭你
+      </div>
+      <div class='info-content info-content-ellipsis'></div>
+      <div class='info-content info-content-date'>
+        2018-09-07
+      </div>
+    </li>
+    <li class='info-item'>
+      <div class='info-content info-content-text'>
+        时代
+      </div>
+      <div class='info-content info-content-ellipsis'></div>
+      <div class='info-content info-content-date'>
+        2018-09-07
+      </div>
+    </li>
+    <li class='info-item'>
+      <div class='info-content info-content-text'>
+        上天派我来消灭你
+      </div>
+      <div class='info-content info-content-ellipsis'></div>
+      <div class='info-content info-content-date'>
+        2018-09-07
+      </div>
+    </li>
+    <li class='info-item'>
+      <div class='info-content info-content-text'>
+        想要的带你去看浪漫的土耳其想要的带你去看浪漫的土耳其想要的带你去看浪漫的土耳其想要的带你去看浪漫的土耳其想要的带你去看浪漫的土耳其想要的带你去看浪漫的土耳其
+      </div>
+      <div class='info-content info-content-ellipsis'></div>
+      <div class='info-content info-content-date'>
+        2018-09-07
+      </div>
+    </li>
+    <li class='info-item'>
+      <div class='info-content info-content-text'>
+        上天派我来消灭你上天派我来消灭你
+      </div>
+      <div class='info-content info-content-ellipsis'></div>
+      <div class='info-content info-content-date'>
+        2018-09-07
+      </div>
+    </li>
+    <li class='info-item'>
+      <div class='info-content info-content-text'>
+        上天派我来消灭你上天派我来消灭你上天派我来消灭你上天派我来消灭你
+      </div>
+      <div class='info-content info-content-ellipsis'></div>
+      <div class='info-content info-content-date'>
+        2018-09-07
+      </div>
+    </li>
+  </ul>
+</body>
+</html>>

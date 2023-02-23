@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<style>
+    /*
+    *文字水平对齐：text-align:center
+    垂直对齐：padding,vertical-align,line-height
+    */
+    .center {
+
+        border: 5px solid red;
+        width: 41%;
+        text-align: center;
+        /* padding: 23px; */
+        /* vertical-align: middle; */
+        line-height: 1.5;
+    }
+
+    /*
+    *float：设置浮动和宽度，
+    然后在使用text-align:center;
+    */
+    .center1 {
+
+        float: right;
+        width: 300px;
+        border: 3px solid #73AD21;
+        padding: 10px;
+
+    }
+
+    /*
+    *盒子水平垂直对齐，1.定位,2margin
+    */
+    /* .box1 {
+        position: relative;
+        width: 300px;
+        height: 300px;
+        background-color: greenyellow;
+    } */
+
+    /*
+    方法二：通过left，top,margin-left,margin-top方式
+    */
+    /* .box1 .chi {
+        width: 100px;
+        height: 100px;
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        margin-left: -50px;
+        margin-top: -50px;
+        background-color: blueviolet;
+
+    } */
+    /**方法三：通过left，top,transform方式*/
+    /* .box1 .chi {
+        width: 100px;
+        height: 100px;
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        transform: translate(-50%, -50%);
+        background-color: blueviolet;
+
+    } */
+    /*
+    *方法四：使用auto和根据父子盒子差计算margin大小
+    */
+    /* .box1 .chi {
+        width: 100px;
+        height: 100px;
+        background-color: blueviolet;
+        margin: 100px auto;
+    } */
+    /*
+    *方法五：父元素的padding
+    */
+    /* .box1 {
+        position: relative;
+        width: 300px;
+        height: 300px;
+        padding: 100px 100px;
+        box-sizing: border-box;
+        background-color: greenyellow;
+    }
+
+    .box1 .chi {
+        width: 100px;
+        height: 100px;
+        background-color: blueviolet;
+    } */
+    /*
+    *方法六：浮动
+    */
+
+    .box1 {
+        position: relative;
+        width: 300px;
+        height: 300px;
+        background-color: greenyellow;
+        overflow: auto;
+    }
+
+    .box1 .chi {
+        width: 100px;
+        height: 100px;
+        background-color: blueviolet;
+        float: right;
+        vertical-align: middle;
+
+    }
+</style>
+
+<body>
+    <!-- 文字在box中水平垂直对齐 -->
+    <div class="center">
+        水平垂直对齐
+    </div>
+    <div class="center1">
+        水平垂直对齐1
+    </div>
+
+    <div class="box1">
+        <div class="chi"></div>
+    </div>
+
+</body>
+
+</html>

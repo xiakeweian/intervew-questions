@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>margin重叠父子元素</title>
+</head>
+<style>
+    .box {
+        width: 250px;
+        height: 250px;
+        margin: 20px;
+        background: orange;
+    }
+
+    .box1 {
+        width: 200px;
+        height: 200px;
+        margin: 30px;
+        background-color: chartreuse;
+    }
+
+    .box2 {
+        margin-top: 20px;
+        margin-bottom: 20px;
+
+        width: 200px;
+        height: 1px;
+        background-color: darkmagenta;
+    }
+</style>
+
+<body>
+    <h1>margin重叠</h1>
+    <div class="box">
+        <div class="box1"></div>
+    </div>
+    <br />
+    <div class="box2"></div>
+</body>
+
+</html>
+<!-- <!DOCTYPE html>
+<html lang="cn">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        p {
+            font-size: 16px;
+            line-height: 1;
+            margin-top: 10px;
+            margin-bottom: 15px;
+        }
+
+        .aa {
+            border-bottom: 1px solid red;
+        }
+
+        .bb {
+            border-top: 1px solid red;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div>
+        <p class="aa">AAA</p>
+        <p></p>
+        <p></p>
+        <p></p>
+        <p class="bb">BBB</p>
+    </div>
+
+</body>
+
+</html> -->
