@@ -12,6 +12,7 @@ import yaml from '../public/data/data.yaml'
 import json from '../public/data/data.json5'
 import HelloWorld from './HelloWorld.js'
 import printMe from './print.js';
+
 function component () {
     const element = document.createElement('div');
     const img = document.createElement('img')

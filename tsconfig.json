@@ -64,7 +64,7 @@
       "skipLibCheck": true /* Skip type checking of declaration files. */,
       "forceConsistentCasingInFileNames": true /* Disallow inconsistently-cased references to the same file. */,
       "noImplicitAny": true, //对隐含的“any”类型的表达式和声明引发错误。确认不会错写任何新的类型
-      "outDir": "./dist/",
+      "outDir": "dist1",
       "sourceMap": true,
       "jsx": "react"
     },
