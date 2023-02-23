@@ -19,18 +19,8 @@ module.exports = {
     },
     entry: {
         // 入口方式
-        // index: path.resolve(__dirname, "./src/index.js"),
-        // another: './src/another-module.js',
-        // 入口方式防止重复
-        index: {
-            import: path.resolve(__dirname, "./src/index.js"),
-            dependOn: 'shared',
-        },
-        another: {
-            import: path.resolve(__dirname, "./src/another-module.js"),
-            dependOn: 'shared',
-        },
-        shared: 'lodash',
+        index: path.resolve(__dirname, "./src/index.js"),
+        another: './src/another-module.js',
     },
     target: 'web',
     module: {
@@ -145,7 +135,10 @@ module.exports = {
         port: 9000,
     },
     optimization: {
-        runtimeChunk: 'single',
+        splitChunks: {
+            chunks: 'all',
+        },
+
         // minimize: true,
         // minimizer: [new CssMinimizerWebpackPlugin()] //这个用于生产环境下css压缩,只有设置 mode: 'production'的时候有效 ，设置环境变量的时候区分
     }
