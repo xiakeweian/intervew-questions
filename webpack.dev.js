@@ -3,6 +3,7 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 const webpack = require('webpack'); // 用于访问内置插件
 const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 const CssMinimizerWebpackPlugin = require('css-minimizer-webpack-plugin')
+const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin
 const toml = require('toml');
 const yaml = require('yaml');
 const json5 = require('json5');
@@ -11,7 +12,7 @@ module.exports = {
     mode: 'development',
     // entry: path.resolve(__dirname, "./src/index.js"),
     output: {
-        filename: '[name].bundle.js',
+        filename: '[name].[contenthash].js',
         path: path.resolve(__dirname, './dist'),
         chunkFilename: "[chunkhash].js",
         clean: true,//打包到dist文件之前将dist文件内容清除
@@ -20,7 +21,6 @@ module.exports = {
     entry: {
         // 入口方式
         index: path.resolve(__dirname, "./src/index.js"),
-        another: './src/another-module.js',
     },
     target: 'web',
     module: {
@@ -95,10 +95,23 @@ module.exports = {
             inject: 'body',
             title: 'app'
         }),
-        new webpack.HotModuleReplacementPlugin(),
+        // new webpack.HotModuleReplacementPlugin(),
         new MiniCssExtractPlugin({
             filename: 'css/[contenthash].css'
-        })
+        }),
+        //它将 bundle 内容展示为一个便捷的、交互式、可缩放的树状图形式。
+        // new BundleAnalyzerPlugin({
+        //     analyzerMode: 'server',
+        //     analyzerHost: '127.0.0.1',
+        //     analyzerPort: 8888,
+        //     reportFilename: 'report.html',
+        //     defaultSizes: 'stat',
+        //     openAnalyzer: true,
+        //     generateStatsFile: true,
+        //     statsFilename: 'stats.json',
+        //     statsOptions: { source: false },
+        //     logLevel: 'info'
+        // }),
 
     ],
     // alias: {},
@@ -118,7 +131,7 @@ module.exports = {
     //     "react-dom": "ReactDOM"
     // },
     devServer: {
-        static: './dist',
+        // static: './dist',
         // // contentBase: path.join(__dirname, "./public"),
         // compress: true,
         // historyApiFallback: true,
@@ -128,17 +141,21 @@ module.exports = {
         // open: true,
         // https: false,
         // noInfo: true
-        // static: {
-        //     directory: path.join(__dirname, './public'),
-        // },
         compress: true,
         port: 9000,
     },
     optimization: {
+        runtimeChunk: 'single',
+        moduleIds: 'deterministic',
         splitChunks: {
-            chunks: 'all',
+            cacheGroups: {
+                vendor: {
+                    test: /[\\/]node_modules[\\/]/,
+                    name: 'vendors',
+                    chunks: 'all',
+                },
+            },
         },
-
         // minimize: true,
         // minimizer: [new CssMinimizerWebpackPlugin()] //这个用于生产环境下css压缩,只有设置 mode: 'production'的时候有效 ，设置环境变量的时候区分
     }
