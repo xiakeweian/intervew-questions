@@ -6,8 +6,6 @@ const toml = require('toml');
 const yaml = require('yaml');
 const json5 = require('json5');
 
-
-
 module.exports = (env) => {
     return {
         mode: env.production ? 'production' : 'development',

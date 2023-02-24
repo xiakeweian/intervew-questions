@@ -10,10 +10,6 @@ const compiler = Webpack(webpackConfig);
 const devServerOptions = { ...webpackConfig.devServer };
 const server = new WebpackDevServer(devServerOptions, compiler);
 
-
-
-
-
 server.startCallback(() => {
     console.log('Successfully started server on http://localhost:' + webpackConfig.devServer.port);
 });

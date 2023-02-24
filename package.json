@@ -7,7 +7,8 @@
     "build": "webpack --config  ./webpack.dev.js  --color --progress",
     "start": "npm run deploy:dev && node ./config/server",
     "deploy:dev": "webpack --config  ./config/webpack.config.js --env development --color --progress",
-    "deploy:pro": "webpack --config  ./config/webpack.config.js --env production --color --progress"
+    "deploy:pro": "webpack --config  ./config/webpack.config.js --env production --color --progress",
+    "prepare": "husky install"
   },
   "repository": {
     "type": "git",
