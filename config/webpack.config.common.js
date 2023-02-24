@@ -57,9 +57,9 @@ module.exports = (env) => {
                         loader: 'babel-loader?cacheDirectory',
                     }
                 },
+                { test: /\.(css|less)$/, use: env.production ? [MiniCssExtractPlugin.loader, 'css-loader', 'less-loader'] : ['style-loader', 'css-loader', 'less-loader'] },
                 // { test: /\.tsx?$/, loader: "awesome-typescript-loader" },
                 // { enforce: "pre", test: /\.js$/, loader: "source-map-loader" },
-                { test: /\.(css|less)$/, use: [MiniCssExtractPlugin.loader, 'css-loader', 'less-loader'] },
                 // { test: /\.ts$/, use: 'ts-loader' },
                 {
                     test: /\.(woff|woff2?|ttf|eot|otf)(\?.*)?$/i, type: 'asset/resource',
@@ -101,6 +101,6 @@ module.exports = (env) => {
                 },
             },
         },
-       
+
     }
 };
