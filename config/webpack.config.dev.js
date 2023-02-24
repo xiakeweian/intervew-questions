@@ -17,12 +17,16 @@ module.exports = {
     devtool: "inline-source-map",
     devServer: {
         static: './dist',
-        compress: true,//增加的压缩头部，就是文件在
+        compress: true,////增加的压缩头部，当为true的时候，请求过来的时候是压缩的，Content-Encoding: gzip
         port: 9000,
         host: '0.0.0.0',//配置为0.0.0.0之后局域网内别的小伙伴也都可以访问你的服务
         historyApiFallback: true, //配置为true，路由无论怎么写都不会为true
         hot: true,//设置为true实现模块热替换，这是webpack-dev-server默认值，
-        liveReload: false//热加载 设置为true之后，代码发生变化会自动刷新页面
+        liveReload: false,//热加载 设置为true之后，代码发生变化会自动刷新页面
+        client:{
+            overlay:false,//当有错误的eslint或者代码错误时候不显示覆盖层
+        }
+
     },
     devtool: "cheap-module-source-map",
 
