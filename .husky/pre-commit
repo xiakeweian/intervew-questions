@@ -1,1 +1,1 @@
-npx exlint ./src
+npx eslint ./src

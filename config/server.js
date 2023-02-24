@@ -4,7 +4,6 @@ const { merge } = require('webpack-merge')
 const devConfig = require('./webpack.config.dev.js')
 const commonConfig = require('./webpack.config.common.js')
 const webpackConfig = merge(commonConfig({ development: true }), devConfig)
-// const webpackConfig = require('../webpack.dev.js')
 
 
 const compiler = Webpack(webpackConfig);
