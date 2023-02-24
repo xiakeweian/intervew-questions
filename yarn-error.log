@@ -1,5 +1,5 @@
 Arguments: 
-  /Users/xiaoweian/.nvm/versions/node/v14.15.0/bin/node /Users/xiaoweian/.nvm/versions/node/v8.15.0/bin/yarn add @babel/preset-typescript @babel/proposal-class-properties @babel/proposal-object-rest-spread -D
+  /Users/xiaoweian/.nvm/versions/node/v14.15.0/bin/node /Users/xiaoweian/.nvm/versions/node/v8.15.0/bin/yarn add antd babel-plugin-import --save
 
 PATH: 
   /Users/xiaoweian/.nvm/versions/node/v14.15.0/bin:/Users/xiaoweian/.nvm/versions/node/v8.15.0/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/Users/xiaoweian/.nvm/versions/node/v8.15.0/bin:/usr/local/apache-maven-3.6.3/bin:/usr/local/apache-maven-3.6.3/bin
@@ -14,17 +14,8 @@ Platform:
   darwin x64
 
 Trace: 
-  Error: https://registry.yarnpkg.com/@babel%2fproposal-class-properties: Not found
-      at Request.params.callback [as _callback] (/Users/xiaoweian/.nvm/versions/node/v8.15.0/lib/node_modules/yarn/lib/cli.js:66145:18)
-      at Request.self.callback (/Users/xiaoweian/.nvm/versions/node/v8.15.0/lib/node_modules/yarn/lib/cli.js:140890:22)
-      at Request.emit (events.js:315:20)
-      at Request.<anonymous> (/Users/xiaoweian/.nvm/versions/node/v8.15.0/lib/node_modules/yarn/lib/cli.js:141862:10)
-      at Request.emit (events.js:315:20)
-      at IncomingMessage.<anonymous> (/Users/xiaoweian/.nvm/versions/node/v8.15.0/lib/node_modules/yarn/lib/cli.js:141784:12)
-      at Object.onceWrapper (events.js:421:28)
-      at IncomingMessage.emit (events.js:327:22)
-      at endReadableNT (_stream_readable.js:1327:12)
-      at processTicksAndRejections (internal/process/task_queues.js:80:21)
+  Error: read ECONNRESET
+      at TLSWrap.onStreamRead (internal/stream_base_commons.js:209:20)
 
 npm manifest: 
   {
@@ -61,6 +52,7 @@ npm manifest:
       "@babel/plugin-transform-runtime": "^7.21.0",
       "@babel/preset-env": "^7.20.2",
       "@babel/preset-react": "^7.18.6",
+      "@babel/preset-typescript": "^7.21.0",
       "@babel/runtime": "^7.21.0",
       "awesome-typescript-loader": "^5.2.1",
       "babel-loader": "^9.1.2",
@@ -329,7 +321,7 @@ Lockfile:
     resolved "https://registry.yarnpkg.com/@babel/helper-validator-identifier/-/helper-validator-identifier-7.19.1.tgz#7eea834cf32901ffdc1a7ee555e2f9c27e249ca2"
     integrity sha512-awrNfaMtnHUr653GgGEs++LlAvW6w+DcPrOliSMXWCKo597CwL5Acf/wWdNkf/tfEQE3mjkeD1YOVZOUV/od1w==
   
-  "@babel/helper-validator-option@^7.18.6":
+  "@babel/helper-validator-option@^7.18.6", "@babel/helper-validator-option@^7.21.0":
     version "7.21.0"
     resolved "https://registry.yarnpkg.com/@babel/helper-validator-option/-/helper-validator-option-7.21.0.tgz#8224c7e13ace4bafdc4004da2cf064ef42673180"
     integrity sha512-rmL/B8/f0mKS2baE9ZpyTcTavvEuWhTTW8amjzXNvYG4AwBsqTLikfXsEofsJEfKHf+HQVQbFOHy6o+4cnC/fQ==
@@ -624,6 +616,13 @@ Lockfile:
     dependencies:
       "@babel/helper-plugin-utils" "^7.14.5"
   
+  "@babel/plugin-syntax-typescript@^7.20.0":
+    version "7.20.0"
+    resolved "https://registry.yarnpkg.com/@babel/plugin-syntax-typescript/-/plugin-syntax-typescript-7.20.0.tgz#4e9a0cfc769c85689b77a2e642d24e9f697fc8c7"
+    integrity sha512-rd9TkG+u1CExzS4SM1BlMEhMXwFLKVjOAFFCDx9PbX5ycJWDoWMcwdJH9RhkPu1dOgn5TrxLot/Gx6lWFuAUNQ==
+    dependencies:
+      "@babel/helper-plugin-utils" "^7.19.0"
+  
   "@babel/plugin-transform-arrow-functions@^7.18.6":
     version "7.20.7"
     resolved "https://registry.yarnpkg.com/@babel/plugin-transform-arrow-functions/-/plugin-transform-arrow-functions-7.20.7.tgz#bea332b0e8b2dab3dafe55a163d8227531ab0551"
@@ -905,6 +904,15 @@ Lockfile:
     dependencies:
       "@babel/helper-plugin-utils" "^7.18.9"
   
+  "@babel/plugin-transform-typescript@^7.21.0":
+    version "7.21.0"
+    resolved "https://registry.yarnpkg.com/@babel/plugin-transform-typescript/-/plugin-transform-typescript-7.21.0.tgz#f0956a153679e3b377ae5b7f0143427151e4c848"
+    integrity sha512-xo///XTPp3mDzTtrqXoBlK9eiAYW3wv9JXglcn/u1bi60RW11dEUxIgA8cbnDhutS1zacjMRmAwxE0gMklLnZg==
+    dependencies:
+      "@babel/helper-create-class-features-plugin" "^7.21.0"
+      "@babel/helper-plugin-utils" "^7.20.2"
+      "@babel/plugin-syntax-typescript" "^7.20.0"
+  
   "@babel/plugin-transform-unicode-escapes@^7.18.10":
     version "7.18.10"
     resolved "https://registry.yarnpkg.com/@babel/plugin-transform-unicode-escapes/-/plugin-transform-unicode-escapes-7.18.10.tgz#1ecfb0eda83d09bbcb77c09970c2dd55832aa246"
@@ -1023,6 +1031,15 @@ Lockfile:
       "@babel/plugin-transform-react-jsx" "^7.18.6"
       "@babel/plugin-transform-react-jsx-development" "^7.18.6"
       "@babel/plugin-transform-react-pure-annotations" "^7.18.6"
+  
+  "@babel/preset-typescript@^7.21.0":
+    version "7.21.0"
+    resolved "https://registry.yarnpkg.com/@babel/preset-typescript/-/preset-typescript-7.21.0.tgz#bcbbca513e8213691fe5d4b23d9251e01f00ebff"
+    integrity sha512-myc9mpoVA5m1rF8K8DgLEatOYFDpwC+RkMkjZ0Du6uI62YvDe8uxIEYVs/VCdSJ097nlALiU/yBC7//3nI+hNg==
+    dependencies:
+      "@babel/helper-plugin-utils" "^7.20.2"
+      "@babel/helper-validator-option" "^7.21.0"
+      "@babel/plugin-transform-typescript" "^7.21.0"
   
   "@babel/regjsgen@^0.8.0":
     version "0.8.0"

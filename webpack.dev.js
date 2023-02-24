@@ -4,6 +4,7 @@ const webpack = require('webpack'); // 用于访问内置插件
 const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 const CssMinimizerWebpackPlugin = require('css-minimizer-webpack-plugin')
 const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin
+// const TerserPlugin = require('terser-webpack-plugin')
 const toml = require('toml');
 const yaml = require('yaml');
 const json5 = require('json5');
@@ -12,7 +13,7 @@ module.exports = {
     mode: 'development',
     // entry: path.resolve(__dirname, "./src/index.js"),
     output: {
-        filename: '[name].[contenthash].js',
+        filename: 'scripts/[name].[contenthash].js',
         path: path.resolve(__dirname, './dist'),
         chunkFilename: "[chunkhash].js",
         clean: true,//打包到dist文件之前将dist文件内容清除
@@ -145,6 +146,7 @@ module.exports = {
         port: 9000,
     },
     optimization: {
+
         runtimeChunk: 'single',
         moduleIds: 'deterministic',
         splitChunks: {
@@ -157,7 +159,8 @@ module.exports = {
             },
         },
         // minimize: true,
-        // minimizer: [new CssMinimizerWebpackPlugin()] //这个用于生产环境下css压缩,只有设置 mode: 'production'的时候有效 ，设置环境变量的时候区分
+        // minimizer: [new CssMinimizerWebpackPlugin(),new TerserPlugin()] //这个用于生产环境下css压缩,js压缩,只有设置 mode: 'production'的时候有效 ，设置环境变量的时候区分
     }
-
+// webpack-merge,合并webpack.config，区分生产环境和开发环境
+// terser-webpack-plugin
 };
