@@ -19,7 +19,7 @@ const App = () => {
 
     return <div className='app'>
 
-        <Input defaultValue='我是Appsssss' />
+        <Input defaultValue='我是App' />
         <Button type='primary' onClick={handleClick}>点击</Button>
 
         <span>有多少方块:{count}</span>
