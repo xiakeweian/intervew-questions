@@ -1,24 +1,22 @@
-
-  @font-face {
+@font-face {
     font-family: 'BMWTypeNextLatin-Regular';
     src: url('../public/fonts/BMWTypeNextLatin-Regular.otf');
     font-weight: normal;
     font-style: normal;
     font-display: swap;
-  }
+}
 
 p {
-    background:orange!important;
+    background: orange !important;
 }
 .font {
-    font-family:BMWTypeNextLatin-Regular;
-    font-size:20px;
-    color:green;
+    font-family: BMWTypeNextLatin-Regular;
+    font-size: 20px;
+    color: green;
 }
 
 .list-img {
-    background-image:url(../public/images/8.jpeg);
-    width:500px;
-    height:300px;
+    background-image: url(../public/images/8.jpeg);
+    width: 500px;
+    height: 300px;
 }
-

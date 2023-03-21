@@ -4,8 +4,7 @@
         "es2021": true
     },
     "extends": [
-        "plugin:react/recommended",
-        "standard-with-typescript"
+        "plugin:react/recommended"
     ],
     "overrides": [
     ],
@@ -17,5 +16,13 @@
         "react"
     ],
     "rules": {
+        "semi": ["error", "always"],
+        "no-console": "off",
+        "indent": ["error", 4],
+        "quotes": ["error", "single"],
+        "spaced-comment": ["error", "always"],
+        "comma-spacing": ["error", { "before": false, "after": true }],
+        "no-dupe-keys": "error"
     }
 }
+
