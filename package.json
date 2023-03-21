@@ -9,7 +9,10 @@
     "deploy:dev": "webpack --config  ./config/webpack.config.js --env development --color --progress",
     "deploy:pro": "webpack --config  ./config/webpack.config.js --env production --color --progress",
     "prepare": "husky install",
-    "prettier:check": "prettier --config .prettierrc --check \"src/**/*.{js,ts,css,html}\" --write"
+    "prettier:check": "prettier --config .prettierrc --check \"config/**/*.{js,ts,css,html}\"  --write"
+  },
+  "lint-staged": {
+    "**/*": "prettier --write --ignore-unknown"
   },
   "repository": {
     "type": "git",
