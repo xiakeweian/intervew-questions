@@ -27,19 +27,19 @@ module.exports = {
     },
     devtool: 'cheap-module-source-map', // 开发环境推荐使用这个，因为这个可以锁定代码行数，单独打包sourceMap文件，且不包含列信息而且简化为只包含对应行
     // plugins: [
-    // 它将 bundle 内容展示为一个便捷的、交互式、可缩放的树状图形式。
-    // new BundleAnalyzerPlugin({
-    //     analyzerMode: 'server',
-    //     analyzerHost: '127.0.0.1',
-    //     analyzerPort: 8888,
-    //     reportFilename: 'report.html',
-    //     defaultSizes: 'stat',
-    //     openAnalyzer: false,
-    //     generateStatsFile: true,
-    //     statsFilename: 'stats.json',
-    //     statsOptions: { source: false },
-    //     logLevel: 'info'
-    // }),
+    //     // 它将 bundle 内容展示为一个便捷的、交互式、可缩放的树状图形式。
+    //     new BundleAnalyzerPlugin({
+    //         analyzerMode: 'server',
+    //         analyzerHost: '127.0.0.1',
+    //         analyzerPort: 8888,
+    //         reportFilename: 'report.html',
+    //         defaultSizes: 'stat',
+    //         openAnalyzer: false,
+    //         generateStatsFile: true,
+    //         statsFilename: 'stats.json',
+    //         statsOptions: { source: false },
+    //         logLevel: 'info'
+    //     }),
 
     // ],
 };

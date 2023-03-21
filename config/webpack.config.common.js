@@ -18,6 +18,22 @@ module.exports = (env) => {
         },
         entry: path.resolve(__dirname, '../src/index.js'),
         target: 'web',
+        resolve: {
+            alias: {
+                '@': path.resolve(__dirname, '../src'),
+            },
+            extensions: ['.js', '.jsx', '.json']
+        },
+
+        externalsType: 'script',
+        // 定义外部第三方包别名,就是在windows上暴露的名称
+        externals: {
+            // jquery:'$'
+            // 这里可以是数组，数组第一项是第三方包用script的地址，第二项是别名名称
+            jquery: ['https://cdn.bootcdn.net/ajax/libs/jquery/3.6.0/jquery.js', '$']
+
+
+        },
         module: {
             // 一般情况下，如果资源小于8k,就会自动生成base64格式图片，大于8k生成资源文件，但是同样也可以设置通过parser
             // asset后面加resource，inline，source,或者不加这些主要区别是什么呢？
@@ -58,8 +74,8 @@ module.exports = (env) => {
                 {
                     test: /\.(css|less)$/,
                     use: env.production
-                        ? [MiniCssExtractPlugin.loader, 'css-loader', 'less-loader']
-                        : ['style-loader', 'css-loader', 'less-loader'],
+                        ? [MiniCssExtractPlugin.loader, 'css-loader', 'postcss-loader', 'less-loader']
+                        : ['style-loader', 'css-loader', 'postcss-loader', 'less-loader'],
                 },
                 // { test: /\.tsx?$/, loader: "awesome-typescript-loader" },
                 // { enforce: "pre", test: /\.js$/, loader: "source-map-loader" },

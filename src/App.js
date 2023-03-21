@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Button, Input } from 'antd';
-import './index.less';
+// import './index.less';
+import './index.css';
 
 const App = () => {
     const [count, setCount] = useState(0);
@@ -24,6 +25,7 @@ const App = () => {
 
             <span>有多少方块:{count}</span>
             <ul>{createDiv()}</ul>
+            <div className="box"></div>
         </div>
     );
 };
