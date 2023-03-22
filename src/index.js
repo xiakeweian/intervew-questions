@@ -5,6 +5,7 @@ import 'antd/dist/reset.css';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(<App />);
+console.log('你好')
 
 //模块热替换 devServer配置了 hot:true之后，module.hot就为true了
 if (module.hot) {

@@ -25,7 +25,7 @@ module.exports = {
             overlay: false, // 当有错误的eslint或者代码错误时候不显示覆盖层
         },
     },
-    devtool: 'cheap-module-source-map', // 开发环境推荐使用这个，因为这个可以锁定代码行数，单独打包sourceMap文件，且不包含列信息而且简化为只包含对应行
+    devtool: 'eval-cheap-module-source-map', // 开发环境推荐使用这个，因为这个可以锁定代码行数，单独打包sourceMap文件，且不包含列信息而且简化为只包含对应行
     // plugins: [
     //     // 它将 bundle 内容展示为一个便捷的、交互式、可缩放的树状图形式。
     //     new BundleAnalyzerPlugin({
@@ -42,8 +42,8 @@ module.exports = {
     //     }),
 
     // ],
-    optimization: {
-        usedExports: true, // 只导出被使用的模块
-        minimize: true // 启动压缩
-    },
+    // optimization: {
+    //     usedExports: true, // 只导出被使用的模块
+    //     minimize: true // 启动压缩
+    // },
 };
