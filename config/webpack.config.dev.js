@@ -42,4 +42,8 @@ module.exports = {
     //     }),
 
     // ],
+    optimization: {
+        usedExports: true, // 只导出被使用的模块
+        minimize: true // 启动压缩
+    },
 };

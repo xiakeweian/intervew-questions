@@ -1,6 +1,7 @@
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+const webpack = require('webpack')
 
 const toml = require('toml');
 const yaml = require('yaml');
@@ -96,15 +97,19 @@ module.exports = (env) => {
             ],
         },
         plugins: [
+            // 多页面应用可以配置多个HtmlWebpackPlugin
             new HtmlWebpackPlugin({
                 template: './src/index.html',
                 filename: 'index.html',
-                inject: 'body',
+                inject: 'body', // script标签应该放哪里？body还是head
                 title: 'app',
+                // chunks:[]
             }),
             new MiniCssExtractPlugin({
                 filename: 'css/[contenthash].css',
             }),
+            new webpack.ProvidePlugin({'_':'lodash'})
+
         ],
 
         optimization: {
