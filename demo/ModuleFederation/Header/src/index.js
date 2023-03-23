@@ -1,5 +1,5 @@
-import Header from './Header';
+import Header from './Header'
 
-const div = document.createElement('div');
-div.appendChild(Header());
-document.body.appendChild(div);
+const div = document.createElement('div')
+div.appendChild(Header())
+document.body.appendChild(div)

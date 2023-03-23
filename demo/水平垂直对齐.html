@@ -1,25 +1,23 @@
 <!DOCTYPE html>
 <html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Document</title>
-</head>
-<style>
+  </head>
+  <style>
     /*
     *文字水平对齐：text-align:center
     垂直对齐：padding,vertical-align,line-height
     */
     .center {
-
-        border: 5px solid red;
-        width: 41%;
-        text-align: center;
-        /* padding: 23px; */
-        /* vertical-align: middle; */
-        line-height: 1.5;
+      border: 5px solid red;
+      width: 41%;
+      text-align: center;
+      /* padding: 23px; */
+      /* vertical-align: middle; */
+      line-height: 1.5;
     }
 
     /*
@@ -27,12 +25,10 @@
     然后在使用text-align:center;
     */
     .center1 {
-
-        float: right;
-        width: 300px;
-        border: 3px solid #73AD21;
-        padding: 10px;
-
+      float: right;
+      width: 300px;
+      border: 3px solid #73ad21;
+      padding: 10px;
     }
 
     /*
@@ -101,36 +97,29 @@
     */
 
     .box1 {
-        position: relative;
-        width: 300px;
-        height: 300px;
-        background-color: greenyellow;
-        overflow: auto;
+      position: relative;
+      width: 300px;
+      height: 300px;
+      background-color: greenyellow;
+      overflow: auto;
     }
 
     .box1 .chi {
-        width: 100px;
-        height: 100px;
-        background-color: blueviolet;
-        float: right;
-        vertical-align: middle;
-
+      width: 100px;
+      height: 100px;
+      background-color: blueviolet;
+      float: right;
+      vertical-align: middle;
     }
-</style>
+  </style>
 
-<body>
+  <body>
     <!-- 文字在box中水平垂直对齐 -->
-    <div class="center">
-        水平垂直对齐
-    </div>
-    <div class="center1">
-        水平垂直对齐1
-    </div>
+    <div class="center">水平垂直对齐</div>
+    <div class="center1">水平垂直对齐1</div>
 
     <div class="box1">
-        <div class="chi"></div>
+      <div class="chi"></div>
     </div>
-
-</body>
-
+  </body>
 </html>

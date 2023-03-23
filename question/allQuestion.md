@@ -421,8 +421,161 @@ WebSocket 连接必须由浏览器发起，因为请求协议是一个标准的 
 
 为什么 WebSocket 连接可以实现全双工通信而 HTTP 连接不行呢？实际上 HTTP 协议是建立在 TCP 协议之上的，TCP 协议本身就实现了全双工通信，但是 HTTP 协议的请求－应答机制限制了全双工通信。WebSocket 连接建立以后，其实只是简单规定了一下：接下来，咱们通信就不使用 HTTP 协议了，直接互相发数据吧。
 
-## 谈谈 js 的继承/继承怎样实现/JS 继承方案，谈谈原型链
+## 谈谈原型，原型链
 
+原型：每个函数都有一个prototype属性，**是函数特有的属性**，这个属性叫做原型，因为这个属性的值是个对象，也称为原型对象
+- 原型可以放一些属性和方法，共享给实例对象使用
+- 原型可以做继承
+
+原型链：每个对象都有__proto__属性，这个属性指向它的原型对象，原型对象也是对象，也有__proto__属性，指向原型对象的原型对象，这样一层层形成的链式结构 称之为原型链，最顶层找不到就返回null。当我们去访问一个对象的属性或者方法的时候，首先在它本身查找，如果它本身没找到，会向它上级的原型上去找，如果还是没找到会向原型的原型上去查找，知道找到为止，这样就形成一条原型链。
+![](../public/images/prototypeChain.png)
+
+## 谈谈 js 的继承，继承怎样实现/JS 继承方案
+[es6的class和extends实现继承](../src/questions/ClassExtend.js)
+[原型链继承](../src/questions/prototype.js)
+[构造函数继承]
 ## es6 的新特性，es7，es8 中新特性
 
 es6
+
+## 谈谈闭包
+闭包只是函数和声明该函数的词法环境的组合，指有权访问作用域中变量的函数。
+闭包具有封闭性：外部作用域无法访问闭包内部的数据，假如在闭包内部定义了一个变量，在外部是无法访问到的，除非闭包向外界暴露接口。
+闭包具有持久性：一般函数在被调用之后系统会自动注销该函数，但是闭包因为有其内部的函数，会占用一定内存，即使调用之后结构依然存在，正是因为占用一定内存，在项目中如果过多的使用闭包会导致内存溢出，所以在使用闭包的时候要谨慎使用，这也是闭包的缺点。
+闭包优点：减少全局变量的定义和减少参数的传递。
+
+## 什么是深拷贝，什么是浅拷贝？
+浅拷贝：指基于一个对象创建一个新的对象，这份新的对象完整精确的拷贝了原对象，如果拷贝的是基本类型，那么拷贝的就是基本类型的值，如果拷贝的是引用类型，那么拷贝的就是内存地址，如果对新的对象进行了修改，那么原对象也将发生改变。
+深拷贝：指从内存中完整的拷贝一份对象出来，并在内存中为其分配一个新的区域来存放，如果修改这个对象的属性，不会影响到原来的对象。
+
+## 手写深拷贝
+首先判断属于什么类型，根据不同类型分别写出不同的处理方法
+```
+  function deepCopy(ori) {
+    const type = getType(ori);
+    let copyObj;
+    switch (type) {
+      case 'array':
+        return copyArray(ori, type, copy);
+      case 'object':
+        return copyObject(ori, type, copy);
+      case 'function':
+        return copyFunction(ori, type, copy);
+      default:
+        return ori;
+    }
+  }
+  function copyArray(ori, type, copy = []) {
+  for (const [index, value] of ori.entries()) {
+    copy[index] = deepCopy(value)
+  }
+  return copy;
+}
+function copyObject(ori, type, copy = {}) {
+  for (const [key, value] of Object.entries(ori)) {
+    copy[key] = deepCopy(value)
+  }
+  return copy
+}
+function copyFunction(ori, type, copy = () => { }) {
+  const fun = eval(ori.toString());
+  fun.prototype = ori.prototype;
+  return fun
+}
+  function getType(value) {
+    switch(value) {
+      case value instanceof Array:
+        return 'array';
+        break;
+      case  typeof value === 'object':
+        return 'object';
+        break;
+      case typeof value === 'function':
+        return 'function';
+        break;
+      case type of value === 'number':
+        return 'number';
+        break;
+      case type of value === 'string':
+        return 'string';
+        break;
+      case type of value === 'boolean':
+        return 'boolean';
+        break;
+      case type of value === 'undefined':
+        return 'undefined';
+        break;
+
+    }
+  }
+```
+## 节流和防抖
+节流和防抖都是为了解决频繁触发某个事件的情况造成的性能消耗。
+防抖：就是在触发后的一段时间内只执行最后一次，例如：在进行搜索的时候，当用户停止输入后调用方法，节约请求资源。
+节流：就是在频繁触发某个事件的情况下，单位时间之内只执行一次，类似打游戏的时候长按某个按键，动作是有规律的在间隔时间触发一次。
+### 应用场景：
+debounce
+search搜索联想，用户在不断输入值时，用防抖来节约请求资源。
+window触发resize的时候，不断的调整浏览器窗口大小会不断的触发这个事件，用防抖来让其只触发一次
+拖动元素移动的时候
+文本编辑器实时保存
+throttle
+快速点击
+鼠标不断点击触发，mousedown(单位时间内只触发一次)
+监听滚动事件，比如是否滑到底部自动加载更多，用throttle来判断
+### 手写节流：Throttle
+```
+var throttle = function (fn, interval) {
+  var last = +new Date() // 记录前一次时间
+ var timerId = null
+  return function () {// 包装完后返回 闭包函数
+ 
+    var current = +new Date()
+    var args = [].slice.call(arguments, 0)
+    var context = this
+    clearTimeout(timerId) // 首先清除定时器
+    // current 与last 间隔大于interval 执行一次fn
+    // 在一个周期内 last相对固定 current一直再增加
+    // 这里可以保证调用很密集的情况下 current和last 必须是相隔interval 才会调用fn
+    if (current - last >= interval) {
+      fn.apply(context, args)
+      last = current
+    } else {
+      // 如果没有大于间隔 添加定时器
+      // 这可以保证 即使后面没有再次触发 fn也会在规定的interval后被调用
+      timerId = setTimeout(function() {
+        fn.apply(context, args)
+        last = current
+      }, interval)
+    }
+  }
+}
+```
+### 手写防抖：Debounce
+```
+var debounce = function (fn, interval) {
+  // debounce中的interval 和 throttle中的 interval含义不一样
+  // 在debounce中可以可以把interval理解成 用户停止了某个连续的操作后 再推迟interval执行fn
+  var timerId = null
+  return function () {
+    if(timerId !==null) {
+   var args = [].slice.call(arguments, 0)
+    var context = this
+    // 如果调用很密集 可以保证fn永远不会触发 必须等到有前后两个调用的间隔大于等于interval fn才能被执行
+    // 如果调用很少 fn会在interval结束后被执行
+    clearTimeout(timerId)
+    }
+    timerId = setTimeout(function() {
+      fn.apply(context, args)
+    }, interval)
+    }
+ 
+  
+}
+```
+## 谈谈回流和重绘
+回流：
+重绘：
+
+
+

@@ -16,7 +16,7 @@
         "react"
     ],
     "rules": {
-        "semi": ["error", "always"],
+        "semi": ["error", "never"],
         "no-console": "off",
         // "indent": ["error", 4],
         "quotes": ["error", "single"],

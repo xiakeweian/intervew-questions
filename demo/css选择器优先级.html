@@ -1,239 +1,220 @@
 <!DOCTYPE html>
 <html lang="en">
-
-<head>
-    <meta charset="UTF-8">
+  <head>
+    <meta charset="UTF-8" />
     <title>Title</title>
     <style>
-        /*
+      /*
         通配符使用星号*表示，意思是“所有的
         */
-        * {
-            padding: 0;
-            margin: 0;
-        }
+      * {
+        padding: 0;
+        margin: 0;
+      }
 
-        .box .title {
+      .box .title {
+        color: crimson;
+      }
 
-            color: crimson;
+      .box .content {
+        background-color: #eee;
+        min-height: 200px;
+        /* border: 1px solid #eee; */
+      }
 
-        }
+      .box .content div.import {
+        color: coral !important;
+        color: blue;
+      }
 
-        .box .content {
-            background-color: #eee;
-            min-height: 200px;
-            /* border: 1px solid #eee; */
-        }
+      .box .content {
+        color: aquamarine;
+      }
 
-        .box .content div.import {
+      .two {
+        color: #ffffff;
+        background: blue;
+        font-weight: 600;
+      }
 
-            color: coral !important;
-            color: blue;
-        }
+      .three {
+        color: #ffffff;
+        background: green;
+        font-weight: 600;
+      }
 
-        .box .content {
-            color: aquamarine;
-        }
+      .box .content > div#one {
+        color: red;
+        background-color: orange;
+      }
 
-        .two {
-            color: #ffffff;
-            background: blue;
-            font-weight: 600;
-        }
-
-        .three {
-            color: #ffffff;
-            background: green;
-            font-weight: 600;
-        }
-
-        .box .content>div#one {
-            color: red;
-            background-color: orange;
-        }
-
-        /*
+      /*
         * 第一种：[属性]
         */
-        [title] {
-            color: blue;
-        }
+      [title] {
+        color: blue;
+      }
 
-        /*
+      /*
         *第二种：属性=值
         */
 
-        [title=one] {
-            border: 5px solid green;
-            color: crimson;
-        }
+      [title='one'] {
+        border: 5px solid green;
+        color: crimson;
+      }
 
-        /*
+      /*
         *第三种：[属性~=值] 属性中包含独立的单词
         */
 
-        [title~=one] {
-            color: dodgerblue;
-        }
+      [title~='one'] {
+        color: dodgerblue;
+      }
 
-        /*
+      /*
         第四种 属性中必须是完整且唯一的单词，或用" - "隔开
         */
-        [lang|=one] {
-            background: #72D1FF;
-            font-weight: 600;
-            text-align: center;
-        }
+      [lang|='one'] {
+        background: #72d1ff;
+        font-weight: 600;
+        text-align: center;
+      }
 
-        /*
+      /*
          第五种：[属性*=值] 属性中做字符串拆分，只要能拆出来 value 这个词就行
         */
-        .box .content [title*=one] {
-            color: orange;
-        }
+      .box .content [title*='one'] {
+        color: orange;
+      }
 
-        /*
+      /*
           第六种：[属性^=值] 属性的前几个字母是值就可以
         */
-        .box .content [title^=one] {
-            color: darkorchid;
-        }
+      .box .content [title^='one'] {
+        color: darkorchid;
+      }
 
-        /*
+      /*
         伪类
         */
-        .box:nth-child(7) div.weilei p {
-            color: crimson;
-        }
+      .box:nth-child(7) div.weilei p {
+        color: crimson;
+      }
 
-        .box:nth-child(7) div.weilei p:hover {
-            width: 100px;
-            height: 20px;
-            background: orange;
-            border-radius: 10px;
-            text-align: center;
+      .box:nth-child(7) div.weilei p:hover {
+        width: 100px;
+        height: 20px;
+        background: orange;
+        border-radius: 10px;
+        text-align: center;
+      }
 
-        }
-
-        /*
+      /*
         最常见的 CSS 选择器就是元素选择器。设置 HTML 的样式，选择器通常将是某个 HTML 元素，比如 p、h1、em、a，甚至可以是 html 本身
         */
-        h3 {
-            color: black;
-        }
+      h3 {
+        color: black;
+      }
 
+      .jicheng p {
+        color: red;
+        font-size: 20px;
+      }
 
-        .jicheng p {
-            color: red;
-            font-size: 20px;
-        }
-
-        .jicheng p span {
-            background-color: skyblue;
-        }
+      .jicheng p span {
+        background-color: skyblue;
+      }
     </style>
-</head>
+  </head>
 
-<body>
-    <div>！important>内联选择器>ID选择器>类别选择器>属性选择器>伪类>元素选择器>通配符选择器>继承选择器</div>
-    <div class="box">
-        <div class="title">！import选择器</div>
-        <div class="content">
-            <div class="import">我是！import选择器</div>
-        </div>
+  <body>
+    <div>
+      ！important>内联选择器>ID选择器>类别选择器>属性选择器>伪类>元素选择器>通配符选择器>继承选择器
     </div>
     <div class="box">
-        <div class="title">内联选择器</div>
-        <div class="content" style="color:brown;">我是css写到元素style中的内联选择器</div>
+      <div class="title">！import选择器</div>
+      <div class="content">
+        <div class="import">我是！import选择器</div>
+      </div>
     </div>
     <div class="box">
-        <div class="title">id选择器</div>
-        <div class="content">
-            <div id="one">我是id选择器</div>
-        </div>
+      <div class="title">内联选择器</div>
+      <div class="content" style="color: brown">我是css写到元素style中的内联选择器</div>
     </div>
     <div class="box">
-        <div class="title">类别选择器</div>
-        <div class="content">
-            <div class="two">
-                你好！
-            </div>
-
-            <div class="three">
-                你好！
-            </div>
-
-            <div class="two">
-                你喜欢吃什么？
-            </div>
-
-            <div class="three">
-                你喜欢吃什么？
-            </div>
-        </div>
+      <div class="title">id选择器</div>
+      <div class="content">
+        <div id="one">我是id选择器</div>
+      </div>
     </div>
     <div class="box">
-        <div class="title">属性选择器</div>
-        <div class="content">
+      <div class="title">类别选择器</div>
+      <div class="content">
+        <div class="two">你好！</div>
 
-            <h1 title="Hello world">Hello world</h1>
-            <h2 title="name">你好！</h2>
-            <p>Hello!</p>
-            <div style="height:1px;width:100%;background: #000;"></div>
-            <a title="one" href="">one</a>
-            <br>
-            <br>
-            <div title="two">你好!</div>
-            <p title="two">Hi!</p>
-            <div style="height:1px;width:100%;background: #000;"></div>
-            <h1 title="two one">你好！</h1>
-            <br>
-            <p title="one three">你好！</p>
-            <br>
-            <p title="two">你好！</p>
+        <div class="three">你好！</div>
 
-            <div style="height:1px;width:100%;background: #000;"></div>
-            <p lang="one">你好</p>
-            <p lang="eson">你好！</p>
-            <p lang="one-gb">嗨!</p>
-            <p lang="us">你好!</p>
-            <p lang="neo">你好!</p>
-            <div style="height:1px;width:100%;background: #000;"></div>
-            <p title="one">你好!</p>
-            <p title="oneeeeee">你好!</p>
-            <p title="oooneee">你好!</p>
-            <p title="eon">你好!</p>
-            <p title="nowee">你好!</p>
-            <p title="ooonnneee">你好!</p>
+        <div class="two">你喜欢吃什么？</div>
 
-        </div>
+        <div class="three">你喜欢吃什么？</div>
+      </div>
     </div>
     <div class="box">
-        <div class="title">伪类</div>
-        <div class="content weilei">
-            <p>你好，伪类，点我</p>
-        </div>
+      <div class="title">属性选择器</div>
+      <div class="content">
+        <h1 title="Hello world">Hello world</h1>
+        <h2 title="name">你好！</h2>
+        <p>Hello!</p>
+        <div style="height: 1px; width: 100%; background: #000"></div>
+        <a title="one" href="">one</a>
+        <br />
+        <br />
+        <div title="two">你好!</div>
+        <p title="two">Hi!</p>
+        <div style="height: 1px; width: 100%; background: #000"></div>
+        <h1 title="two one">你好！</h1>
+        <br />
+        <p title="one three">你好！</p>
+        <br />
+        <p title="two">你好！</p>
+
+        <div style="height: 1px; width: 100%; background: #000"></div>
+        <p lang="one">你好</p>
+        <p lang="eson">你好！</p>
+        <p lang="one-gb">嗨!</p>
+        <p lang="us">你好!</p>
+        <p lang="neo">你好!</p>
+        <div style="height: 1px; width: 100%; background: #000"></div>
+        <p title="one">你好!</p>
+        <p title="oneeeeee">你好!</p>
+        <p title="oooneee">你好!</p>
+        <p title="eon">你好!</p>
+        <p title="nowee">你好!</p>
+        <p title="ooonnneee">你好!</p>
+      </div>
     </div>
     <div class="box">
-        <div class="title">元素选择器</div>
-        <div class="content">
-            <h3>我是元素选择器</h3>
-
-        </div>
+      <div class="title">伪类</div>
+      <div class="content weilei">
+        <p>你好，伪类，点我</p>
+      </div>
     </div>
     <div class="box">
-        <div class="title">通配符选择器</div>
-        <div class="content">
-
-        </div>
+      <div class="title">元素选择器</div>
+      <div class="content">
+        <h3>我是元素选择器</h3>
+      </div>
     </div>
     <div class="box">
-        <div class="title">继承选择器</div>
-        <div class="content jicheng">
-            <p>我是p元素<span>我是p元素中的span元素,我继承p元素中的字体颜色设置字号设置</span></p>
-        </div>
+      <div class="title">通配符选择器</div>
+      <div class="content"></div>
     </div>
-
-</body>
-
+    <div class="box">
+      <div class="title">继承选择器</div>
+      <div class="content jicheng">
+        <p>我是p元素<span>我是p元素中的span元素,我继承p元素中的字体颜色设置字号设置</span></p>
+      </div>
+    </div>
+  </body>
 </html>

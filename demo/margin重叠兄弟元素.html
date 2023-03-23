@@ -1,13 +1,12 @@
 <!DOCTYPE html>
 <html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>margin重叠</title>
-</head>
-<style>
+  </head>
+  <style>
     /*
 如果一个box的下边框和另一个box上的上边框都设置了margin，有以下几种情况：
 如果两者都是正数，那么就取最大者
@@ -40,22 +39,21 @@
 两个都是负值时，用0减去两个中绝对值大的那个
 */
     .box1 {
-        margin-bottom: -20px;
-        background: orange;
+      margin-bottom: -20px;
+      background: orange;
     }
 
     .box2 {
-        margin-top: -10px;
-        background-color: brown;
+      margin-top: -10px;
+      background-color: brown;
     }
-</style>
+  </style>
 
-<body>
+  <body>
     <h1>margin重叠</h1>
     <div class="box">
-        <div class="box1"></div>
-        <div class="box2"></div>
+      <div class="box1"></div>
+      <div class="box2"></div>
     </div>
-</body>
-
+  </body>
 </html>

@@ -1,13 +1,13 @@
 function getString() {
-    return new Promise((resolve, reject) => {
-        setTimeout(() => {
-            resolve('hello world!');
-        }, 2000);
-    });
+  return new Promise((resolve, reject) => {
+    setTimeout(() => {
+      resolve('hello world!')
+    }, 2000)
+  })
 }
 
 async function helloWorld() {
-    let string = await getString();
-    console.log(string);
+  let string = await getString()
+  console.log(string)
 }
-export default helloWorld;
+export default helloWorld

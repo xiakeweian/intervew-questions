@@ -1,7 +1,7 @@
-import _ from 'lodash';
+import _ from 'lodash'
 
-const str = _.join(['hello', 'webpack'], ' ');
+const str = _.join(['hello', 'webpack'], ' ')
 
-const div = document.createElement('div');
-div.textContent = str;
-document.body.appendChild(div);
+const div = document.createElement('div')
+div.textContent = str
+document.body.appendChild(div)

@@ -68,7 +68,7 @@
       "sourceMap": true,
       "jsx": "react"
     },
-    "files": ["test.ts"],
+    // "files": ["test.ts"],
     "include": ["src"],
     "exclude": ["node_modules"]
   }
