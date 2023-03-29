@@ -2,9 +2,17 @@ import React, { useState } from 'react'
 import { Button, Input } from 'antd'
 // import './index.less';
 import './index.css'
-import ClassExtend from './questions/ClassExtend'
-import prototype from './questions/prototype'
-
+// import ClassExtend from './questions/ClassExtend'
+// import prototype from './questions/prototype'
+// import constructor from './questions/constructor'
+// import combinateExtend from './questions/combinateExtend'
+// import combinateExtendOpt1 from './questions/combinateExtendOpt1'
+// import test from './questions/test'
+// import symbol from './questions/symbol'
+// import map_set from './questions/map_set'
+// import proxyAndReflect from './questions/proxyAndReflect'
+// import iteratorAndgenerator from './questions/iteratorAndgenerator'
+import callAndApply from './questions/callAndApply'
 const App = () => {
   const [count, setCount] = useState(0)
 

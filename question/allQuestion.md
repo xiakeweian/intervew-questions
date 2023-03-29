@@ -153,23 +153,27 @@ bfc 导致的属于同一个 bfc 中的子元素的 margin 重叠(Box 垂直方�
 - @import, 告诉 CSS 引擎引入一个外部样式表。(常用)
   `@import '~antd/es/style/themes/default.less';`
 - @media，如果满足媒介查询的条件则条件规则组里的规则生效。(常用)
-  ````@media screen and (max-width: @screen-xs) {
+  ```
+  @media screen and (max-width: @screen-xs) {
   .container {
     width: 100% !important;
   }
-  }```
-  ````
+  }
+  ```
+  
 - @font-face，引入外部下载的外部的字体。(常用)
-  ````@font-face {
+  ```
+  @font-face {
   font-family: 'PingFangSC-Regular';
   src: url('./assets/fonts/苹方黑体-准-简.ttf');
   font-weight: normal;
   font-style: normal;
   font-display: swap;
-  }```
-  ````
+  }
+  ```
 - @keyframes，描述 CSS 动画的中间步骤。(常用)
-  `````@keyframes slideRightIn {
+  ```
+  @keyframes slideRightIn {
   0% {
     -webkit-transform-origin: 100% 100%;
     transform-origin: 100% 100%;
@@ -182,17 +186,20 @@ bfc 导致的属于同一个 bfc 中的子元素的 margin 重叠(Box 垂直方�
     -webkit-transform: scaleX(1);
     transform: scaleX(1);
   }
-  }````
+  }
+  ```
   不常用：
-  `````
+
 - @namespace, 告诉 CSS 引擎必须考虑 XML 命名空间。
 - @supports, 一般用于检测 css 属性，如果满足给定条件则条件规则组里的规则生效。
-  ````@supports (display: grid) {
+  ```
+  @supports (display: grid) {
     .container {
      color: red;
   }
-  }```
-  ````
+  }
+  ```
+  
 - @page，描述打印文档时布局的变化。
 - @document，如果文档样式表满足给定条件则条件规则组里的规则生效。 (推延至 CSS Level 4 规范)
 - @counter-style — 一个 @counter-style 规则定义了如何把一个计数器的值转化为字符串表示。
@@ -213,7 +220,17 @@ css 定位规则：绝对定位（position:absolute;）脱离标准文档流，�
 水平垂直对齐包含文字水平垂直对齐，图片/容器水平垂直对齐
 文字水平可以用 text-align:center;垂直对齐用：1.vertical-align:middle;2.paddding,3.line-height:1.5;
 或者给文字容器设置宽度，设置右浮动，在设置 text-align:center;
-图片/容器水平垂直对齐可以用：绝对定位 position:absolute;left,top,margin-left,margin-top 或者 position:absolute;left,top,transform:translate(-50%,-50%),margin:具体值 auto,父元素的 padding
+图片/容器水平垂直对齐可以用：
+
+1. 绝对定位 position:absolute;left,top,margin-left,margin-top 
+2. position:absolute;left,top,transform:translate(-50%,-50%)
+3. margin:具体值 auto
+4. 父元素的padding
+5. 用flex布局
+6. display:flex和margin:auto
+7. 父元素固定定位，父元素固定定位,left,right,top,bottom 都为0，添加一个：after占位，height:100%;vertical-align:middle;子元素display:inline-block;vertical-align: middle;
+[水平垂直对齐](../demo/水平垂直对齐.html)
+
 
 ## CSS 模块化方案、如何配置按需加载、如何防止 CSS 阻塞渲染
 
@@ -427,16 +444,554 @@ WebSocket 连接必须由浏览器发起，因为请求协议是一个标准的 
 - 原型可以放一些属性和方法，共享给实例对象使用
 - 原型可以做继承
 
-原型链：每个对象都有__proto__属性，这个属性指向它的原型对象，原型对象也是对象，也有__proto__属性，指向原型对象的原型对象，这样一层层形成的链式结构 称之为原型链，最顶层找不到就返回null。当我们去访问一个对象的属性或者方法的时候，首先在它本身查找，如果它本身没找到，会向它上级的原型上去找，如果还是没找到会向原型的原型上去查找，知道找到为止，这样就形成一条原型链。
+原型链：每个对象都有__proto__属性，这个属性指向它的原型对象，原型对象也是对象，也有__proto__属性，指向原型对象的原型对象，这样一层层形成的链式结构 称之为原型链，最顶层找不到就返回null。当我们去访问一个对象的属性或者方法的时候，首先在它本身查找，如果它本身没找到，会向它上级的原型上去找，如果还是没找到会向原型的原型上去查找，直到找到为止，这样就形成一条原型链。
 ![](../public/images/prototypeChain.png)
 
 ## 谈谈 js 的继承，继承怎样实现/JS 继承方案
 [es6的class和extends实现继承](../src/questions/ClassExtend.js)
 [原型链继承](../src/questions/prototype.js)
-[构造函数继承]
-## es6 的新特性，es7，es8 中新特性
+[构造函数继承](../src/questions/constructor.js)
+[组合继承](../src/questions/combinateExtend.js)
+[组合继承优化1](../src/questions/combinateExtendOpt1.js)
+[组合继承优化2](../src/questions/combinateExtendOpt2.js)
+## es6的新特性，es7，es8,es9,es10中新特性
+### es6新特性
+1. **新增块级作用域**
+let 定义变量，他定义的变量被限定在特定范围内才能使用，离开这个范围不能被访问到；
+const定义常量，即无法被更改值的变量,避免了变量提升。
+2. **提供了定义类的语法糖（class）**
+ES6引入了class关键字，使对象的创建，继承更加直观，并且父类方法的调用，实例化，静态方法和构造函数等概念更加形象化。
+[es6的class和extends实现继承](../src/questions/ClassExtend.js)
+3. **对象和数组新增了扩展运算符**
+```
+let a = [1,2,3];
+let b = [...a];
+let a = {
+    name : "Jyy",
+    msg : {
+        age : 29
+    }
+}
+let b = {...a};
+```
+4. **新增了变量的解构赋值**
+分解数据结构，并为变量赋值，从数组或者对象中提取值，按照对应的位置，对变量赋值。
+```
+var { house, mouse} = $('body').data() // 我们会拿到house和mouse的值的
+var {jsonMiddleware} = require('body-parser')
+var {username, password} = req.body
+```
+5. **函数参数允许设置默认值，引入了不定参/rest参数，新增了箭头函数。**
+- 设置默认值
+```
+var link = function(widht=50,height=50,color='red',url='http://www.baidu.com'){...}
+```
+- 引入不定参
+```
+function add(a,b,...x){
+	return x.reduce((m,n)=>m+n);
+}
+```
+- 箭头函数 
+简化函数定义的语法，自动绑定this,不用再let self = this, _this = this或者.bind(this)绑定this，
+如果函数只有一行代码可以省略大括号，如果行参只有一个，可以省略小括号（如果没有行参，不能省略小括号）
+```
+const a = (x,y) => x + y;
+const b = x => x;
+```
 
-es6
+6. **新增模板字符串，多行字符串**
+
+```
+//javascript中字符串写法：
+var name = 'Your name is ' + first + ' ' + last + '.'
+var url = 'http://localhost:3000/api/messages/' + id；
+//ES6中
+var name = `Your name is ${first} ${last}`
+var url = `http://localhost:3000/api/messages/${id}`
+```
+```
+//javascript中多行字符串写法：
+var roadPoem = 'Then took the other, as just as fair,nt'
+    + 'And having perhaps the better claimnt'
+    + 'Because it was grassy and wanted wear,nt'
+    + 'Though as for that the passing therent'
+    + 'Had worn them really about the same,nt'
+//ES6中多行字符串，直接两个反引号即可
+var fourAgreements = `You have the right to be you.
+    You can only be you when you do your best.` 
+```
+7. **新增了一种基本数据类型（Symbol）**
+Symbol一种独一无二的值，最大的用法是用来定义对象的唯一属性名
+[Symbol](../src/questions/symbol.js)
+
+8. **ES6新增了模块化（import / export）**
+为了解决作用域的问题，引进了模块，是一种打包和封装功能的方式。
+导出语法，可以导出数据，函数，类：
+```
+// 导出数据
+export var color = 'red'
+export let name = 'John'
+export const number = 7
+//导出函数
+export function sum(num1,num2) {
+return num1 + num2
+}
+//导出类
+export class RectAngle {
+
+constructor(length,width) {
+this.length = length
+this.width = width
+}
+// 或者定义一个模块然后export导出
+function mutiply(num1,num2) {
+return num1 * num2
+}
+export mutiply
+
+}
+```
+
+导入语法：可用通过关键字import在另一个模块访问
+```
+import {identifier1,identifier12} from './example.js'
+```
+使用模块，有如下方法：
+1. 在脚本中添加script元素通过src属性添加加载代码地址来加载javascript代码文件；
+```
+<script type='module' src='./module.js'></script>
+//异步加载文件
+<script type='module' async src='./module.js'></script>
+```
+2. 将javascript代码内嵌到<script></script>元素中
+```
+<script type='module'>
+  import {sum} from './example.js'
+  let result = sum(1,2)
+</script>
+```
+3. 通过Web Worker或Service Worker的方法加载并执行javascript文件；
+let worker = new Worker('./script.js')
+
+9. **ES6新增Map,Set，WeakMap,WeakSet数据结构。**
+- Set
+Set 本身是一种构造函数，用来生成 Set 数据结构。
+Set的存储结构与数组类似，Set中不允许存放重复数据,只有键值没有键名，类似数组，可以用Set去重数组。
+可以遍历，自带方法 add新增，相当于 array里的push,has判断集合中是否存在 value,delete存在即删除集合中value,clear清空集合
+Set集合没有键名，但是仍然保留了key，当输出键名时，键名和键值是相等的
+
+- WeakSet
+  在WeakSet实例中，如果向add()方法中传入非对象参数会导致程序报错，向has()和delete()方法中传入非对象参数则会返回false；
+  WeakSet集合不可迭代，不能被用于for-of循环；
+  WeakSet集合不暴露任何迭代器，如keys,values方法，无法通过程序本身检测其中内容；
+  WeakSet集合不支持forEach,不支持size属性，方法有add ,delete，has, clear方法已废弃
+  成员都是对象
+  成员都是 弱引用，随时都可以消失，可以用来保存dom节点，不容易造成内存泄漏
+ 不能遍历，方法有add ,delete, has clear方法已废弃
+**WeakSet 与 Set 的区别：**
+1. WeakSet只能储存对象引用，不能存放值，而 Set 对象都可以
+2. WeakSet对象中储存的对象值都是被弱引用的，即垃圾回收机制不考虑 WeakSet 对该对象的应用，如果没有其他的变量或属性引用这个对象值，则这个对象将会被垃圾回收掉（不考虑该对象还存在于 WeakSet 中），所以，WeakSet 对象里有多少个成员元素，取决于垃圾回收机制有没有运行，运行前后成员个数可能不一致，遍历结束之后，有的成员可能取不到了（被垃圾回收了），WeakSet 对象是无法被遍历的（ES6 规定 WeakSet 不可遍历），也没有办法拿到它包含的所有元素
+
+- Map
+1. 本身是键值对的集合，类似集合；
+2. 可以遍历，方法很多，可以跟多种数据结构进行转换；
+3. 属性：constructor：构造函数；size：返回字典中所包含的元素个数；
+4. 操作方法：
+- set(key, value)：向字典中添加新元素
+- get(key)：通过键查找特定的数值并返回
+- has(key)：判断字典中是否存在键key
+- delete(key)：通过键 key 从字典中移除对应的数据
+- clear()：将这个字典中的所有元素删除
+
+5. 遍历方法
+- Keys()：将字典中包含的所有键名以迭代器形式返回
+- values()：将字典中包含的所有数值以迭代器形式返回
+- entries()：返回所有成员的迭代器
+- forEach()：遍历字典的所有成员
+6. 与其他数据结构的相互转换
+[与其他数据结构的相互转换](../src/questions/map_set.js)
+
+- WeakMap
+WeakMap 对象是一组键值对的集合，其中的键是弱引用对象，而值可以是任意。
+注意，WeakMap 弱引用的只是键名，而不是键值。键值依然是正常引用。
+WeakMap 中，每个键对自己所引用对象的引用都是弱引用，在没有其他引用和该键引用同一对象，这个对象将会被垃圾回收（相应的key则变成无效的），所以，WeakMap 的 key 是不可枚举的。
+直接受对象作为健名（null除外），不接受其他类型的值作为健名
+健名所指向的对象，不计入垃圾回收机制
+不能遍历，方法同get,set,has,delete
+
+10. **ES6新增Proxy和Reflect**
+调用new Proxy()可创建代替其他目标（target）对象的代理，代理可以拦截javascript引擎内部目标的底层对象操作，这些底层操作被拦截后会触发响应特定操作的陷阱函数。
+反射API以Reflect对象的形式出现，对象中方法的默认特性与相同的底层操作一致，而代理可以覆写这些操作，每个代理陷阱对应一个命名和参数都相同的Reflect方法:
+![](../public/images/proxy.jpeg)
+[Proxy和Reflect](../src/questions/proxyAndPeflect.js)
+
+11. **ES6新增了迭代器（Iterator）和 生成器（Generator）**
+迭代器的使用可以极大的简化数据操作，于是ES6中添加了这个迭代器的特性，新的数组方法和新的集合类型（例如Set和Map集合）都依赖迭代器实现，这个新特性对于高效的数据处理而言是不可或缺的，for-of循环，展开运算符（...）,甚至异步编程都可以使用迭代器。
+1. 迭代器（Iterator）:
+迭代器是一种特殊对象，它具有一些专门为迭代过程设计的专有接口，所有的迭代器对象都有一个next()方法，每次掉用都返回一个结果对象，结果对象有两个属性，一个是value,表示下一个将要返回的值，另一个是done,它是一个布尔类型的值，当没有更多可返回数据时返回true，迭代器会保存一个内部指针，用来指向当前集合中值的位置，每次调用一次next()方法，都会返回下一个可用的值。
+如果在最后一个值返回后再调用next()方法，那么返回的对象中属性done的值为true,属性value则包含迭代器最终返回的值，这个返回的值不是数据集的一部分，他与函数的返回值类似，是函数调用过程中最后一次给调用者传递信息的方法，如果函数没有相关数据则返回undefined
+2. 生成器（Generator）:
+生成器是一个返回迭代器的函数，通过function关键字后的星号（*）来表示，函数中会用到新的关键字yield,星号可以紧挨着function关键字，也可以在中间添加一个空格，如下：
+[生成器generator](../src/questions/iteratorAndgenerator.js)
+
+createIterator()前的*表明它是一个生成器，yield关键字是ES6新增的特性，可以通过它来指定调用迭代器的next()方法时的返回值及返回顺序。生成迭代器后，连续3次调用它的next()方法返回3个不同的值，分别是1，2，3.生成器调用过程和吧其他函数一样，最终返回的是创建好的迭代器。
+生成器函数每执行完一条yield语句后就会自动停止执行，直到调用迭代器的next()方法才会继续执行。
+**yield关键字只能在生成器函数中使用**，在其他地方使用会导致程序抛出语法错误，即使在生成器内部的函数里使用也是不可以的。
+  ```
+  function *createIterator(items) {
+  items.forEach(function(item){
+  yield item // 语法错误，因为在生成器内部函数中使用也是不可以的
+  })
+  }
+  ```
+使用yield关键字可以返回任何值或表达式，所以可以通过生成器函数批量的给迭代器添加元素，可以在循环中使用yield关键字：
+[循环使用yield关键字](../src/questions/iteratorAndgenerator.js)
+生成器函数表达式：也可以通过函数表达式来创建生成器函数，只需要在function关键字和小括号中间添加一个*即可：
+[生成器函数表达式](../src/questions/iteratorAndgenerator.js)
+不能用箭头函数来创建生成器。
+生成器对象的方法，有两种写法,可以通过函数表达式创建生成器，也可以简写方式：只需在函数名前添加一个星号(*)，如下：
+```
+let o = {
+    createIterator: function* (items) {
+        for (let i = 0; i < items.length; i++) {
+            yield items[i]
+        }
+    },
+    *createIterator1 (items) {
+
+        for (let i = 0; i < items.length; i++) {
+            yield items[i]
+        }
+
+    }
+}
+let iterator = o.createIterator([1, 2, 3])
+let iterator2 = o.createIterator([4, 5, 6])
+```
+可迭代对象和for-of循环
+可迭代对象具有Symbol.iterator属性，是一种与迭代器密切相关的对象，Symbol.iterator通过制定的函数可以返回一个作用于附属对象的迭代器。ES6中所有集合（数组，Map和Set集合）和字符串都是可迭代对象 ，这些对象都有默认的迭代器，for-of循环需要用到可迭代对象的这些功能。
+
+12. **数组新增了一些API，如isArray / Array.from / for of 方法；**
+- Object.is()
+经常用来判断是否相等的运算符==或===，开发者更喜欢后者，但是在javascript引起中，+0和-0标示为两个完全不同的实体，如果用全等运算符（===）对两者进行比较，得到的结果却是两者相等，同样NaN === NaN 的值返回false,需要使用isNaN()方法才可以正确检测NaN,所以ES6引入Object.is()方法弥补===的缺陷。
+[Object.is()用法](../src/questions/test.js)
+- Object.setPrototypeOf()
+ES5添加了Object.getPrototypeOf()方法来返回任意指定对象的原型，但是任然缺少对象在实例化之后改变原型的方法，所以ES6新添加了Object.setPrototypeOf(),通过这一方法可以任意改变指定对象的原型，它接受两个参数
+[Object.setPrototypeOf()](../src/questions/test.js)
+- Array.of()
+Array.of()方法创建数组，只需要传入你希望数组中包含的值就行，无论传入单个数据还是多个数据，length长度都和传入数据的个数相等
+对比使用new Array创建数组，如果Array中传入单个number的数字,那么数组length长度就是此数字的值； 如果 Array中传入单个string的数字，那么数组length长度就是1；如果Array传入多个值，那么数组的length就是多个值的个数。
+[Array.of()用法](../src/questions/test.js)
+- Array.from()
+Array.from方法可以接受迭代对象或者类数组对象作为第一个参数，最终返回一个数组
+```
+function makeArray(arrayLike) {
+Array.prototype.slice.call(arrayLike)
+}
+等价于ES6新增家的方法 Array.from()
+```
+- find()方法和findIndex()方法
+二者都接受两个参数：一个回调函数，另一个可选参数，用于指定回调函数中this的值，两者唯一的区别是：find()方法返回查找到的值，findIndex()返回查找到的值的索引
+- fill()
+fill()方法用于指定值填充一个至多组元素
+1. 只填一个参数(1)，代表数据全部填充为1
+2. 只填充两个值(0,2)，代表从索引2开发填充0，一直到结尾
+3. 填充三个值(0,1,3)，索引1开始，到索引3结束用0填充
+[fill()用法](../src/questions/test.js)
+- for of 值遍历
+我们都知道for in 不用于遍历数组，类数组或者对象，ES6中引入的for of循环功能相似，不同的是每次循环它提供的不是序号，而是值
+```
+var someArray = [ "a", "b", "c" ];
+for (v of someArray) {
+    console.log(v);//输出 a,b,c
+}
+```
+13. Promise
+[promise](https://github.com/xiakeweian/promise)
+
+### es7新特性
+ES7在ES6的基础上添加三项内容：求幂运算符（**）、Array.prototype.includes()方法
+1. Array includes
+在ES7之前，如果我们想判断一个数组中是否包含某个元素，需要通过 indexOf 获取结果，并且判断是否为 -1。
+在ES7之后，我们可以通过includes来判断一个数组中是否包含一个指定的元素，根据情况，如果包含则返回 true，否则返回false
+```
+const arr = [10, 20, 30];
+console.log(arr.includes(30)); // true
+console.log(arr.includes(40)); // false
+```
+2. 求幂运算符
+在ES7之前，计算数字的乘方需要通过 Math.pow 方法来完成。
+在ES7之后，增加了 ** 运算符，可以对数字来计算乘方。
+```
+const result1 = Math.pow(2, 2);
+const result2 = 3 ** 2;
+
+console.log(result1); // 4
+console.log(result2); // 9
+```
+
+### es8新特性
+1. 新增字符串填充
+ES8新增padStart和 padEnd方法，分别对字符串的首尾进行填充，第一个参数, 填充到多少位; 第二个参数, 用什么来填充
+```
+const message = "Hello";
+// 在开头用a填充到10位
+console.log(message.padStart(10, "a")); // aaaaaHello
+// 在结尾用b填充到10位
+console.log(message.padEnd(10, "b")); // Hellobbbbb
+
+```
+2. 新增values和entries函数
+- Object.values
+之前我们可以通过 Object.keys 获取一个对象所有的key,Object.values方法返回一个数组，成员是参数对象自身的（不含继承的）所有可遍历（ enumerable ）属性的键值.
+```
+const obj = {
+  name: "kaisa",
+  age: 18,
+  height: 1.88,
+};
+console.log(Object.values(obj)); // ['kaisa', 18, 1.88]
+```
+- Object.entries
+Object.entries方法返回一个数组，成员是参数对象自身的（不含继承的）所有可遍历（ enumerable ）属性的键值对数组。
+可以针对对象操作；
+```
+const obj = {
+  name: "why",
+  age: 18,
+  height: 1.88,
+};
+console.log(Object.entries(obj)); // [['name', 'why'], ['age', 18], ['height', 1.88]]
+```
+也可以针对数组、字符串进行操作, 数组和字符串会将索引作为key(了解)
+```
+const arr = [10, 20];
+const str = "ab";
+console.log(Object.entries(arr)); // [['0', 10], ['1', 20]]
+console.log(Object.entries(str)); // [['0', 'a'], ['1', 'b']]
+```
+
+3. Object.getOwnPropertyDescriptors()
+Object.getOwnPropertyDescriptors:获取一个对象的所有自身属性的描述符,如果没有任何自身属性，则返回空对象
+4. Async/await 
+用更加清晰的语义解决js异步代码，使得异步代码看起来像同步代码。  
+```
+async fetchData(query) =>{  
+  try {      
+    const response = await axios.get(`/query?query=${query}`); 
+    const data = response.data;     
+    return data;    
+ }catch (error)    {      
+   console.log(error)   
+ }} 
+fetchData(query).then(data =>{    
+     this.processfetchedData(data)
+})
+```
+5. 尾部逗号添加
+在ES8中，我们允许在函数定义和调用时多加一个逗号：
+```
+function foo(x, y, ) {
+  console.log(x, y);
+}
+foo(2, 4, )
+```
+### es9新特性
+1. async/await,异步迭代器
+在async/await的某些时刻，我们可能尝试在同步循环中调用异步函数。例如下面两段代码：
+```
+async function process(array) {
+  for (let i of array) {
+    await doSomething(i);
+  }
+}
+async function process(array) {
+  array.forEach(async i => {
+    await doSomething(i);
+  });
+}
+```
+这段代码中，循环本身依旧保持同步，并在在内部异步函数之前全部调用完成。
+
+ES2018引入异步迭代器（asynchronous iterators），这就像常规迭代器，除了next()方法返回一个Promise。因此await可以和for...of循环一起使用，以串行的方式运行异步操作。例如：
+```
+async function process(array) {
+  for await (let i of array) {
+    doSomething(i);
+  }
+}
+```
+2. Object Rest&Spread操作符和对象构建
+ES6 引入了 Rest参数 和 扩展运算符 , ...仅用于数组, ES9新增了对象rest, 和之前数组的剩余参数用法相似
+Rest用在解构中
+```
+const obj = {foo: 1, bar: 2, baz: 3};
+const {foo, ...rest} = obj;
+```
+Spread主要被用来展开对象
+```
+const obj = {foo: 1, bar: 2, baz: 3};
+const obj2 = {...obj,foo:true}
+```
+建立和拷贝对象
+使用Object.assign和Spread操作符能够很方便的进行对象的拷贝
+```
+const clone1 = {...obj}
+const clone2 = Object.assign({},obj)
+```
+```
+function restParam(p1,p2,...p3){
+console.log(p1,p2)
+console.log(p3)
+}
+restParam(1,2,3,4,5)
+// 1,2
+// 3,4,5
+
+```
+3. Promise.prototype.finally()
+在之前的Promise的调用链要么调用成功返回 .then() 方法, 要么调用失败返回 .catch() 方法, 在某些情况下, 你想要在无论是成功还是失败, 都运行同样的代码, 不如清除, 删除对话, 关闭数据连接等
+Promise.finally()允许你指定最终的逻辑
+```
+promise
+.then(result => {···})
+.catch(error => {···})
+.finally(() => {···});
+```
+4. 新的正则表达式,正则表达式命名捕获组
+JS正则表达式可以返回一个匹配的对象, 一个包含匹配字符串的类数组, 比如: 以 YYYY-MM-DD的格式解析日期
+???
+
+### es10新特性
+1. Array.prototype.flat()
+flat() 方法会按照一个可指定的深度递归遍历数组，并将所有元素与遍历到的子数组中的元素合并为一个新数组返回。
+例如一个数组有很多层, 第一层数组中还有第二层, 第三层, …数组
+```
+const arr = [10, 20, [30, 40], [50, [60]], [70, [80, [90]]]];
+
+// 将数组里面第一层数组平坦化
+const newArr1 = arr.flat(1);
+console.log(newArr1); // [10, 20, 30, 40, 50, [60], 70, [80, [90]]
+// 将数组里面第三层数组平坦化
+const newArr2 = arr.flat(3);
+console.log(newArr2); // [10, 20, 30, 40, 50, 60, 70, 80, 90]
+```
+2. Array.prototype.flatMap()
+flatMap() 方法首先使用映射函数映射每个元素，然后将结果压缩成一个新数组。
+注意一：flatMap是先进行map操作，再做flat的操作；
+
+注意二：flatMap中的flat相当于深度为1；
+```
+const message = ["Hello World", "Hello coder", "你好 中国"];
+
+const newMessage = message.flatMap(item => item.split(" "));
+console.log(newMessage); // ['Hello', 'World', 'Hello', 'coder', '你好', '中国']
+```
+3. Object.fromEntries()
+在前面，我们可以通过 Object.entries 将一个对象转换成 entries (key, value键值对数组)
+那么如果我们有一个entries了，如何将其转换成对象呢？
+ES10提供了 Object.formEntries来完成转换：
+```
+var obj = {
+  name: "kaisa",
+  age: 18,
+  height: 1.88,
+};
+
+const entries = Object.entries(obj);
+console.log(entries); // [['name', 'kaisa'], ['age', 18], ['height', 1.88]]
+
+const info = Object.fromEntries(entries);
+console.log(info); // {name: 'kaisa', age: 18, height: 1.88}
+
+```
+
+4. String.trimStart & String.trimEnd
+去除一个字符串首尾的空格，我们可以通过trim方法，如果单独去除前面或者后面呢？
+ES10中给我们提供了trimStart和trimEnd；
+```
+const message = "        HelloWorld      ";
+
+// 去除首尾空格
+console.log(message.trim());
+// 去除开头空格
+console.log(message.trimStart());
+// 去除结尾空格
+console.log(message.trimEnd());
+```
+5. String.prototype.matchAll
+6. try catch
+7. Symbol.prototype.description
+创建Symbol时可以传入一个描述
+8. Function.prototype.toString()
+ES10对函数实例的toString()方法作了修改，以前toString()方法返回函数代码本身，以前会省略注释和空格，现在修改之后，返回内容和源码一模一样
+### ES11新特性
+1. BigInt
+在早期的JavaScript中，我们不能正确的表示过大的数字：
+
+大于MAX_SAFE_INTEGER的数值，表示的可能是不正确的。
+```
+// 最大安全整数
+console.log(Number.MAX_SAFE_INTEGER); // 9007199254740991
+// 大于MAX_SAFE_INTEGER的一些数值, 可能正确表示, 可能不正确表示
+const num1 = 9007199254740991 + 1;
+console.log(num1); // 9007199254740992
+const num2 = 9007199254740991 + 2;
+console.log(num2); // 9007199254740992
+```
+那么ES11中，引入了新的数据类型BigInt，用于表示大的整数：
+
+BigInt的表示方法是在数值的后面加上n, 这样表示的数字一定是正确的
+```
+console.log(Number.MAX_SAFE_INTEGER); // 9007199254740991
+const num1 = 9007199254740991n + 1n;
+console.log(num1); // 9007199254740992n
+const num2 = 9007199254740991n + 2n;
+console.log(num2); // 9007199254740993n
+```
+2. 空值合并操作符
+- 相对于 || 更加严谨
+```
+const foo = 0;
+const result1 = foo || "默认值";
+const result2 = foo ?? "默认值";
+console.log(result1); // 默认值
+console.log(result2); // 0
+```
+- 可选链
+可选链也是ES11中新增一个特性，主要作用是让我们的代码在进行null和undefined判断时更加清晰和简洁
+普通写法：
+```
+const obj = {
+  name: "kaisa",
+  friend: {
+    name: "coder",
+    running() {
+      console.log("running~");
+    },
+  },
+};
+
+// 确定方法存在的时候再调用 避免报错
+if (obj.friend && obj.friend.running) {
+  obj.friend.running();
+}
+```
+可选链的写法: 使用 ?. 进行判断
+```
+const obj = {
+  name: "kaisa",
+  friend: {
+    name: "coder",
+    running() {
+      console.log("running~");
+    },
+  },
+};
+
+obj?.friend?.running?.();
+```
 
 ## 谈谈闭包
 闭包只是函数和声明该函数的词法环境的组合，指有权访问作用域中变量的函数。
@@ -450,65 +1005,9 @@ es6
 
 ## 手写深拷贝
 首先判断属于什么类型，根据不同类型分别写出不同的处理方法
-```
-  function deepCopy(ori) {
-    const type = getType(ori);
-    let copyObj;
-    switch (type) {
-      case 'array':
-        return copyArray(ori, type, copy);
-      case 'object':
-        return copyObject(ori, type, copy);
-      case 'function':
-        return copyFunction(ori, type, copy);
-      default:
-        return ori;
-    }
-  }
-  function copyArray(ori, type, copy = []) {
-  for (const [index, value] of ori.entries()) {
-    copy[index] = deepCopy(value)
-  }
-  return copy;
-}
-function copyObject(ori, type, copy = {}) {
-  for (const [key, value] of Object.entries(ori)) {
-    copy[key] = deepCopy(value)
-  }
-  return copy
-}
-function copyFunction(ori, type, copy = () => { }) {
-  const fun = eval(ori.toString());
-  fun.prototype = ori.prototype;
-  return fun
-}
-  function getType(value) {
-    switch(value) {
-      case value instanceof Array:
-        return 'array';
-        break;
-      case  typeof value === 'object':
-        return 'object';
-        break;
-      case typeof value === 'function':
-        return 'function';
-        break;
-      case type of value === 'number':
-        return 'number';
-        break;
-      case type of value === 'string':
-        return 'string';
-        break;
-      case type of value === 'boolean':
-        return 'boolean';
-        break;
-      case type of value === 'undefined':
-        return 'undefined';
-        break;
+[深拷贝](../src/questions/deepCopy.js)
 
-    }
-  }
-```
+
 ## 节流和防抖
 节流和防抖都是为了解决频繁触发某个事件的情况造成的性能消耗。
 防抖：就是在触发后的一段时间内只执行最后一次，例如：在进行搜索的时候，当用户停止输入后调用方法，节约请求资源。
@@ -574,8 +1073,176 @@ var debounce = function (fn, interval) {
 }
 ```
 ## 谈谈回流和重绘
-回流：
-重绘：
+### 首先了解浏览器渲染过程：
+1. 解析获取到的HTML生成DOM树，解析CSS，生产CSSOM树；
+2. 将DOM树和CSS树结合，生产渲染树（render tree）;
+3. 根据生成的渲染树，进行回流，计算得到节点的几何信息（位置和大小）；
+4. 根据渲染树以及得到节点的集合信息，将节点几何信息转换为屏幕上的绝对像素（像素，背景色，外观等）
+5. display将像素发给GPU，展示在页面上
+
+### 概念
+回流：通过构建渲染树，我们将可见的节点和对应的css样式结合起来，然后计算他们在视口内确切的几何信息（位置和大小），这个计算过程就叫做回流。
+重绘：通过构建渲染树，我们知道那些节点是可见的，以及可见节点的样式和具体的集合信息（位置和大小），然后将每个节点都转换为屏幕上的绝对像素，这个阶段就是重绘；
+当页面布局和几何信息发生变化的时候，就需要回流。比如以下情况：
+- 添加或删除可见的DOM元素；
+- 元素的位置发生变化；
+- 元素的尺寸发生变化（包括外边距、内边框、边框大小、高度和宽度等）；
+- 内容发生变化，比如文本变化或图片被另一个不同尺寸的图片所替代；
+- 页面一开始渲染的时候（这肯定避免不了）；
+- 浏览器的窗口尺寸变化（因为回流是根据视口的大小来计算元素的位置和大小的）。
+以下情况会发生重绘：
+在渲染树中一些元素更新属性，这些属性只影响元素等外观，风格，不影响布局，比如背景颜色的改变，字色，样式发生改变的时候只会影响重绘。
+### 以下情况会引起回流和重绘：
+1. 页面初始渲染；
+2. 改变字体，改变元素尺寸（宽、高、内外边距、边框，改变元素位置等
+    各种情况：
+             设置 style 属性的值 
+             激活 CSS 伪类，比如 :hover
+             操作 class 属性
+            css3的某些属性
+（注意：如果修改属性不影响布局则不会发生重排）
+3. 改变元素内容（文本或图片等或比如用户在input框中输入文字）
+4. 添加/删除可见DOM元素（注意：如果是删除本身就display:none的元素不会发生重排；visibility:hidden的元素显示或隐藏不影响重绘）
+5. fixed定位的元素,在拖动滚动条的时候会一直回流；
+6. 调整窗口大小（Resizing the window）；
+7. 计算 offsetWidth 和 offsetHeight 属性；
+**注意：回流一定会触发重绘，而重绘不一定会回流**，比如：visibility:hidden的时候会触发重绘，但是不会触发回流
+### 如何减少回流和重绘？
+频繁的回流重绘会导致额外的计算消耗，代价比较昂贵，因此最好就是可以减少它的发生次数。为了减少发生次数，我们可以合并多次对DOM和样式的修改，然后一次处理掉，那么如何减少回流和重绘？
+步骤：
+1. 使元素脱离文档流；
+2. 对其进行修改；
+3. 再将元素带回到文档中。
+有三种方式可以让DOM脱离文档流：
+1. 隐藏元素，应用修改，重新显示
+这个会在展示和隐藏节点的时候，产生两次重绘
+```
+function appendDataToElement(appendToElement, data) {
+    let li;
+    for (let i = 0; i < data.length; i++) {
+        li = document.createElement('li');
+        li.textContent = 'text';
+        appendToElement.appendChild(li);
+    }
+}
+const ul = document.getElementById('list');
+ul.style.display = 'none';
+appendDataToElement(ul, data);
+ul.style.display = 'block';
+```
+2. 使用文档片段(document fragment)在当前DOM之外构建一个子树，再把它拷贝回文档。
+```
+const ul = document.getElementById('list');
+const fragment = document.createDocumentFragment();
+appendDataToElement(fragment, data);
+ul.appendChild(fragment);
+```
+3. 将原始元素拷贝到一个脱离文档的节点中，修改节点后，再替换原始的元素。
+```
+const ul = document.getElementById('list');
+const clone = ul.cloneNode(true);
+appendDataToElement(clone, data);
+ul.parentNode.replaceChild(clone, ul);
+```
+
+或者从根源上减少回流和重绘：
+1. 使用transform替代top,left；
+2. 使用visibility替换display:none,因为前者只会引起重绘，后者会引发回流（改变了布局）
+3. 避免使用table布局，可能很小的一个改动会造成整个table的重新布局；
+4. 避免使用css表达式，可能会引发回流；
+5. 尽可能在DOM树的最末端改变class，回流是不可避免的，但可以减少其影响。尽可能在DOM树的最末端改变class，可以限制了回流的范围。
+6. 将动画效果应用到position属性为absolute或者fixed的元素上，避免影响其他元素的布局，这样只是一个重绘，而不是回流。同时，控制动画速度可以选择requestAnimationFrame。
+常见的重绘元素：color,text-decoration,outline-color,outline-width
+常见回流元素：width,height,padding,margin,display,position,overflow,font-family,clear,offsetTop/offsetLeft/offsetWidth/offsetHeight
+
+## react中禁止onCopy, onPaste, onCut怎么用？
+```
+ onPaste={e => {
+
+       e.preventDefault(); //关键点要加上这句
+       Message.error('禁止粘贴！');
+       return false;
+ }}
+ onCut={e => {
+        e.preventDefault();
+        Message.error('禁止剪切！');
+        return false;
+ }}
+ onCopy={e => {
+         e.preventDefault();
+         Message.error('禁止复制！');
+         return false;
+ }}
+```
+```
+<style>
+    body {
+      position: relative;
+    }
+
+    .test {
+      moz-user-select: -moz-none;
+
+      -moz-user-select: none;
+
+      -o-user-select: none;
+
+      -khtml-user-select: none;
+
+      -webkit-user-select: none;
+
+      -ms-user-select: none;
+
+      user-select: none;
+    }
+
+    .mark {
+      position: fixed !important;
+
+      left: 0 !important;
+
+      top: 0 !important;
+
+      width: 100% !important;
+
+      height: 100% !important;
+
+      z-index: 998 !important;
+
+      pointer-events: none !important;
+
+    }
+
+    .test3 {
+      position: absolute;
+      left: 0;
+      top: 100px;
+    }
+  </style>
+  <body>
+  <div class='test'> 使用moz-user-select，不能选中copy </div>
+  <div class='test2' oncopy='return false;'>添加oncopy='return false;'可以选中但是不能copy</div>
+  <div class="mark">
+    <div class='test3'>在当前div盒子外层套一个蒙层，不能copy</div>
+  </div>
+  <div class="test4" onselectstart="return false;">添加事件不能选中 onselectstart="return false;"</div>
+  <div class="test5"> 可以复制</div>
+
+</body>
+```
+## apply和call的区别
+apply和call主要区别是传参数的方式不一样，apply接收的是一个数组，call接收的是数组中的每一项的参数列表，什么时候用apply和call,主要看参数给的是什么形式.
+他俩的共同点：劫持传入对象的方法，继承传入对象的属性
+## createHashHistory和createBrowserHistory()区别
+|方式| 路径|是否需要服务端支持|备注|
+|--|--|--|--|
+|createBrowserHistory| http://localhost:8084/list |需要|使用browserHistory时，从 / 到 /user/liuna, 浏览器会向server发送request，所以server要做特殊请求，比如用的 express 的话，你需要 handle 所有的路由 app.get('*', (req, res) => { ... })，使用了 nginx 的话，nginx也要做相应的配置。|
+|createHashHistory |http://localhost:8084/#/list|不需要|使用hashHistory时，因为有 # 的存在，浏览器不会发送request,react-router 自己根据 url 去 render 相应的模块。|
+
+## browserHistory 和 hashHistory 的优缺点比较
+## 什么是跨域
+
+
 
 
 

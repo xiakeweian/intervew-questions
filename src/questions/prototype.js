@@ -10,17 +10,17 @@ import { Children } from 'react'
 
 // ⽆法实现多继承。
 function Parent(name) {
-  this.name = name
+  this.name = name || '父亲'
   this.arr = [1]
 }
 Parent.prototype.say = function () {
   console.log('hello')
 }
 function Child(name, age) {
-  this.name = name
+  // this.name = name
   this.age = age
   this.sayHello = function () {
-    console.log(`我叫${this.name}，${this.age}岁了`)
+    console.log(`我叫${name}，今年${this.age}岁了`)
   }
 }
 console.log(Child.prototype, 'sss')
@@ -29,3 +29,16 @@ Child.prototype.constructor = Child // 修正constructor指向 Child.prototype�
 console.log(Child.prototype)
 
 let child1 = new Child('张三', 10)
+child1.sayHello()
+// 这样就拥有了Parent的属性和方法
+child1.say()
+let child2 = new Child('小明', 7)
+child2.sayHello()
+child2.say()
+console.log(child1.say, child2.say, child1.say === child2.say)
+console.log(child1.arr, child1.name, child2.name, child1.name === child2.name, 'ggg')
+child1.name = '王五'
+console.log(child1.name, child1, child1.constructor)
+// 优点：共享父类构造函数的属性和方法
+// 缺点1：不能向父类构造函数穿参
+// 缺点2：子类实例共享了父类构造函数的引用属性,child1.arr修改了父类构造函数的引用属性，同样child2.arr也会发生变化
