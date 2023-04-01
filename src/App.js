@@ -13,6 +13,7 @@ import './index.css'
 // import proxyAndReflect from './questions/proxyAndReflect'
 // import iteratorAndgenerator from './questions/iteratorAndgenerator'
 import callAndApply from './questions/callAndApply'
+import immutable from './questions/immutable'
 const App = () => {
   const [count, setCount] = useState(0)
 

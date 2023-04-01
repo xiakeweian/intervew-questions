@@ -33,7 +33,10 @@
     "lodash": "^4.17.21",
     "moment": "^2.29.4",
     "react": "^18.2.0",
-    "react-dom": "^18.2.0"
+    "react-dom": "^18.2.0",
+    "react-redux": "^8.0.5",
+    "redux": "^4.2.1",
+    "seamless-immutable": "^7.1.4"
   },
   "devDependencies": {
     "@babel/core": "^7.21.0",
@@ -67,6 +70,7 @@
     "mini-css-extract-plugin": "^2.7.2",
     "postcss-loader": "^7.1.0",
     "prettier": "^2.8.5",
+    "redux-devtools": "^3.7.0",
     "source-map-loader": "^4.0.1",
     "style-loader": "^3.3.1",
     "terser-webpack-plugin": "^5.3.6",

@@ -18,17 +18,17 @@
 
 // 使用call
 
-function Parent (name, age) {
-    this.name = name
-    this.age = age
-    console.log(this, 'Parentthis')
+function Parent(name, age) {
+  this.name = name
+  this.age = age
+  console.log(this, 'Parentthis')
 }
-function Student (name, age, grade) {
-    // this的上下文是Student,Parent.call()传如this,
-    // Student将会有Parent的属性和方法
-    Parent.call(this, name, age, grade)
-    this.grade = grade
-    console.log(this, 'Studentthis')
+function Student(name, age, grade) {
+  // this的上下文是Student,Parent.call()传如this,
+  // Student将会有Parent的属性和方法
+  Parent.call(this, name, age, grade)
+  this.grade = grade
+  console.log(this, 'Studentthis')
 }
 let student = new Student('zhangsan', 18, '大一')
 console.log(student.__proto__ === Student.prototype)
