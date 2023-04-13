@@ -227,14 +227,36 @@
 // console.log(flatFun(list, newArr), 'gg1')
 // console.log(list.flat(7), 'gg2')
 
+const obj = {}
+function flat (arr, newArr) {
+  arr.map((item) => {
+    if (item instanceof Array) {
+      flat(item, newArr)
+    } else {
+      if (!obj[item]) {
+        newArr.push(item)
+        obj[item] = true
+      }
+    }
+  })
+  return newArr
+}
+
+var arr = [[1, 2, 2], [3, 4, 5, 5], [6, 7, 8, 9, [11, 12, [12, 13, [14]]]], 10]
+const data = flat(arr, [])
+// console.log(data, 'newFlat')
+
+let newData = data.sort((a, b) => a - b)
+// console.log(data, newData, 'kkk')
+
 // 给迭代器传参数
-function* createIterator() {
+function* createIterator () {
   let first = yield 1
   let second = yield first + 2
   console.log(first, second)
   yield second + 3
 }
 let iterator = createIterator()
-console.log(iterator.next()) // {value: 1, done: false}
-console.log(iterator.next(4)) // {value: 6, done: false}
-console.log(iterator.next(5)) // {value: 8, done: false}
+// console.log(iterator.next()) // {value: 1, done: false}
+// console.log(iterator.next(4)) // {value: 6, done: false}
+// console.log(iterator.next(5)) // {value: 8, done: false}

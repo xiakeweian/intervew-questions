@@ -69,7 +69,6 @@ const iterator = createIterator([0, 1, 2, 3])
 
   observable.subscribe(observer)
 })
-
 ;(function fn() {
   const observable = Rx.Observable.interval(1000)
   //Subscription (订阅): 表示 Observable 的执行，主要用于取消 Observable 的执行。
@@ -81,7 +80,6 @@ const iterator = createIterator([0, 1, 2, 3])
     subscribtion.unsubscribe()
   }, 2000)
 })
-
 ;(function fn() {
   // Subject是一种能够发射多个数据给observer的Observable, 看起来好像是EventEmintter
   const subject = new Rx.Subject()
@@ -106,7 +104,6 @@ const iterator = createIterator([0, 1, 2, 3])
   // AsyncSubject 只会发射结束前的一个数据
   // Multicasted Observables 是一种借助Subject来讲数据发射给多个observer的Observable
 })
-
 ;(function fn() {
   const a$ = Rx.Observable.from([1, 3])
   const b$ = Rx.Observable.from([2, 3])
@@ -119,7 +116,6 @@ const iterator = createIterator([0, 1, 2, 3])
     console.log(x)
   })
 })
-
 ;(function f() {
   const input = document.createElement('input')
   const button = document.createElement('button')
@@ -141,7 +137,6 @@ const iterator = createIterator([0, 1, 2, 3])
     .scan((count, clientX) => count + clientX, 0)
     .subscribe((count) => console.log(count))
 })()
-
 ;(function drag() {
   const dragDOM = document.getElementById('drag')
   const body = document.body
