@@ -3,17 +3,182 @@
 
 ### 变量和类型
 1. JavaScript规定了几种语言类型
+基本数据类型：Number,String,Boolean,Undefined,Null ,es6中又添加了一种Symbol类型 ，常用来做对象中的key，实际在于后端交互过程中这种数据结构不常用
+引用数据类型：Object,Array,Funtion
+判断数据类型的方式有typeof 用来判断基本数据类型
+instanceof可以判断引用数据类型，他返回的是布尔值
+，Object.prototype.toString.call()基本数据类型和引用数据类型都可以判断
 2. JavaScript对象的底层数据结构是什么
+JavaScript中的数据在底层是以二进制存储，比如null所有存储值都是0，但是底层的判断机制，只要前三位为0，就会判定为object，所以才会有typeof null === 'object'这个bug。
+JavaScript使用的是 堆(Heap) 和 栈( Stack)
+JavaScript基本类型数据都是直接按值存储在栈中的(Undefined、Null、布尔、数字和字符串,Symbol)，每种类型的数据占用的内存空间的大小是确定的，并由系统自动分配和自动释放。这样带来的好处就是，内存可以及时得到回收，相对于堆来说 ，更加容易管理内存空间。
+
+JavaScript引用类型数据被存储于堆中 (如对象、数组、函数等，它们是通过拷贝和new出来的）。其实，说存储于堆中，也不太准确，因为，引用类型的数据的地址指针是存储于栈中的，当我们想要访问引用类型的值的时候，需要先从栈中获得对象的地址指针，然后，在通过地址指针找到堆中的所需要的数据。
+
 3. Symbol类型在实际开发中的应用、可手动实现一个简单的Symbol
+    因为Symbol是不可重复的数据，所以Symbol常用来作为对象中的key值，
+    手动实现Symbol:
+```js
+let generateName = (function(){
+  var postfix = 0
+  return function(desc) {
+    postfix++
+    return '@@' + desc + postfix
+  }
+})()
+function Symbol(description) {
+  // 1, 如果使用 new ，就报错
+  if (this instanceof Symbol) {
+    return new TypeError('Symbol is not constructor') // 实现第一点不可以使用new 调用
+  }
+  // 2  3如果 description 是 undefined，让 desc 为 undefined 否则 让 descString 为 ToString(description)
+  let desc = description === undefined ? undefined : String(description)
+ 
+  let symbol = Object.create({
+    toString: function() {
+      console.log(this._Name_)
+      return this._Name_
+    },
+    valueOf: function () {
+      return this;
+    }
+ 
+  })
+  Object.defineProperties(symbol, {
+    "_Description_" : {
+      value: '',
+      writable: false,
+      enumerable: false,
+      configurable: false
+    },
+    '_Name_': {
+      value: generateName(description),
+      writable: false,
+      enumerable: false,
+      configurable: false
+    }
+  })
+  console.log(symbol)
+  //3 因为调用该方法，返回的是一个新对象，两个对象之间，只要引用不同，就不会相同
+  //  Symbol 函数的参数只是表示对当前 Symbol 值的描述，相同参数的 Symbol 函数的返回值是不相等的
+  return symbol
+}
+var forMap = {};
+// Symbol.keyFor 方法返回一个已登记的 Symbol 类型值的 key
+Object.defineProperties(Symbol, {
+    'for': {
+        value: function (description) {
+            var descString = description === undefined ? undefined : String(description)
+            return forMap[descString] ? forMap[descString] : forMap[descString] = Symbol(descString); // 如果有就直接返回 重新使用同一个Symbol
+        },
+        writable: true,
+        enumerable: false,
+        configurable: true
+    },
+    'keyFor': {
+        value: function (symbol) {
+            for (var key in forMap) {
+                if (forMap[key] === symbol) return key;
+            }
+        },
+        writable: true,
+        enumerable: false,
+        configurable: true
+    }
+})
+```
 4. JavaScript中的变量在内存中的具体存储形式
+![](../public/images/js_data_save.png)
 5. 基本类型对应的内置对象，以及他们之间的装箱拆箱操作
 6. 理解值类型和引用类型
-7. null和undefined的区别
-8. 至少可以说出三种判断JavaScript数据类型的方式，以及他们的优缺点，如何准确的判断数组类型
-9. 可能发生隐式类型转换的场景以及转换原则，应如何避免或巧妙应用
-10. 出现小数精度丢失的原因，JavaScript可以存储的最大数字、最大安全数字，JavaScript处理大数字的方法、避免精度丢失的方法
+js包含两种数据类型，基本数据类型和复杂数据类型，而其对应的值基本类型的值指的是简单的数据段，引用类型指的是那些可能有多个值构成的对象。可以从三个方面来理解：动态的属性、复制变量的值、传递参数
+动态的属性:
+引用类型可以动态的添加属性和方法或者删除属性和方法，基本类型不能动态的添加属性和方法
+复制变量的值：引用类型复制变量实际上是复制变量的指针地址，基本类型复制的就是变量的值
+传递参数：
+所有函数的参数都是按值传递的，无论在向参数传递的是基本类型还是引用类型
+7. 至少可以说出三种判断JavaScript数据类型的方式，以及他们的优缺点，如何准确的判断数组类型
+typeof ,Object.prototype.toString.call(),instanceof,
+typeof主要是判断基本数据,返回的是个字符串
+instanceof 主要是判断引用数据类型的,返回布尔类型的字符串
+Object.prototypeof.toString.call()既可以判断基本数据类型，也可以判断引用类型，返回
+```js
+const num = 2
+const str = 'aaa'
+const boolean = false
+const symbol = Symbol()
+let obj = {}
+let arr = []
+let set = new Set()
+let map = new Map()
+function fn () { }
+console.log(typeof num, 'number')
+console.log(typeof str, 'string')
+console.log(typeof boolean, 'boolean')
+console.log(typeof undefined, 'undefined')
+console.log(typeof null, 'object')
+console.log(typeof symbol, 'symbol')
+console.log(obj instanceof Object, 'true')
+console.log(arr instanceof Array, 'true')
+console.log(fn instanceof Function, 'true')
+console.log(set instanceof Set, 'true')
+console.log(map instanceof Map, 'true')
+console.log(Object.prototype.toString.call(arr), '[object Array]')
+console.log(Object.prototype.toString.call(obj), '[object Object]')
+console.log(Object.prototype.toString.call(fn), '[object Function]')
+console.log(Object.prototype.toString.call(2), '[object Number]')
+console.log(Object.prototype.toString.call('string'), '[object String]')
+console.log(Object.prototype.toString.call(undefined), '[object Undefined]')
+console.log(Object.prototype.toString.call(null), '[object Null]')
+console.log(Object.prototype.toString.call(true), '[object Boolean]')
+console.log(Object.prototype.toString.call(Symbol()), '[object Symbol]')
+console.log(Object.prototype.toString.call(set), '[object Set]')
+console.log(Object.prototype.toString.call(map), '[object Map]')
+```
+8. 可能发生隐式类型转换的场景以及转换原则，应如何避免或巧妙应用
+有三个函数可以将非数值转换为数值：Number()、parseInt()、parseFloat()。Number()是转型函数，可用于任何数据类型。后两个函数主要用于将字符串转换为数值。
+隐式类型转换:
+1. 涉及类型转换最多的两个运算符是+和==。+可以是字符串相加，也可以是数字相加，在操作符中存在字符串时，优先转换为字符串。
+2. −∗/- * /−∗/ 只针对Number类型，所以转换的结果只能是Number类型。
+三种转换:
+转换为数字:ES定义所有对象都有toString()方法，无论它是伪对象还是对象。
+转换为字符串
+转换为布尔值：
+1. 除了+0，-0，NaN,其他数字布尔值都是true，2 == true
+...
+
+9. 出现小数精度丢失的原因，JavaScript可以存储的最大数字、最大安全数字，JavaScript处理大数字的方法、避免精度丢失的方法
+最大数字是Number.MAX_VALUE、最大安全数字是Number.MAX_SAFE_INTEGER。Number.MAX_VALUE大于Number.MAX_SAFE_INTEGER，我的理解是js可以精确表示最大安全数字以内的数，超过了最大安全数字但没超过最大数字可以表示，但不精确，如果超过了最大数字，则这个数值会自动转换成特殊的Infinity值。
+可以使用toFixed和Math.round的方法避免精度丢失，
+// 位数要小于10000000的位数
+const newNum = Math.round(number * 100000000)  / 100000000
+newNum.toFixed(位数)
+```js
+function RoundNum(n, m){ //n表示需要四舍五入的数，m表示需要保留的小数位数
+var newNum = Math.round(n * Math.pow(10, m)) / Math.pow(10, m) ;
+//首先将要保留的小数位数的小数部分转成整数部分，利用幂函数将n乘以10的m次方
+//然后利用Math.round()方法进行四舍五入处理
+//最后再除以10的m次方还原小数部分
+//注：此时还未能将所有数字正确转换。例如将1.0001保留3位小数我们想要的结果是1.000，而此时newNum里面的值是1
+//所以还需要处理此种特殊情况，即保留的小数位上全0
+var newSNum = newNum.toString();
+//这一步将刚才进行处理过的数转换成字符串
+var rs = newSNum.indexOf('.'); //利用indexOf查找字符串中是否有.，它返回某个指定的字符串值在字符串中首次出现的位置，不存在则返回-1
+if (rs < 0) {
+rs = newSNum.length;
+newSNum += '.';
+}
+while (newSNum.length <= rs + m) { //在末尾加0
+newSNum += '0';
+}
+return newSNum;
+}
+```
+或者第三方库math.js
 ### 原型和原型链
 1. 理解原型设计模式以及JavaScript中的原型规则
+
+
 2. instanceof的底层实现原理，手动实现一个instanceof
 4. 实现继承的几种方式以及他们的优缺点
 5. 至少说出一种开源项目(如Node)中应用原型继承的案例
@@ -156,8 +321,19 @@ Node
 ## 六、框架和类库
 轮子层出不穷，从原理上理解才是正道
 TypeScript
-1.理解泛型、接口等面向对象的相关概念，TypeScript对面向对象理念的实现
-2.理解使用TypeScript的好处，掌握TypeScript基础语法
+
+TS 支持的类型如下：boolean,number,string,[],Tuple,enum,any,void,null,undefined,never,Object。
+
+TS 做为 JS 的超集，其「超」其实主要在两方面
+TS 为 JS 引入了一套类型系统；
+TS 支持一些非 ECMAScript 正式标准的语法，比如装饰器；
+1. 理解泛型、接口等面向对象的相关概念，TypeScript对面向对象理念的实现
+
+2. 理解使用TypeScript的好处，掌握TypeScript基础语法
+使用typescript优点：
+1. 可以对类型进行约束；
+2. 开发过程中会知道自己在操作的数据类型,能增强开发的效率；
+3. 提高代码可读性；
 3.TypeScript的规则检测原理
 4.可以在React、Vue等框架中使用TypeScript进行开发
 React
@@ -240,9 +416,12 @@ nginx
 6.Canvas性能优化方案
 7.React、Vue等框架使用性能优化方案
 前端安全
-1.XSS攻击的原理、分类、具体案例，前端如何防御
-2.CSRF攻击的原理、具体案例，前端如何防御
-3.HTTP劫持、页面劫持的原理、防御措施
+1. XSS攻击的原理、分类、具体案例，前端如何防御
+XSS攻击就是跨站脚本攻击(cross-site Scripting),是一种代码注入攻击，恶意攻击者在目标网站上注入script代码，当访问者浏览网页的时候通过执行注入的script代码盗窃用户信息，盗用用户身份等
+比如：无限弹窗、篡改网站页面、获取用户信息等等。甚至你可以在网站里植入广告，以此来获取大量利润，这都是完全可以实现的。所以XSS的危害是巨大的，作为一个前端开发人员不得不小心。
+2. CSRF攻击的原理、具体案例，前端如何防御
+CSRF攻击就是跨站请求伪造(Cross-Site Request Forgery)，跟XSS一样，具有巨大的危害性，就是指恶意攻击者用已经认证过的用户信息，以用户的名义进行一些操作（如发邮件，转账，购买等），由于身份已经认证过，所以目标网站会认为操作都是正常用户进行的操作。CSRF并不能拿到用户信息，他只是盗用了用户凭证进行操作。
+3. HTTP劫持、页面劫持的原理、防御措施
 业务相关
 1.能理解所开发项目的整体业务形态、业务目标、业务架构，可以快速定位线上业务问题
 2.能理解所开发项目整体的技术架构、能快读的根据新需求进行开发规划、能快速根据业务报警、线上日志等定位并解决线上技术问题

@@ -7,8 +7,9 @@
 }
 
 p {
-  background: orange !important;
+  background: pink;
 }
+
 .font {
   font-family: BMWTypeNextLatin-Regular;
   font-size: 20px;
@@ -21,6 +22,7 @@ p {
   height: 300px;
   display: flex;
 }
+
 .box {
   display: flex;
   width: 200px;

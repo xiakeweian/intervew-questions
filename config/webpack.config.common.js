@@ -7,6 +7,8 @@ const toml = require('toml')
 const yaml = require('yaml')
 const json5 = require('json5')
 
+const source = path.resolve(__dirname, 'src')
+
 module.exports = (env) => {
   return {
     mode: env.production ? 'production' : 'development',
@@ -14,7 +16,7 @@ module.exports = (env) => {
       filename: 'scripts/[name].[contenthash].js',
       path: path.resolve(__dirname, '../dist'),
       chunkFilename: '[chunkhash].js',
-      clean: true, // 打包到dist文件之前将dist文件内容清除
+      // clean: true, // 打包到dist文件之前将dist文件内容清除
       assetModuleFilename: 'images/[name].[contenthash][ext]', // 图片输出的名称以及存放位置
     },
     entry: path.resolve(__dirname, '../src/index.js'),
@@ -23,16 +25,16 @@ module.exports = (env) => {
       alias: {
         '@': path.resolve(__dirname, '../src'),
       },
-      extensions: ['.js', '.jsx', '.json'],
+      extensions: ['.js', '.jsx', '.json', 'tsx'],
     },
 
     externalsType: 'script',
     // 定义外部第三方包别名,就是在windows上暴露的名称
-    externals: {
-      // jquery:'$'
-      // 这里可以是数组，数组第一项是第三方包用script的地址，第二项是别名名称
-      jquery: ['https://cdn.bootcdn.net/ajax/libs/jquery/3.6.0/jquery.js', '$'],
-    },
+    // externals: {
+    //   // jquery:'$'
+    //   // 这里可以是数组，数组第一项是第三方包用script的地址，第二项是别名名称
+    //   jquery: ['https://cdn.bootcdn.net/ajax/libs/jquery/3.6.0/jquery.js', '$'],
+    // },
     module: {
       // 一般情况下，如果资源小于8k,就会自动生成base64格式图片，大于8k生成资源文件，但是同样也可以设置通过parser
       // asset后面加resource，inline，source,或者不加这些主要区别是什么呢？
@@ -64,7 +66,8 @@ module.exports = (env) => {
         },
         // 所有.ts或者.tsx结尾的扩展名都必须经过awesome-typescript-loader处理
         {
-          test: /\.js$/,
+          test: /\.(js|jsx)$/,
+          // include: source,
           exclude: /node_modules/, // 因为代码运行过程中不仅有业务代码也有node_modules中的代码，但是node_modules中代码不需要将es6代码转换成es5代码，所以要把这部分给排除
           use: {
             loader: 'babel-loader?cacheDirectory',
@@ -75,10 +78,32 @@ module.exports = (env) => {
           use: env.production
             ? [MiniCssExtractPlugin.loader, 'css-loader', 'postcss-loader', 'less-loader']
             : ['style-loader', 'css-loader', 'postcss-loader', 'less-loader'],
+          // use: env.production
+          //   ? [MiniCssExtractPlugin.loader, {
+          //     loader: 'css-loader',
+          //     options: {
+          //       modules: true, // 开启模块化
+          //       // localIdentName: '[path][name]-[local]-[hash:base64:5]'
+          //     }
+          //   }, 'postcss-loader', 'less-loader']
+          //   : ['style-loader', {
+          //     loader: 'css-loader',
+          //     options: {
+          //       modules: true, // 开启模块化
+          //       // localIdentName: '[path][name]-[local]-[hash:base64:5]'
+          //     }
+          //   }, 'postcss-loader', 'less-loader'],
         },
-        // { test: /\.tsx?$/, loader: "awesome-typescript-loader" },
-        // { enforce: "pre", test: /\.js$/, loader: "source-map-loader" },
-        // { test: /\.ts$/, use: 'ts-loader' },
+        {
+          test: /\.(ts|tsx)$/,
+          exclude: /node-modules/,
+          use: [
+            {
+              loader: 'awesome-typescript-loader',
+              options: { useBabel: true, babelCore: '@babel/core' },
+            },
+          ],
+        },
         {
           test: /\.(woff|woff2?|ttf|eot|otf)(\?.*)?$/i,
           type: 'asset/resource',
@@ -103,22 +128,32 @@ module.exports = (env) => {
         title: 'app',
         // chunks:[]
       }),
-      new MiniCssExtractPlugin({
-        filename: 'css/[contenthash].css',
-      }),
+
       new webpack.ProvidePlugin({ _: 'lodash' }),
     ],
 
     optimization: {
       runtimeChunk: 'single',
-      moduleIds: 'deterministic',
+      moduleIds: env.production ? 'deterministic' : 'named',
       splitChunks: {
         cacheGroups: {
           vendor: {
             test: /[\\/]node_modules[\\/]/,
+            // test: /[\\/]node_modules[\\/](react|react-dom)[\\/]/,
             name: 'vendors',
             chunks: 'all',
           },
+          commons: {
+            name: 'commons',
+            chunks: 'initial',
+            minChunks: 2,
+          },
+          // styles: {
+          //   name: 'styles',
+          //   test: /\.css$/,
+          //   chunks: 'all',
+          //   enforce: true
+          // }
         },
       },
     },

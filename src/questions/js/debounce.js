@@ -1,4 +1,4 @@
-//节流和防抖
+// 节流和防抖
 function debounce(fn, duration) {
   let timer = null
 

@@ -1,42 +1,37 @@
 import React, { useState } from 'react'
-import { Button, Input } from 'antd'
-// import './index.less';
+import { Provider, useDispatch, useSelector } from 'react-redux'
+import { BrowserRouter, Routes, Route, Redirect } from 'react-router-dom'
+import { ConfigProvider } from 'antd'
+import zhCN from 'antd/locale/zh_CN'
+import enUS from 'antd/locale/en_US'
+import { ConnectedRouter } from 'react-router-redux'
+import ViewApp from '@/views/App'
+import store from '@/store'
+import Home from '@/views/Home'
+import RenderPages from '@/components/RenderPages'
+import rootRoutes from '@/config/routes.config.js'
 import './index.css'
-// import ClassExtend from './questions/ClassExtend'
-// import prototype from './questions/prototype'
-// import constructor from './questions/constructor'
-// import combinateExtend from './questions/combinateExtend'
-// import combinateExtendOpt1 from './questions/combinateExtendOpt1'
-// import test from './questions/test'
-// import symbol from './questions/symbol'
-// import map_set from './questions/map_set'
-// import proxyAndReflect from './questions/proxyAndReflect'
-// import iteratorAndgenerator from './questions/iteratorAndgenerator'
-import callAndApply from './questions/callAndApply'
-import immutable from './questions/immutable'
-const App = () => {
-  const [count, setCount] = useState(0)
+import ReactHooks from '@/questions/ReactHooks'
+import Event from '@/questions/Event'
+import Questions from '@/questions'
 
-  const handleClick = () => {
-    setCount(count + 1)
-  }
-
-  const createDiv = () => {
-    return new Array(count).fill(1).map((item, i) => <li key={item + i} className='li-item'></li>)
-  }
-
+const App = (props) => {
   return (
-    <div className='app'>
-      <h1>面试题</h1>
-      {/* <Input defaultValue="我是App" /> */}
-      {/* <Button type="primary" onClick={handleClick}>
-                点击
-            </Button>
-
-            <span>有多少方块:{count}</span>
-            <ul>{createDiv()}</ul>
-            <div className="box"></div> */}
-    </div>
+    <ConfigProvider locale={zhCN}>
+      <Provider store={store}>
+        {/* <ConnectedRouter> */}
+        <BrowserRouter>
+          <Routes>
+            <Route path='/' element={<ViewApp />} />
+            <Route path='/home' element={<Home />} />
+            <Route path='/reacthooks' element={<ReactHooks />} />
+            <Route path='/event' element={<Event />} />
+            <Route path='/questions' element={<Questions />} />
+          </Routes>
+        </BrowserRouter>
+        {/* </ConnectedRouter> */}
+      </Provider>
+    </ConfigProvider>
   )
 }
 export default App

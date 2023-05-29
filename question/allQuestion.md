@@ -1,13 +1,13 @@
 # 前端面试题汇总1
 
-## 盒模型是指什么？
+## 1. 盒模型是指什么？
 
 盒模型指的是页面在渲染时，DOM 元素所采用的布局模型，一个元素占用的空间大小由几个部分组成，内容(content)、内边距(padding)，边框(border)和外边距(margin)。
 w3c 盒子模型  =  内容区域 content(height,width)+内边距(padding)+边框(border)+外边距(margin),content = width
 IE 盒模型 width = content + paddding + border
 后来 W3C 中加入了  box-sizing 样式，属性包含 content-box 和 border-box；content-box 就是默认的样式（W3C 盒模型），border-box（IE 盒模型）是 width 包含了 content+padding+boder
 
-## css 选择器优先级
+## 2. css 选择器优先级
 
 **！important>内联选择器>ID 选择器>类别选择器>属性选择器>伪类>元素选择器>通配符选择器>继承选择器**
 属性选择器有以下几种：
@@ -50,7 +50,7 @@ IE 盒模型 width = content + paddding + border
                       color: darkorchid;
                   }
 
-  ## 伪类和伪元素分别有哪些，什么区别？
+  ## 3. 伪类和伪元素分别有哪些，什么区别？
 
   伪类：
   |属性|用法|说明|
@@ -98,7 +98,18 @@ IE 盒模型 width = content + paddding + border
 |::selection|用法--p::selection| 选择指定元素中被用户选中的内容|
 区别：伪类的操作对象是文档树中已有的元素，本身存在，只是在特定场景下才会触发，而伪元素则创建了一个文档树外的 dom 元素,并为其添加样式.
 
-## 什么是 BFC，BFC 实现原理，如何创建 BFC。可以解决的问题?
+## 4. css hack
+为什么会有css hack?
+
+由于不同浏览器和浏览器版本对css的支持和解析结果不一样，以及css优先级对浏览器展示效果的影响，这样就会导致相同的css代码在不同的浏览器和不同浏览器版本上显示不同的效果，所以就需要针对不同的浏览器和浏览器版本写特定的css样式，这种针对不同浏览器和不同浏览器版本写相应的css code的过程叫做css hack.
+css hack有3中表现形式：属性前缀法，选择器前缀法，IE条件注释法
+属性前缀法就是在属性前面
+属性前缀法(即类内部Hack)：例如 IE6能识别下划线"_"和星号" * "，IE7能识别星号" * "，但不能识别下划线"_"，IE6~IE10都认识"\9"，但firefox前述三个都不能认识。
+选择器前缀法(即选择器Hack)：例如 IE6能识别*html .class{}，IE7能识别*+html .class{}或者*:first-child+html .class{}。
+IE条件注释法(即HTML条件注释Hack)：针对所有IE(注：IE10+已经不再支持条件注释)： \<!--[if IE]>IE浏览器显示的内容 <![endif]-->
+针对IE6及以下版本： \<!--[if lt IE 6]>只在IE6-显示的内容 <![endif]-->。这类Hack不仅对CSS生效，对写在判断语句里面的所有代码都会生效。
+
+## 5. 什么是 BFC，BFC 实现原理，如何创建 BFC。可以解决的问题?
 
 ### 什么是 BFC？
 
@@ -109,7 +120,7 @@ IE 盒模型 width = content + paddding + border
 1）内部的 Box 会在垂直方向，一个接一个地放置。
 2）Box 垂直方向的距离由 margin 决定。属于同一个 BFC 的两个相邻 Box 的 margin 会发生重叠
 3）每个元素的 margin box 的左边， 与包含块 border box 的左边相接触(对于从左往右的格式化，否则相反)。即使存在浮动也是如此。
-4）BFC 的区域不会与 float box 重叠。
+4）BFC 的区域不会与浮动box 重叠。
 5）BFC 就是页面上的一个隔离的独立容器，容器里面的子元素不会影响到外面的元素。反之也如此。
 6）计算 BFC 的高度时，浮动元素也参与计算。
 
@@ -121,17 +132,59 @@ IE 盒模型 width = content + paddding + border
 4）overflow 不为 visible
 5）display 为 inline-block, table-cell, table-caption, flex, inline-flex
 
+
 ### BFC 作用？
 
 1）防止外边距重叠。
 bfc 导致的属于同一个 bfc 中的子元素的 margin 重叠(Box 垂直方向的距离由 margin 决定。属于同一个 BFC 的两个相邻 Box 的 margin 会发生重叠)
 我们可以在 div 外面包裹一层容器，并触发该容器生成一个 BFC。那么两个 div 便不属于同一个 BFC，就不会发生 margin 重叠了。
+正常两个div元素有margin的时候，上元素的margin-bottom和下元素的margin-top会重叠为最大的一个margin大小展示，但是这样达不到要求了，所以可以给这两个元素添加容器box-wrap,然后给这个外面容器添加overflow:hidden;
+<style>
+   .box3,
+  .box4 {
+    width: 100px;
+    height: 100px;
+    margin: 100px;
+    background: blue;
+  }
+  .box4 {
+    background: red;
+  }
+  .box-wrap {
+    overflow: hidden;
+  }
+</style>
+  <!-- 防止margin重叠 -->
+  <div class="box-wrap">
+    <div class="box3"></div>
+  </div>
+  <div class="box-wrap">
+    <div class="box4"></div>
+  </div>
+
 2）清除浮动的影响
 块级子元素浮动，如果块级父元素没有设置高度，其会有高度塌陷的情况发生。
 原因：子元素浮动后，均开启了 BFC，父元素不会被子元素撑开。
 解决方法：由第六条原理得，计算 BFC 的高度时，浮动元素也参与计算。所以只要将父容器设置为 bfc
 就可以把子元素包含进去：这个容器将包含浮动的子元素，它的高度将扩展到可以包含它的
 子元素，在这个 BFC，这些元素将会回到页面的常规文档流。
+<style>
+  .container {
+    border: 1px solid red;
+    overflow: hiidden;
+  }
+
+  .cube {
+    width: 100px;
+    height: 100px;
+    background: blue;
+    margin: 100px;
+
+  }
+</style>
+ <div class="container">
+    <div class="cube"></div>
+  </div>
 3）防止文字环绕
 
 ## 什么是 margin 重叠？
@@ -144,7 +197,7 @@ bfc 导致的属于同一个 bfc 中的子元素的 margin 重叠(Box 垂直方�
 4、不全是正值，则都取绝对值，然后用正值减去最大值；
 5、没有正值，则都取绝对值，然后用 0 减去最大值。
 
-## CSS 中如何使用@规则？
+## 6. CSS 中如何使用@规则？
 
 常用规则：
 
@@ -207,7 +260,7 @@ bfc 导致的属于同一个 bfc 中的子元素的 margin 重叠(Box 垂直方�
 - @property （实验性），是 CSS Houdini API 的一部分，它允许开发者显式地定义他们的 css 自定义属性, 允许进行属性类型检查、设定默认值以及定义该自定义属性是否可以被继承。
 - @layer， 声明了一个 级联层，同一层内的规则将级联在一起，这给予了开发者对层叠机制的更多控制。
 
-## HTML 文档流的排版规则，CSS 几种定位的规则、定位参照物、对文档流的影响，如何选择最好的定位方式，雪碧图实现原理
+## 7. HTML 文档流的排版规则，CSS 几种定位的规则、定位参照物、对文档流的影响，如何选择最好的定位方式，雪碧图实现原理
 
 文档流指的是元素排版布局过程中，元素会默认自动从左往右，从上往下的流式排列方式。并最终窗体自上而下分成一行行，并在每行中从左至右的顺序排放元素。
 HTML 文档流的排版规则：html 标签分成了块级元素和行内元素，块级元素在标准文档流中独占一行，多个块级元素垂直排列，行内元素在标准文档流中没有宽高，与其他元素排成一排。
@@ -215,51 +268,81 @@ css 定位规则：绝对定位（position:absolute;）脱离标准文档流，�
 雪碧图实现原理：雪碧图就是 css sprite,也叫 css 精灵，是将很多个小图标放到一张背景图上，通过定位的方式获取
 雪碧图优点：减少加载网页图片时对服务器的请求次数
 
-## 水平垂直居中的方案、可以实现 6 种以上并对比它们的优缺点
+## 8. 水平垂直居中的方案、可以实现 6 种以上并对比它们的优缺点
 
 水平垂直对齐包含文字水平垂直对齐，图片/容器水平垂直对齐
 文字水平可以用 text-align:center;垂直对齐用：1.vertical-align:middle;2.paddding,3.line-height:1.5;
 或者给文字容器设置宽度，设置右浮动，在设置 text-align:center;
 图片/容器水平垂直对齐可以用：
 
-1. 绝对定位 position:absolute;left,top,margin-left,margin-top 
+1. 绝对定位 position:absolute;left,top,margin-left:-50px(子元素宽度的一半),margin-top:-50px(子元素高度的一半)
 2. position:absolute;left,top,transform:translate(-50%,-50%)
-3. margin:具体值 auto
-4. 父元素的padding
-5. 用flex布局
-6. display:flex和margin:auto
+3. 父元素设置display:flex,子元素设置margin:auto
+4. 父元素的padding，已知父元素和子元素的宽高，设置padding=(父元素宽 - 子元素的宽) / 2
+5. 用flex布局，父元素display:flex;justify-content:center;align-items:center;
+6. 父元素display: table-cell;text-align: center;vertical-align: middle;子元素：display: inline-block;
 7. 父元素固定定位，父元素固定定位,left,right,top,bottom 都为0，添加一个：after占位，height:100%;vertical-align:middle;子元素display:inline-block;vertical-align: middle;
 [水平垂直对齐](../demo/水平垂直对齐.html)
+## 浮动
+设置了浮动之后，会使其脱离标准文档流，会影响其他元素的排版，不占用空间，因为其脱离了标准文档流，可以使元素排列在一排，如果父级元素没有设置宽高，设置浮动之后会引起父元素高度塌陷，同时也会影响父级元素同级的兄弟元素的排列，
+清除浮动的方法：给浮动元素的父元素添加overflow:hidden;
+或者添加伪元素清除浮动：给浮动元素父级增加 .clearfix::after { content: ''; display: table; clear: both; } 
 
 
-## CSS 模块化方案、如何配置按需加载、如何防止 CSS 阻塞渲染
+## 9. CSS 模块化方案、如何配置按需加载、如何防止 CSS 阻塞渲染
+css模块化就是把一个大的功能拆解成小功能，目前主流的 css 模块化分为 css modules 和 css in js 两种方案
+css模块化的优点：
+1. 相对独立性 – 避免作用域污染
+2. 通用性 – 可复用
+3. 互换性 – 可按需加载，从而优化性能
+CSS Modules：是很好的 CSS 模块化解决方案：所有样式都是局部作用域的，解决了全局污染问题，class 名生成规则配置灵活，可以此来压缩class名，依然是CSS，几乎 0 学习成本；
+css in js: 简单来说CSS-in-JS就是将应用的CSS样式写在JavaScript文件里面，而不是独立为一些.css.
+babel-plugin-import插件可以实现js,css的按需加载，本质上就是将按需引入的方式变更为直接引入的方式。 如果配置了style字段，同时也会注入style的直接引入代码。css如果需要按需加载，需要手动直接引入。
+常用的按需加载方式
+- 使用babel-plugin-import插件
+- 提供es module版本，开启tree shaking
 
-## 熟练使用 CSS 实现常见动画，如渐变、移动、旋转、缩放等等
+link引入外部css会阻塞
+1. 对css进行压缩，使用css-minimizer-webpack-plugin
+2. 对css进行拆分：mini-css-extract-plugin
+3. 优化样式表的代码
+
+
+## 10. 熟练使用 CSS 实现常见动画，如渐变、移动、旋转、缩放等等
 
 https://www.cnblogs.com/starof/p/4968769.html
 
-## CSS 浏览器兼容性的写法，了解不同 API 在不同浏览器下的兼容性情况
+## 11. CSS 浏览器兼容性的写法，了解不同 API 在不同浏览器下的兼容性情况
 
 - -webkit-,针对 safari、chrome 浏览器的内核
 - -moz-，针对 firefox 浏览器内核
 - -ms-，针对 ie 内核
 - -o-，针对 Opera 内核
 
-## 掌握一套完整的响应式布局方案
+## 12. 掌握一套完整的响应式布局方案
 
 1.第三方库：normalize.css、bootstrap
 2.JavaScript 计算
 3.CSS：css3 @media、rem、postcss
+## 13. 说一说css尺寸设置的单位
+有px,rem,em,vw,vh,
+px:绝对长度单位，就是设计图中设计的长度，是css中常用的长度单位；
+rem:相对长度单位，相对于根元素的字体大小，根元素字体没有设置，使用浏览器默认字体大小，在实际宽度和设计图的宽度所占百分比radio，然后再和根元素设置的基本尺寸相乘，就得到了根元素的字号大小，监听窗口resize事件,重新计算根元素字号大小。
+em:相对长度单位，设置font-size属性时，是相对于父元素的字体大小，相对于其他属性，是相对于自身字体大小设置，如当前元素的字体尺寸未设置，由于字体大小可继承的原因，可逐级向上查找，最终找不到则相对于浏览器默认字体大小
+vw:相对长度单位，相对于视图宽度的百分比，比如分辨率width=1980px,那么使用vw的话就是100vw
+vh:相对长度单位，相对于视图高度的百分比
+之前做官网的时候就使用rem和vw/vh做响应式布局。
 
-## 谈谈 js 的数据类型,typeof,instanceof
+## 14. 谈谈 js 的数据类型,typeof,instanceof
 
-基本数据类型：Number，String，Undefined，Null，Boolean
-引用数据类型：Object，Array, Function
+基本数据类型：Number，String，Undefined，Null，Boolean，Symbol
+Symbol是ES6新出的一种数据类型，这种数据类型的特点就是没有重复的数据，可以作为object的key。
+引用数据类型：Object，Array, Function,
 基本数据类型存储在栈（stack）中，占据空间小，大小固定，属于频繁使用的数据
 引用数据类型存储在堆中，占据空间大，大小不固定，如果存储在栈中，将会影响程序运行的性能，引用数据类型在栈中存储了指针，该指针指向堆中该实体的起始地址，当解释器寻找引用值时，会首先检索其在栈中的地址，取得地址后，从堆中获取实体。
 基本数据类型具有不可变的性质，方法操作无法改变一个基本类型的值
 引用数据类型是可以改变的，引用类型的值是同时保存在栈内存和堆内存中的对象
-javascript 和其他语言不同，不允许直接访问内存中的位置，也就是说不能直接操作对象的内存空间，实际上操作对象的引用，所以引用类型的值是按照引用访问的，准确的说 ，引用数据类型的存储需要内存中的栈区和 堆区共同完成，栈区内存保存变量标识符和指向堆内存 中该对象的指针，也可以说是该对象在堆内存的地址。
+javascript 和其他语言不同，不允许直接访问内存中的位置，也就是说不能直接操作对象的内存空间，实际上操作对象的引用，所以引用类型的值是按照引用访问的，准确的说 ，引用数据类型的存储需要内存中的栈区和堆区共同完成，栈区内存保存变量标识符和指向堆内存 中该对象的指针，也可以说是该对象在堆内存的地址。
 在方法体内改变形参,将同时改变实参
 
 ```
@@ -287,41 +370,133 @@ number，string,bool,undefined,null
 其他数据类型：引用数据类型：Function,Object, Array,
 ==的两边的转换，判断 true 或者 false，为什么？
 
-## 什么是闭包,有什么优缺点？
+## 15. 什么是闭包,有什么优缺点？
 
 闭包是函数和声明该函数的词法环境的组合。闭包有权访问一个函数作用域中的变量的函数。
 闭包的特点：
 特性：闭包具有封闭性，外部作用域无法访问闭包内部的数据，如果在闭包内部声明变量，外界是无法访问的，除非闭包向外界暴露接口；
-持久性：一般函数被调用完毕之后系统 自动注销函数，对于闭包来说，在外部函数被调用之后闭包结构依然存在
-缺点：由于闭包含有自身内部的函数，所以占有内存比较多，占有内存资源，过多的使用闭包会导致内存溢出等。
+持久性：一般函数被调用完毕之后系统 自动注销函数，对于闭包来说，在外部函数被调用之后闭包结构依然存在，
+缺点：由于闭包含有自身内部的函数，所以占有内存比较多，占用内存资源，过多的使用闭包会导致内存溢出等。
 优点：减少全局变量的声明，减少参数的传递，封闭性。
+## 16. 闭包使用场景
+1. 返回值
+```js
+//1.返回值 最常用的
+		function fn(){
+			var name="hello";
+			return function(){
+				return name;
+			}
+		}
+		var fnc = fn();
+		console.log(fnc())//hello
+```
+2. 函数赋值
+```js
+ var fn2;
+		function fn(){
+			var name="hello";
+			//将函数赋值给fn2
+			fn2 = function(){
+				return name;
+			}
+		}
+		fn()//要先执行进行赋值，
+		console.log(fn2())//执行输出fn2
+```
 
-## 谈谈对TCP三次握手和四次挥手的理解
+3. 函数参数
+用闭包返回一个函数，把此函数作为另一个函数的参数，在另一个函数里面执行这个函数，最终输出 hello
+```js
+function fn(){
+			var name="hello";
+			return function callback(){
+				return name;
+			}
+		}
+		var fn1 = fn()//执行函数将返回值（callback函数）赋值给fn1，
+		
+		function fn2(f){
+			//将函数作为参数传入
+			console.log(f());//执行函数，并输出
+		}
+		fn2(fn1)//执行输出fn2
+```
+4. IIFE（自执行函数）
+```js
+(function(){
+			var name="hello";
+			var fn1= function(){
+				return name;
+			}
+			//直接在自执行函数里面调用fn2，将fn1作为参数传入
+			fn2(fn1);
+		})()
+		function fn2(f){
+			//将函数作为参数传入
+			console.log(f());//执行函数，并输出
+		}
 
-SYN(synchronous 建立联机) ACK(acknowledgement 确认) PSH(push 传送) FIN(finish 结束) 
-SYN 表示建立连接，
-FIN 表示关闭连接，
-ACK 表示响应，
-PSH 表示有 DATA 数据传输，
-RST 表示连接重置。
-  其中，ACK 是可能与 SYN，FIN 等同时使用的，比如 SYN 和 ACK 可能同时为 1，它表示的就是建立连接之后的响应，
-  如果只是单个的一个 SYN，它表示的只是建立连接。
-TCP 的几次握手就是通过这样的 ACK 表现出来的。
-  但 SYN 与 FIN 是不会同时为 1 的，因为前者表示的是建立连接，而后者表示的是断开连接。
- |握手|握手详情|
-|:---|:---|  
-|第一次握手|客户端发送一个连接请求消息 SYN=1 到服务端,然后等待服务端响应|
-|第二次握手|服务端接收到客户端发送到连接请求 SYN=1 消息之后，知道自己与客户端是可以连接成功的，给客户端应答，发送 ACK=1，SYN=1|
-|第三次握手|客户端接收到服务端的应答反馈之后，确定自己和服务端是可以连接的，然后发送 http 请求|
-四次挥手
- |挥手|挥手详情|
-|:---|:---|
-|第一次挥手|首先客户端请求关闭客户端到服务端方向的连接，这时客户端就要发送一个 FIN=1，表示要关闭一个方向的连接|
-|第二次挥手|服务端接收到后是需要确认一下的，所以返回了一个 ACK=1|
-|第三次挥手|这时只关闭了一个方向，另一个方向也需要关闭，所以服务端也向客户端发了一个 FIN=1 ACK=1|
-|第四次挥手|客户端接收到后发送 ACK=1，表示接受成功|
 
-## http 的长轮询，短轮询缓存机制，长连接，短连接
+```
+5. 循环赋值
+```js
+//每秒执行1次，分别输出1-10
+	for(var i=1;i<=10;i++){
+		(function(j){
+			//j来接收
+			setTimeout(function(){
+				console.log(j);
+			},j*1000);
+		})(i)//i作为实参传入
+	}
+```
+6. getter和setter
+```js
+function fn(){
+		var name='hello'
+		setName=function(n){
+			name = n;
+		}
+		getName=function(){
+			return name;
+		}
+		
+		//将setName，getName作为对象的属性返回
+		return {
+			setName:setName,
+			getName:getName
+		}
+	}
+	var fn1 = fn();//返回对象，属性setName和getName是两个函数
+	console.log(fn1.getName());//getter
+		fn1.setName('world');//setter修改闭包里面的name
+	console.log(fn1.getName());//getter
+
+```
+7. 迭代器
+```js
+var arr =['aa','bb','cc'];
+		function incre(arr){
+			var i=0;
+			return function(){
+				//这个函数每次被执行都返回数组arr中 i下标对应的元素
+				 return arr[i++] || '数组值已经遍历完';
+			}
+		}
+		var next = incre(arr);
+		console.log(next());//aa
+		console.log(next());//bb
+		console.log(next());//cc
+		console.log(next());//数组值已经遍历完
+
+```
+8. <a href="#preface">节流和防抖函数</a>
+
+
+
+
+## 17. http 的长轮询，短轮询缓存机制，长连接，短连接
 
 http 长轮询：客户端发起请求，如果服务端的数据没有发生变更，那么就 hold 住请求，直到服务端的数据发生了变更，或者达到了一定的时间就会返回。这样就减少了客户端和服务端不断频繁连接和传递数据的过程，并且不会消耗服务端太多资源。长轮询在传输层本质上还是走的 TCP 协议。
 http 长轮询的局限:
@@ -350,7 +525,7 @@ HTTP 协议是基于请求/响应模式的，因此只要服务端给了响应�
 之所以说 HTTP 分为长连接和短连接，其实本质上是说的 TCP 连接。**TCP 连接是一个双向的通道，它是可以保持一段时间不关闭的，因此 TCP 连接才有真正的长连接和短连接这一说。**
 **http 协议是应用层协议，TCP 是传输协议**，如果 http 请求是一个物品的话，TCP 就是传输物品的一个通道，HTTP 请求和响应都是通过 TCP 连接这个通道进行传输的
 长连接：
-在 HTTP1.0 和 HTTP1.1 协议中都有对长连接的支持。其中 HTTP1.0 需要在 request 的 header 中设置 Connection:keep-alive;这个需要客户端和服务端同时设置，这样就建立起长连接了，http1.1 默认就是长连接。
+在 HTTP1.0 和 HTTP1.1协议中都有对长连接的支持。其中 HTTP1.0 需要在 request 的 header 中设置 Connection:keep-alive;这个需要客户端和服务端同时设置，这样就建立起长连接了，http1.1 默认就是长连接。
 为什么我们会用长连接呢，有什么好处？这里就要说到 TCP 连接的复用性，一个网页里面肯定包含 css,js，图片等一系列资源，如果是短连接的话，那么每次 http 请求都要建立一个 TCP 连接，那么打开一个网页基本要建立几个甚至几十个 TCP 连接，这样就会浪费资源，但是如果是长连接，那么多次 http 请求，使用一个 TCP 连接，很显然可以节省 TCP 的连接和断开消耗。
 短连接：
 浏览器与服务器只保持短暂的连接，浏览器的每次请求都需要与服务器建立一个 TCP 连接，服务器完成请求处理后立即断开 TCP 连接，服务器不跟踪每个客户也不记录过去的请求。
@@ -359,7 +534,7 @@ HTTP 协议是基于请求/响应模式的，因此只要服务端给了响应�
 
 ![](../public/images/connect.png)
 
-## http1.0-http2.0 的变化
+## 18. http1.0-http2.0 的变化
 
 http1.0 在 1996 年就已经产生，已经能满足 ajax 的需求，但是同时也有很多的缺点，http1.0 最大的问题就是 TCP 连接，TCP 是传输层协议，所以就需要不断的建立连接断开链接，这样使高并发的状态下，带宽的利用率很低，并且有很大的带宽消耗，所以 1999 年就推出了 http1.1
 http1.1 相对 1.0 有以下优点：
@@ -378,7 +553,7 @@ https 协议是 http 协议的升级，在 http 协议的基础上，增加了�
 其他不同点：当你 使用 Chrome 浏览器访问 http 网站的时候，你会发现，浏览器会对 http 网站数据显示‘不安全’的安全警告，提示用户当前所访问的网站可能存在风险。假如你访问的是 https 网站时情况就完全不一样，你回发现浏览器地址栏会变成绿色，企业名称会展示在地址栏中，地址栏上面还会出现一把安全锁图标，这些都会给用户很大的视觉上的安全体验，
 3.https 对搜索排名提升，百度谷歌两大搜索引擎都已经明确表示，https 网站将会作为搜索排名 了一个重要的权重指标，也就是说 https 比 http 网站在搜索排名中更有优势。
 
-## 谈谈 websocket 的基本用法，与 http 有什么区别
+## 19. 谈谈 websocket 的基本用法，与 http 有什么区别
 
 WebSocket 是 HTML5 开始提供的一种在单个 TCP 连接上进行全双工通讯的协议。
 WebSocket 使得客户端和服务器之间的数据交换变得更加简单，允许服务端主动向客户端推送数据。在 WebSocket API 中，浏览器和服务器只需要完成一次握手，两者之间就直接可以创建持久性的连接，并进行双向数据传输。
@@ -438,7 +613,7 @@ WebSocket 连接必须由浏览器发起，因为请求协议是一个标准的 
 
 为什么 WebSocket 连接可以实现全双工通信而 HTTP 连接不行呢？实际上 HTTP 协议是建立在 TCP 协议之上的，TCP 协议本身就实现了全双工通信，但是 HTTP 协议的请求－应答机制限制了全双工通信。WebSocket 连接建立以后，其实只是简单规定了一下：接下来，咱们通信就不使用 HTTP 协议了，直接互相发数据吧。
 
-## 谈谈原型，原型链
+## 20. 谈谈原型，原型链
 
 原型：每个函数都有一个prototype属性，**是函数特有的属性**，这个属性叫做原型，因为这个属性的值是个对象，也称为原型对象
 - 原型可以放一些属性和方法，共享给实例对象使用
@@ -447,20 +622,29 @@ WebSocket 连接必须由浏览器发起，因为请求协议是一个标准的 
 原型链：每个对象都有__proto__属性，这个属性指向它的原型对象，原型对象也是对象，也有__proto__属性，指向原型对象的原型对象，这样一层层形成的链式结构 称之为原型链，最顶层找不到就返回null。当我们去访问一个对象的属性或者方法的时候，首先在它本身查找，如果它本身没找到，会向它上级的原型上去找，如果还是没找到会向原型的原型上去查找，直到找到为止，这样就形成一条原型链。
 ![](../public/images/prototypeChain.png)
 
-## 谈谈 js 的继承，继承怎样实现/JS 继承方案
-[es6的class和extends实现继承](../src/questions/ClassExtend.js)
-[原型链继承](../src/questions/prototype.js)
-[构造函数继承](../src/questions/constructor.js)
-[组合继承](../src/questions/combinateExtend.js)
-[组合继承优化1](../src/questions/combinateExtendOpt1.js)
-[组合继承优化2](../src/questions/combinateExtendOpt2.js)
-## 原型链继承和通过call，apply继承有哪些区别？
-## ES6中Generater函数
-## es6的新特性，es7，es8,es9,es10中新特性
+## 21. 谈谈 js 的继承，继承怎样实现/JS 继承方案
+[es6的class和extends实现继承](../src/questions/继承/ClassExtend.js)
+[原型链继承](../src/questions/继承/prototype.js)
+[call/apply继承](../src/questions/继承/constructor.js)
+[组合继承](../src/questions/继承/combinateExtend.js)
+[组合继承优化1](../src/questions/继承/combinateExtendOpt1.js)
+[组合继承优化2](../src/questions/继承/combinateExtendOpt2.js)
+## 22. 原型链继承和通过call，apply继承有哪些区别？
+原型链继承是把父类的实例作为子类原型，这样子类实例会共享父类的引用属性，比如实例化两个子类，child1,child2,通过child1去操作父类里面的arr，打印出child.arr也发生了变化，而且这种方式不能传递参数
+call，apply是在子类中调用Parent.call(this,name),这种可以传递参数，但是缺点就是父类原型上的方法不能获得，只能调用父类构造函数里面的属性和方法
+## 23. <a href='#gen'>ES6中Generator函数</a>
+
+## 24. es6的新特性，es7，es8,es9,es10中新特性
 ### es6新特性
 1. **新增块级作用域**
 let 定义变量，他定义的变量被限定在特定范围内才能使用，离开这个范围不能被访问到；
-const定义常量，即无法被更改值的变量,避免了变量提升。
+const定义常量，即无法被更改值的变量,避免了变量声明提升，定义常量必须赋初始值，否则报错：Uncaught SyntaxError: Missing initializer in const declaration。
+1.let和const定义的不能进行声明提升,如果在定义之前调用会报错，而var不会报错,返回undefined
+```js
+console.log(a)// 会报错
+let a 
+```
+2.const定义一个对象obj，可以通过obj.name = '11'修改值，这里修改的是obj的值，但是不能直接对obj赋值，如果直接修改obj的值，obj={}这种方式对obj重新赋值的话，就会更改其在内存中的存储地址，这样是不允许的，在浏览器的控制台中会进行报错。 
 2. **提供了定义类的语法糖（class）**
 ES6引入了class关键字，使对象的创建，继承更加直观，并且父类方法的调用，实例化，静态方法和构造函数等概念更加形象化。
 [es6的class和extends实现继承](../src/questions/ClassExtend.js)
@@ -631,10 +815,10 @@ WeakMap 中，每个键对自己所引用对象的引用都是弱引用，在没
 11. **ES6新增了迭代器（Iterator）和 生成器（Generator）**
 迭代器的使用可以极大的简化数据操作，于是ES6中添加了这个迭代器的特性，新的数组方法和新的集合类型（例如Set和Map集合）都依赖迭代器实现，这个新特性对于高效的数据处理而言是不可或缺的，for-of循环，展开运算符（...）,甚至异步编程都可以使用迭代器。
 1. 迭代器（Iterator）:
-迭代器是一种特殊对象，它具有一些专门为迭代过程设计的专有接口，所有的迭代器对象都有一个next()方法，每次掉用都返回一个结果对象，结果对象有两个属性，一个是value,表示下一个将要返回的值，另一个是done,它是一个布尔类型的值，当没有更多可返回数据时返回true，迭代器会保存一个内部指针，用来指向当前集合中值的位置，每次调用一次next()方法，都会返回下一个可用的值。
-如果在最后一个值返回后再调用next()方法，那么返回的对象中属性done的值为true,属性value则包含迭代器最终返回的值，这个返回的值不是数据集的一部分，他与函数的返回值类似，是函数调用过程中最后一次给调用者传递信息的方法，如果函数没有相关数据则返回undefined
-2. 生成器（Generator）:
-生成器是一个返回迭代器的函数，通过function关键字后的星号（*）来表示，函数中会用到新的关键字yield,星号可以紧挨着function关键字，也可以在中间添加一个空格，如下：
+**迭代器是一种特殊对象**，它具有一些专门为迭代过程设计的专有接口，**所有的迭代器对象都有一个next()方法，每次掉用都返回一个结果对象，结果对象有两个属性，一个是value,表示下一个将要返回的值，另一个是done,它是一个布尔类型的值，当没有更多可返回数据时返回true**，迭代器会保存一个内部指针，用来指向当前集合中值的位置，每次调用一次next()方法，都会返回下一个可用的值。
+**如果在最后一个值返回后再调用next()方法，那么返回的对象中属性done的值为true**,属性value则包含迭代器最终返回的值，这个返回的值不是数据集的一部分，他与函数的返回值类似，是函数调用过程中最后一次给调用者传递信息的方法，如果函数没有相关数据则返回undefined
+2. <a id='gen'>生成器（Generator）</a>:
+**生成器是一个返回迭代器的函数，通过function关键字后的星号（*）来表示，函数中会用到新的关键字yield**,星号可以紧挨着function关键字，也可以在中间添加一个空格，如下：
 [生成器generator](../src/questions/iteratorAndgenerator.js)
 
 createIterator()前的*表明它是一个生成器，yield关键字是ES6新增的特性，可以通过它来指定调用迭代器的next()方法时的返回值及返回顺序。生成迭代器后，连续3次调用它的next()方法返回3个不同的值，分别是1，2，3.生成器调用过程和吧其他函数一样，最终返回的是创建好的迭代器。
@@ -710,6 +894,7 @@ for (v of someArray) {
 }
 ```
 13. Promise
+ES6引入的解决异步编程的一种解决方法,可以链式调用，解决回调地狱的问题，
 [promise](https://github.com/xiakeweian/promise)
 
 ### es7新特性
@@ -832,7 +1017,7 @@ const obj = {foo: 1, bar: 2, baz: 3};
 const {foo, ...rest} = obj;
 ```
 Spread主要被用来展开对象
-```jss
+```js
 const obj = {foo: 1, bar: 2, baz: 3};
 const obj2 = {...obj,foo:true}
 ```
@@ -952,7 +1137,7 @@ console.log(num1); // 9007199254740992n
 const num2 = 9007199254740991n + 2n;
 console.log(num2); // 9007199254740993n
 ```
-2. 空值合并操作符
+2. 空值合并操作符 (??)
 - 相对于 || 更加严谨
 ```js
 const foo = 0;
@@ -995,13 +1180,76 @@ const obj = {
 obj?.friend?.running?.();
 ```
 
-## 谈谈闭包
-闭包只是函数和声明该函数的词法环境的组合，指有权访问作用域中变量的函数。
-闭包具有封闭性：外部作用域无法访问闭包内部的数据，假如在闭包内部定义了一个变量，在外部是无法访问到的，除非闭包向外界暴露接口。
-闭包具有持久性：一般函数在被调用之后系统会自动注销该函数，但是闭包因为有其内部的函数，会占用一定内存，即使调用之后结构依然存在，正是因为占用一定内存，在项目中如果过多的使用闭包会导致内存溢出，所以在使用闭包的时候要谨慎使用，这也是闭包的缺点。
-闭包优点：减少全局变量的定义和减少参数的传递。
+### ES12 新特性 （2021）
+1. replaceAll
+原来写替换：
+```js
+const str = "2022-07-12";
+const newStr = str.replace(/-/g, "/");
+console.log(newStr); // 2022/07/12
+```
+现在写替换：
+```js
+const str = "2022-07-12";
+const newStr = str.replaceAll('-', '/');
+console.log(newStr); // 2022/07/12
+```
+2. Promise.any
+可以把 Promise.any 理解成 Promise.all 的相反操作。Promise.any 也可以接受一个 Promise 数组，当其中任何一个 Promise 完成（fullfill）时，就返回那个已经有完成值的 Promise。如果所有的 Promise 都拒绝（reject），则返回一个拒绝的 Promise，该 Promise 的返回值是一个 AggregateError 对象。
 
-## 什么是深拷贝，什么是浅拷贝？
+如下面有三个 Promise 请求正常情况下：
+```js
+const p1 = new Promise((resolve, reject) => {
+  setTimeout(() => resolve("A"), Math.floor(Math.random() * 1000));
+});
+const p2 = new Promise((resolve, reject) => {
+  setTimeout(() => resolve("B"), Math.floor(Math.random() * 1000));
+});
+const p3 = new Promise((resolve, reject) => {
+  setTimeout(() => resolve("C"), Math.floor(Math.random() * 1000));
+});
+
+(async function () {
+  const result = await Promise.any([p1, p2, p3]);
+  console.log(result); // 输出结果可能是 "A", "B" 或者 "C"
+})();
+```
+如果存在某个 Promise 发生错误的情况：
+```js
+const p = new Promise((resolve, reject) => reject());
+
+try {
+  (async function () {
+    const result = await Promise.any([p]);
+    console.log(result);
+  })();
+} catch (error) {
+  console.log(error.errors);
+}
+```
+3. 逻辑赋值操作符 ??=、&&=、 ||=
+
+逻辑空赋值（??=），逻辑空赋值运算符 (x ??= y) 仅在 x 是 (null 或 undefined) 时对其赋值
+```js
+let a = { duration: 50, title: null };
+a.duration ??= 10;
+a.title ??= 'title is empty';
+console.log(a.duration,a.title ); // 50 'title is empty'
+```
+逻辑与赋值（&&=），( x &&= y ) 仅仅当 x 为 true 时起作用，对其赋值
+```js
+let a = { duration: 50, title: '' };
+a.duration &&= 10;
+a.title &&= 'title is empty';
+console.log(a.duration,a.title ); // 10 ''
+```
+逻辑或赋值（||= ），逻辑或赋值运算符 (x ||= y) 是在 x 是 false 时对其赋值
+```js
+let a = { duration: 50, title: '' };
+a.duration ||= 10;
+a.title ||= 'title is empty';
+```
+## 25.什么是深拷贝，什么是浅拷贝？
 浅拷贝：指基于一个对象创建一个新的对象，这份新的对象完整精确的拷贝了原对象，如果拷贝的是基本类型，那么拷贝的就是基本类型的值，如果拷贝的是引用类型，那么拷贝的就是内存地址，如果对新的对象进行了修改，那么原对象也将发生改变。
 深拷贝：指从内存中完整的拷贝一份对象出来，并在内存中为其分配一个新的区域来存放，如果修改这个对象的属性，不会影响到原来的对象。
 
@@ -1010,7 +1258,7 @@ obj?.friend?.running?.();
 [深拷贝](../src/questions/deepCopy.js)
 
 
-## 节流和防抖
+## 26. <a id="preface">节流和防抖函数</a>
 节流和防抖都是为了解决频繁触发某个事件的情况造成的性能消耗。
 防抖：就是在触发后的一段时间内只执行最后一次，例如：在进行搜索的时候，当用户停止输入后调用方法，节约请求资源。
 节流：就是在频繁触发某个事件的情况下，单位时间之内只执行一次，类似打游戏的时候长按某个按键，动作是有规律的在间隔时间触发一次。
@@ -1074,7 +1322,7 @@ var debounce = function (fn, interval) {
   
 }
 ```
-## 谈谈回流和重绘
+## 27. 谈谈回流和重绘
 ### 首先了解浏览器渲染过程：
 1. 解析获取到的HTML生成DOM树，解析CSS，生产CSSOM树；
 2. 将DOM树和CSS树结合，生产渲染树（render tree）;
@@ -1232,17 +1480,838 @@ ul.parentNode.replaceChild(clone, ul);
 
 </body>
 ```
-## apply和call的区别
+## 28. apply和call,bind的作用和区别
+call、apply、bind的作用都是改变函数运行时的this指向，bind常用于vue和react框架中，绑定在函数身上，指定函数中this的指向，bind在改变this指向的时候，返回一个改变执行上下文的函数，不会立即执行函数，而是需要调用该函数的时候再调用即可，但是call和apply在改变this指向的同时执行了该函数，
+bind只接收一个参数，就是this指向的执行上文。 
+call、apply接收多个参数，第一个参数都是this指向的执行上文，后面的参数都是作为改变this指向的函数的参数。但是call和apply参数的格式不同，call是一个参数对应一个原函数的参数，但是apply第二个参数是数组，数组中每个元素代表函数接收的参数，数组有几个元素函数就接收几个元素
 apply和call主要区别是传参数的方式不一样，apply接收的是一个数组，call接收的是数组中的每一项的参数列表，什么时候用apply和call,主要看参数给的是什么形式.
 他俩的共同点：劫持传入对象的方法，继承传入对象的属性
-## createHashHistory和createBrowserHistory()区别
-|方式| 路径|是否需要服务端支持|备注|
-|--|--|--|--|
-|createBrowserHistory| http://localhost:8084/list |需要|使用browserHistory时，从 / 到 /user/liuna, 浏览器会向server发送request，所以server要做特殊请求，比如用的 express 的话，你需要 handle 所有的路由 app.get('*', (req, res) => { ... })，使用了 nginx 的话，nginx也要做相应的配置。|
-|createHashHistory |http://localhost:8084/#/list|不需要|使用hashHistory时，因为有 # 的存在，浏览器不会发送request,react-router 自己根据 url 去 render 相应的模块。|
+call和apply常常用于函数的继承，在子类中使用call，apply,这样就继承了构造函数的属性
 
-## browserHistory 和 hashHistory 的优缺点比较
-## 什么是跨域
+
+## 29. 什么是跨域
+跨域全称跨域资源共享（Cross-Origin-Resources-Sharing）CORS
+当一个请求url的协议、域名、端口三者之间任意一个与当前页面url不同即为跨域。
+![](../public/images/%E8%B7%A8%E5%9F%9F.png)
+解决跨域的方法：
+1. 修改响应头
+localhost:3000端口想要访问localhost:3001端口的内容，因为端口不一致，所以属于跨域，
+1. 设置res.header('Access-Control-Allow-Origin','*')之后，任意的域都可以访问
+2. res.header('Access-Control-Allow-Origin', 'http://localhost:3000')，只允许指定域名的请求
+3. 可以安装cors，使用cors默认允许跨域(原理同1，2)
+
+```html
+<body>
+    <h2>hello，everyone</h2>
+    <script>
+        fetch('http://localhost:3001')
+        .then((res) => res.text())
+        .then((data) => {
+            alert(data)
+        })
+    </script>
+</body>
+```
+
+```js
+const express = require('express')
+const app = express()
+const port = 3000
+app.use(express.static(__dirname))
+
+app.listen(3000)
+var app1 = express()
+app1.get('/', function (req, res) {
+    res.header('Access-Control-Allow-Origin', '*')
+    // res.header('Access-Control-Allow-Origin', 'http://localhost:3000')
+    res.send('hello')
+})
+app1.listen(3001)
+```
+```js
+const app = express()
+app.use(express.static(__dirname))
+app.listen(3000)
+
+var app1 = express()
+// 使用cors默认允许跨域
+app1.use(cors())
+app1.get('/', function (req, res) {
+    res.send('hello，cors')
+})
+app1.listen(3001)
+```
+2. jsonp跨域
+jsonp缺点：只能实现get一种请求。
+在react和vue项目中不适用
+```js
+const app = express()
+const port = 3000
+app.use(express.static(__dirname))
+
+app.listen(3000)
+var app1 = express()
+
+app1.get('/', function (req, res) {
+    console.log(res, res.query, req, req.query, 'sss')
+    res.send(req.query.callback + '("你好，我是被请求者")')
+})
+app1.listen(3001)
+```
+```html
+<h2>你好，jsonp跨域</h2>
+<script>
+    var script = document.createElement('script');
+    script.type = 'text/javascript';
+
+    // 传参一个回调函数名给后端，方便后端返回时执行这个在前端定义的回调函数
+    script.src = 'http://localhost:3001?user=admin&callback=handleCallback';
+    document.head.appendChild(script);
+
+    // 回调执行函数
+    function handleCallback (res) {
+        console.log(res, 'ggss')
+        alert(JSON.stringify(res));
+    }
+</script>
+```
+jquery请求方式配置
+```js
+$.ajax({
+        url: 'http://localhost:3001',
+        type: 'get',
+        dataType: 'jsonp',  // 请求方式为jsonp
+        jsonpCallback: "handleCallback",    // 自定义回调函数名
+        data: {}
+    })
+     // 回调执行函数
+     function handleCallback (res) {
+        console.log(res, 'ggss')
+        alert(JSON.stringify(res));
+    }
+```
+3. 前端服务在开发环境的devServer中配置代理proxy,changeOrigin设置为true,在后端服务中即使不配置cors,res.header('Access-Control-Allow-Origin','*'),也能实现跨域
+```js
+  devServer: {
+    proxy: {
+      '/api': {
+        target: 'http://localhost:3000',// 代理的目标服务器
+        changeOrigin: true, // 是否允许跨域
+        // 发送请求时，请求路径重写：将 /api/xxx --> /xxx （去掉/api）
+        pathRewrite: { '^/api': '' },
+
+      },
+    },
+  },
+  ```
+  ```js
+    useEffect(() => {
+    fetch('/api').then((res) => res.text()).then(data => {
+      console.log(data, 'sss')
+      alert(data)
+    })
+  }, [])
+  ```
+  4. nginx代理跨域
+#proxy服务器
+server {
+    listen       81;
+    server_name  www.domain1.com;
+    location / {
+        proxy_pass   http://www.domain2.com:8080;  #反向代理
+        proxy_cookie_domain www.domain2.com www.domain1.com; #修改cookie里域名
+        index  index.html index.htm;
+        # 当用webpack-dev-server等中间件代理接口访问nignx时，此时无浏览器参与，故没有同源限制，下面的跨域配置可不启用
+        add_header Access-Control-Allow-Origin http://www.domain1.com;  #当前端只跨域不带cookie时，可为*
+        add_header Access-Control-Allow-Credentials true;
+    }
+}
+
+## 30. 为什么选择redux-saga做异步处理？
+## 31. 怎么做适配？
+做适配的目的：
+1.在不同分辨率的电脑上，网页可以正常显示
+2.放大或者缩小屏幕，网页可以正常显示
+
+1. media query(媒体查询)
+通过查看不同设备的分辨率，就使用不同的方案，bootstrap用的就是这种适配
+优点：pc移动端都能适配。
+缺点：区间之内不能适配，且pc移动共用一套不好管理
+2. flex+vw/flex+%
+不需要适配的地方用px，需要适配的地方用该方案
+flex布局(弹性布局)，可以按比例分配，vw和%是按设备大小分配
+3. rem
+rem相对于root 的 font-size适配大小，因此通过改变root 的 font-size改变全局适配大小，
+设计稿规定设备width=750px时，字体大小为30px
+先将html:{font-size:30px}
+如果一容器需要width=90px;就设置width=3rem
+
+然后监听设备宽度变换
+```js
+<style>
+  html{font-size:30px;}
+</style>
+
+<html>
+  <div style="width:3rem;height:.3rem;border:4px solid grey"></div>
+</html>
+
+<script>
+  var docEl = document.documentElement;
+  function reSetRem() {
+    let w = docEl.clientWidth;
+    var radio = w  / 750;//这里750设置成设计稿对应的屏幕宽度
+    var rem = radio * 30 //30为初始化root font-size
+    docEl.style.fontSize = rem + 'px'
+  }
+  window.addEventListener("resize",reSetRem);
+  reSetRem();
+</script>
+```
+4. viewport initial-scale
+先根据设计稿设计好固定宽高，然后根据设备宽高算出缩放比例进行缩放
+
+<script>
+    var scale = window.screen.width/375;
+    console.log(scale);
+      let node=document.createElement("meta")
+      node.id="viewport"
+      node.name="viewport"
+      node.content = `width=device-width,initial-scale=${scale},user-scalable=no`
+      document.getElementsByTagName("head")[0].appendChild(node)
+      
+  </script>
+
+## 32. 箭头函数和普通函数的区别
+箭头函数是ES6推出的一种函数表现方式，简化函数定义的语法，自动绑定this,不用再let self = this, _this = this或者.bind(this)绑定this，
+如果函数只有一行代码可以省略大括号，如果行参只有一个，可以省略小括号（如果没有行参，不能省略小括号）
+区别：
+1. 外形不同。箭头函数中使用箭头定义，普通函数中没有
+```js
+// 普通函数
+function func(){
+  // code
+}
+// 箭头函数
+let func=()=>{
+  // code
+}
+```
+2. 箭头函数都是匿名函数
+普通函数可以有匿名函数，也可以有具体名函数，但是箭头函数都是匿名函数。
+```js
+// 具名函数
+function func(){
+  // code
+}
+ 
+// 匿名函数
+let func=function(){
+  // code
+}
+
+// 箭头函数全都是匿名函数
+let func=()=>{
+  // code
+}
+```
+3. 箭头函数不能用于构造函数，不能使用new
+普通函数可以用于构造函数，以此创建对象实例。
+```
+function Person(name,age){
+   this.name=name;
+   this.age=age;
+}
+let admin=new Person("恩诺小弦",18);
+console.log(admin.name);
+console.log(admin.age);
+```
+Person用作构造函数，通过它可以创建实例化对象。
+但是构造函数不能用作构造函数。
+4. 箭头函数中this的指向不同
+在普通函数中，this总是指向调用它的对象，如果用作构造函数，this指向创建的对象实例。
+箭头函数本身不创建this
+也可以说箭头函数本身没有this，但是它在声明时可以捕获其所在上下文的this供自己使用。
+注意：this一旦被捕获，就不再发生变化
+```js
+var webName="捕获成功";
+let func=()=>{
+  console.log(this.webName);
+}
+func();
+```
+5.  箭头函数不绑定arguments，取而代之用rest参数…解决
+```js
+function A(a){
+  console.log(arguments);
+}
+A(1,2,3,4,5,8);  //  [1, 2, 3, 4, 5, 8, callee: ƒ, Symbol(Symbol.iterator): ƒ]
+
+
+let B = (b)=>{
+  console.log(arguments);
+}
+B(2,92,32,32);   // Uncaught ReferenceError: arguments is not defined
+
+
+let C = (...c) => {
+  console.log(c);
+}
+C(3,82,32,11323);  // [3, 82, 32, 11323]
+```
+6. 其他区别：
+（1）.箭头函数不能Generator函数，不能使用yeild关键字。
+（2）.箭头函数不具有prototype原型对象。
+（3）.箭头函数不具有super。
+（4）.箭头函数不具有new.target。
+ (5).箭头函数适用于map,filter,reduce,forEach,
+
+(1).箭头函数的 this 永远指向其上下文的 this ，任何方法都改变不了其指向，如 call() , bind() , apply()
+(2).普通函数的this指向调用它的那个对象
+
+## 33. 说下this指向(普通函数和箭头函数)?
+1. 如果对象打点调用函数，函数是普通函数，没有setTimeout，那么函数中的this指向的对象本身；
+2. 如果对象打点调用函数，函数是普通函数，函数中有setTimeout/setInterval，在setTimeout外的this指向对象本身，在setTimeout内部的函数又分为箭头函数和普通函数，如果setTimeout中是普通函数，那么里面的this指向window；如果setTimeout中是箭头函数，那么函数中的this指向对象本身；
+3. 如果对象打点调用函数，函数是普通函数，但是函数里面用了严格模式'use strict',此时函数中的this指向对象本身；如果严格模式下，使用函数别名，函数中的this指向window；
+4. 如果对象打点调用函数，函数是箭头函数，函数中的this指向定义函数时所在环境上下文中的this
+5. 如果有两个对象obj1,obj2,函数在obj1内定义，然后用 obj1.fn.call(obj2),此时fn函数里面的this指向obj2
+6. 函数在new中使用，那么函数中的this绑定的就是新创建的对象
+this判断分四种：
+我们会根据优先级来判断函数在某个调用位置应用哪条规则，如下：
+1.函数是否在new中调用（new绑定）？如果是的话this绑定的就是这个新创建的对象；
+2.函数是否通过call,apply（显示绑定）或者硬绑定调用？如果是，this绑定的就是指定的对象；
+3.函数是否在上下文对象中调用（隐式绑定）？如果是，this绑定的就是那个上下文对象；
+4.如果都不是的话，则使用默认绑定，如果在严格模式下，就绑定到undefined，非严格模式下绑定到全局对象；
+
+
+## 34. requestAnimationFrame和setInterval区别
+requestAnimationFrame:浏览器提供的一种API，他允许我们在下次浏览器重绘之前执行javascript代码，这样可以避免浏览器的反复重绘，并提供更流畅的动画效果
+setInterval：是另一种javascript计时器，他可以在固定间隔内重复执行一个操作。是在特定的时间间隔去执行任务，时间间隔需要自己设定，为了平滑的显示动画，我们一般设置延迟时间是为1000/60；
+requestAnimationFrame会在浏览器的下一次重绘之前执行回调函数，而setInterval会按照指定的时间间隔重复执行回调函数。
+requestAnimationFrame会自动考虑浏览器的重绘，避免不必要的重绘，提供更流畅的动画效果。而setInterval则不会考虑浏览器的重绘，可能会导致不必要的重绘，影响性能。
+requestAnimationFrame会在浏览器的后台标签页中暂停，避免不必要的计算资源占用。而setInterval则会一直执行，可能会导致浏览器卡顿或者耗尽电池。
+setInterval所有浏览器都支持，但requestAnimationFrame不是。例如 Internet Explorer 9 不支持它
+
+
+ 
+
+## 35. 讲讲event loop |说一说js事件循环机制
+Event Loop即事件循环机制，是指浏览器或Node的一种解决javaScript单线程运行时不会阻塞的一种机制，也就是我们经常使用异步的原理。
+因为JavaScript就是单线程，也就是说，同一个时间只能做一件事。单线程就意味着，所有任务需要排队，前一个任务结束，才会执行后一个任务。如果前一个任务耗时很长，后一个任务就不得不一直等着。
+JS单线程:单线程，指同一时间上只能执行一件任务
+
+所有任务可以分成两种，一种是同步任务（synchronous），另一种是异步任务（asynchronous）。
+- 同步任务:会立即执行的任务
+- 异步任务:不会立即执行的任务(异步任务又分为宏任务与微任务)
+  在异步任务中，任务被分为两种，一种宏任务（MacroTask)也叫Task，一种叫微任务（MicroTask)
+  ### 36. 宏任务和微任务
+  宏任务包括：setTimeout，setInterval，setImmediate(Node.js)
+  微任务：由js引擎发起的任务，微任务包括 process.nextTick(Node.js)，promise.then()，promise.catch()，async...await
+宏任务执行顺序 setTimeout|setInterval>setImmediate,setTimeout和setInterval按照书写顺序
+微任务执行顺序：process.nextTick > promise > async...await
+
+
+  先将所有的同步任务放到执行栈中，然后将异步任务添加到任务队列中，这个又分为宏任务的任务队列和微任务的任务队列，总是先执行同步任务的执行栈，等同步任务执行栈执行完毕，执行微任务的任务队列，最后执行宏任务的任务队列
+  ```js
+  console.log('1');
+//宏任务
+setTimeout(function() {
+    console.log('2');
+    process.nextTick(function() {
+        console.log('3');
+    })
+    new Promise(function(resolve) {
+        console.log('4');
+        resolve();
+    }).then(function() {
+        console.log('5')
+    })
+})
+//微任务
+process.nextTick(function() {
+    console.log('6');
+})
+//微任务
+new Promise(function(resolve) {
+    console.log('7');
+    resolve();
+}).then(function() {
+    console.log('8')
+})
+//宏任务
+setTimeout(function() {
+    console.log('9');
+    process.nextTick(function() {
+        console.log('10');
+    })
+    new Promise(function(resolve) {
+        console.log('11');
+        resolve();
+    }).then(function() {
+        console.log('12')
+    })
+})
+// 输出结果：1 7  6  8  2  4  3  5  9  11  10  12
+  ```
+  ```js
+  //宏任务
+setImmediate(() => {
+    console.log('第一行setImmediate');
+}, 0);
+//宏任务
+var time = setInterval(() => {
+    console.log('第二行 setInterval');
+    clearInterval(time);
+}, 0);
+//宏任务
+setTimeout(() => {
+    console.log('第三行 setTimeout');
+}, 0);
+
+//宏任务
+var time1 = setInterval(() => {
+    console.log('第四行 setInterval');
+    clearInterval(time1);
+}, 0);
+// 宏任务
+setImmediate(() => {
+    console.log('第五行setImmediate');
+}, 0);
+// 微任务
+process.nextTick(() => {
+    console.log('第六行 nextTick');
+});
+// 微任务
+// 在这个promise中，先执行了reject,下面的resolve就不会再执行了
+new Promise((resolve, reject) => {
+    reject('reject');
+    console.log('第七行Promise');
+    resolve('resolve');
+}).then(() => {
+    console.log('第八行 Promise then resolve');
+}.catch() => {
+    console.log('第八行 Promise then reject');
+});
+
+// 输出结果：
+// 第七行Promise【先执行同步】
+// 第六行 nextTick【微任务】
+// 第八行 Promise then reject【微任务】
+// 第二行 setInterval【宏任务】
+// 第三行 setTimeout【宏任务】
+// 第四行 setInterval【宏任务】
+// 第一行setImmediate【宏任务】
+// 第五行setImmediate【宏任务】
+  ```
+  ```js
+  console.log(1);
+setTimeout(function(){
+    console.log('settimeout1');
+    new Promise(function(resolve,reject){
+    console.log('promise');
+   	resolve();
+    }).then(res=>{
+   console.log('promise.then');
+    })
+});
+setTimeout(function(){
+   console.log('settimeout2');
+    })
+console.log(2);
+
+
+1,2,settimeout1,promise,promise.then,settimeout2 
+  ```
+  这个比上一个少了一个resolve(),没有resolve将不会执行.then里面的
+  ```js
+  console.log(1);
+setTimeout(function(){
+    console.log('settimeout1');
+    new Promise(function(resolve,reject){
+    console.log('promise');
+    //resolve();
+    }).then(res=>{
+   console.log('promise.then');
+    })
+});
+setTimeout(function(){
+   console.log('settimeout2');
+    })
+console.log(2);
+// 1，2，settimeout1，promise，settimeout2
+  ```
+  ```js
+  setTimeout(() => {
+  console.log("0");
+}, 0);
+new Promise((resolve, reject) => {
+  console.log("1");
+  //a
+  resolve();
+})
+  .then(() => {
+    //then1
+    console.log("2");
+    new Promise((resolve, reject) => {
+      console.log("3");
+      //b
+      resolve();
+    })
+      .then(() => {
+        //then2
+        console.log("4");
+      })
+      .then(() => {
+        //then3
+        console.log("5");
+      });
+  })
+  .then(() => {
+    //then4
+    console.log("6");
+  });
+
+new Promise((resolve, reject) => {
+  console.log("7");
+  //c
+  resolve();
+}).then(() => {
+  //then5
+  console.log("8");
+});
+// 1>7>2>3>8>4>6>5>0
+  ```
+
+
+
+
+## 37.  跨域相关的几个请求头的含义
+## ts中的泛型和元组数据
+## 38. ajax和axios区别？使用场景有哪些？
+## 介绍下深度优先遍历和广度优先遍历，如何实现？
+## 39. ES5/ES6 的继承除了写法以外还有什么区别？
+1. ES5 的继承实质上是先创建子类的实例对象，然后再将父类的方法添加 到 this 上(Parent.apply(this)).
+2. ES6 的继承机制完全不同，实质上是先创建父类的实例对象 this(所以必 须先调用父类的super()方法)，然后再用子类的构造函数修改 this。
+3. ES5 的继承时通过原型或构造函数机制来实现。
+4. ES6 通过 class 关键字定义类，里面有构造方法，类之间通过 extends 关键字实现继承。
+5. 子类必须在 constructor 方法中调用 super 方法，否则新建实例报错。因 为子类没有自己的 this对象，而是继承了父类的 this 对象，然后对其进行加工。 如果不调用 super 方法，子类得不到 this 对象。
+6. 注意 super 关键字指代父类的实例，即父类的 this 对象。 注意:在子类构造函数中，调用 super 后，才可使用 this关键字，否则报错
+## 40. setTimeout、Promise、async/await 的区别
+他们都可以用来解决异步问题，都是异步任务，
+setTimeouut是异步任务中的宏任务，Promise和Async/Await都属于微任务，微任务在宏任务之前执行
+Promise是同步立即执行函数，一旦写上，直接就执行了，且可以链式调用，用.then(),.catch()语法实现异步调用，async...await使用同步的书写方式来解决异步调用
+async函数返回一个promise对象，执行函数的时候先执行await之后的函数，然后才会执行后面的语句
+
+## 41. async/await和promise的区别
+1. async/await和promise都是处理异步请求的方式
+2. promise是ES6的，async/await是ES7的语法
+3. async/await是基于promise实现的，他和promise都是非阻塞性的
+优缺点：
+1. promsie是返回对象，然后通过.then和.catch方法处理和捕获异常，书写方式是链式调用，容易造成代码堆叠，不好维护，而async await通过try...catch捕获异常
+2. async await 最大的优点就是使得异步代码看起来像同步代码，只要遇到await就会立即返回结果，然后再执行后面的操作，promise.then()的方式返回会出现请求还没返回就执行了后面的操作
+
+## 42. Async/Await 如何通过同步的方式实现异步
+
+## 43. 去重都有哪些方法？
+```js
+// 已知数组
+const list = [1, 2, 4, 4, 2, 3, 5, 2, 3, 5, 2, 7, 8, 2, 1, 6]
+// 方法1 reduce+includes
+function uniq (data) {
+    if (!data || !data.length) return []
+    const newArr = data.reduce((prev, cur) => {
+        !prev.includes(cur) && prev.push(cur)
+        return prev
+    }, [])
+    return newArr || []
+}
+
+// 方法2 new Set
+function uniq2 (data) {
+    if (!data || !data.length) return []
+    return [...new Set(data)]
+}
+
+// 方法3 遍历
+function uniq3 (data) {
+    let obj = {}
+    let newArr = []
+    if (!data || !data.length) return []
+    data.map((item) => {
+        if (!obj[item]) {
+            newArr.push(item)
+            obj[item] = true
+        }
+    })
+    return newArr
+}
+
+// 方法四 filter
+function uniq4 (data) {
+    if (!data || !data.length) return []
+    let newArr = data.filter((item, index, self) => { return self.indexOf(item) === index })
+    return newArr
+}
+```
+
+## 44. 说一说null 和 undefined 的区别，如何让一个属性变为null
+null 是定义为null,而undefined是为定义的值输出的
+null == undefined // true
+null === undefined // false
+undefind 是全局对象的一个属性，当一个变量没有被赋值或者一个函数没有返回值或者某个对象不存在某个属性却去访问或者函数定义了形参但没有传递实参，这时候都是undefined。undefined通过typeof判断类型是'undefined'。undefined == undefined undefined === undefined 。
+null代表对象的值未设置，相当于一个对象没有设置指针地址就是null。null通过typeof判断类型是'object'。null === null null == null null == undefined null !== undefined undefined 表示一个变量初始状态值，而 null 则表示一个变量被人为的设置为空对象，而不是原始状态。在实际使用过程中，不需要对一个变量显式的赋值 undefined，当需要释放一个对象时，直接赋值为 null 即可。 让一个变量为null，直接给该变量赋值为null即可
+
+## 45. js变量声明提升
+## 46. webpack中tree-shaking
+tree-shaking描述移除 JavaScript 上下文中的未引用代码(dead-code)。它依赖于 ES2015 模块语法的静态结构特性
+tree-shaking就是把js文件中无用的模块或者代码删掉。而这通常需要借助一些工具。在webpack中tree-shaking就是在打包时移除掉javascript上下文中无用的代码，，从而优化打包的结果。
+webpack5的 mode=“production” 自动开启 tree-shaking
+webpack允许我们声明一个模块有无副作用。
+如果所有模块都是纯正的，即都没有副作用，我们可以设置:"sideEffects": false  
+我们直接在package.json文件中添加"sideEffects": false
+## 47.webpack中常用插件?他们的作用
+
+1. mini-css-extract-plugin： 抽离css到一个单独的文件中,这个插件应该只在生产环境构建中使用,开发环境使用style-loader进行css热更新,分离样式文件，css提取为独立文件，支持按需加载.
+2. css-minimizer-webpack-plugin：压缩css
+3. terser-webpack-plugin：压缩和混淆js代码，支持es6压缩
+可以并行处理多个子任务，效率会更加的提高，且是webpack4官方推荐，有专人维护，并且连配置的方式都可以直接在optimization中配置。适配度高，且速度快，最为推荐的。
+4. html-webpack-plugin:生成html文件，自动引用css和js文件。
+5. webpack-merge：merge webpackConfig
+6. webpack-bundle-analyzer:将打包文件文件可视化展现，生成代码分析报告，可以直观地分析打包出的文件有哪些，及它们的大小、占比情况、各文件 Gzipped 后的大小、模块包含关系、依赖项等，对应做出优化，从而帮助提升代码质量和网站性能。
+webpack4之前的一些插件：
+extract-text-webpack-plugin:将js文件中引用的样式单例抽离成css。
+uglifyjs-webpack-plugin
+这个是Webpack官方维护，用Uglifyjs进行代码压缩的插件。它使用的是单线程压缩代码，也就是说多个js文件需要被压缩，它需要一个个文件进行压缩。所以说在正式环境打包压缩代码速度非常慢(因为压缩JS代码需要先把代码解析成用Object抽象表示的AST语法树，再去应用各种规则分析和处理AST，导致这个过程耗时非常大)。优点是支持老项目，对于维护比较老的项目，是较优的选择。
+
+optimize-css-assets-webpack-plugin 对css进行压缩,优化css，去掉重复的css
+```js
+const OptimizeCSSAssetsPlugin = require("optimize-css-assets-webpack-plugin");
+module.exports={
+ optimization: {
+    minimizer: [
+      new UglifyJsPlugin({
+        cache: true,
+        parallel: true,
+        sourceMap: true // set to true if you want JS source maps
+      }),
+      new OptimizeCSSAssetsPlugin({})
+    ]
+  },
+}
+```
+7. happypack 通过多进程模型，来加速代码构建。
+## 48. 计算首屏时间
+计算首屏时间，浏览器提供了一个performance的api
+白屏时间
+白屏时间指的是浏览器开始显示内容的时间（出现第一个字符或元素）。因此我们只需要知道是浏览器开始显示内容的时间点，即页面白屏结束时间点即可获取到页面的白屏时间。
+首屏时间：首屏时间是指用户打开网站开始，到浏览器首屏内容渲染完成的时间。对于用户体验来说，首屏时间是用户对一个网站的重要体验因素。通常一个网站，如果首屏时间在5秒以内是比较优秀的，10秒以内是可以接受的，10秒以上就不可容忍了。超过10秒的首屏时间用户会选择刷新页面或立刻离开。
+
+通常计算首屏的方法有：
+1.首屏模块标签标记法
+
+```js
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>首屏</title>
+  <script type="text/javascript">
+    window.pageStartTime = Date.now();
+  </script>
+  <link rel="stylesheet" href="common.css">
+  <link rel="stylesheet" href="page.css">
+</head>
+<body>
+  <!-- 首屏可见模块1 -->
+  <div class="module-1"></div>
+  <!-- 首屏可见模块2 -->
+  <div class="module-2"></div>
+  <script type="text/javascript">
+    window.firstScreen = Date.now();
+  </script>
+  <!-- 首屏不可见模块3 -->
+  <div class="module-3"></div>
+    <!-- 首屏不可见模块4 -->
+  <div class="module-4"></div>
+</body>
+```
+首屏时间=firstScreen - performance.timing.navigationStart
+2.统计首屏内加载最慢的图片的时间
+通常我们首屏内容加载最慢的就是图片资源，因此我们会把首屏内加载最慢的图片的时间当做首屏的时间。
+由于浏览器对每个页面的 TCP 连接数有限制，使得并不是所有图片都能立刻开始下载和显示。因此我们在 DOM树 构建完成后将会去遍历首屏内的所有图片标签，并且监听所有图片标签 onload 事件，最终遍历图片标签的加载时间的最大值，并用这个最大值减去 navigationStart 即可获得近似的首屏时间。
+
+此时首屏时间等于 加载最慢的图片的时间点 - performance.timing.navigationStart;
+
+3.自定义首屏内容计算法
+由于统计首屏内图片完成加载的时间比较复杂。因此我们在业务中通常会通过自定义模块内容，来简化计算首屏时间。如下面的做法：
+
+忽略图片等资源加载情况，只考虑页面主要 DOM
+只考虑首屏的主要模块，而不是严格意义首屏线以上的所有内容
+
+总结
+对于首屏时间和白屏时间，业界并没有一个统一的计算标准。大家不能通过死记硬背来实现首屏时间和白屏时间的统计，而应该根据首屏时间和白屏时间的具体原理，切合自身业务情况来制定统计的方法。统计首屏时间和白屏时间是为了让我们能够更明白我们业务页面的情况，而不是为了统计而去统计。
+浅蓝色：loading:正在加载
+黄色：Scripting:正在执行的脚本
+紫色：rendering：渲染
+绿色：Painting:绘制
+灰色：系统
+白色：空闲
+![](../public/images/performance.png)
+## 纯函数
+纯函数是这样一种函数，即有相同的输入，永远会得到相同的输出，而且没有任何可观察的副作用。
+副作用包括但不限于：
+打印/log，发送一个http请求，可变数据，DOM查询，DOM操作等
+简单一句话， 即只要是与函数外部环境发生交互的都是副作用。
+在React生态中，使用纯函数的例子很常见，如React Redner函数，Redux的reducer，Redux-saga的声明式effects等等。
+React Render：
+在React中，Render返回了一个JSX表达式，只要输入相同，即可以保证我们拿到同样的输出（最终结果渲染到DOM上），而内部的封装细节我们不需要关心，只要知道它是没有副作用的，这在我们开发过程中带来了极大的便利。当我们的程序出问题时（渲染出来与预期不符合），我们只要关心我们的入参是否有问题即可。
+```js
+class Component extends React.Component {
+    render() {
+        return (
+            <div />
+        )
+    }
+}
+```
+Redux的reducer：
+Redux的reducer函数要求我们每一次都要返回一个新的state, 并且在其中不能有任何副作用，只要传入参数相同，返回计算得到的下一个 state 就一定相同。没有特殊情况、没有副作用，没有 API 请求、没有变量修改，单纯执行计算。这样做可以使得我们很容易的保存了每一次state改变的情况，对于时间旅行这种需求更是天然的亲近。特别是在调试的过程中，我们可以借助插件，任意达到每一个state状态，能够轻松的捕捉到错误是在哪一个节点出现。
+```js
+function todoApp(state = initialState, action) {
+  switch (action.type) {
+    case ADD_TYPE:
+      return Object.assign({}, state, {
+        todos: [
+          ...state.todos,
+          {
+            text: action.text,
+            completed: false
+          }
+        ]
+      })
+    default:
+      return state
+  }
+}
+```
+现在是一个纯函数了，正如Redux-saga中的effects一样：
+```js
+import { call } from 'redux-saga/effects'
+
+function* fetchProducts() {
+  const products = yield call(Api.fetch, '/products')
+  // ...
+}
+```
+纯函数优点：
+1. 可缓存性
+2. 可移植性
+纯函数因为不依赖外部环境，所以非常便于移植，你可以在任何地方使用它而不需要附带着引入其他不需要的属性。
+3. 可测试性
+如上面提到的Redux reducer和Redux-saga一样， 它对于测试天然亲近。
+并行代码
+我们可以并行运行任意纯函数。因为纯函数根本不需要访问共享的内存，而且根据其定义，纯函数也不会因副作用而进入竞争态（race condition）
+柯里化:
+把接受多个参数的函数变换成接受一个单一参数（最初函数的第一个参数）的函数，并且返回接受余下的参数而且返回结果的新函数的技术。
+
+科里化和偏函数的主要用途是在组合中，这一小节主要介绍了他们的使用方法和行为。
+组合 compose
+组合的功能非常强大， 也是函数式编程的一个核心概念， 所谓的对过程进行封装很大程度上就是依赖于组合。那么什么是组合？
+```js
+var compose = function(f,g) {
+  return function(x) {
+    return f(g(x));
+  };
+};
+
+var toUpperCase = function(x) { return x.toUpperCase(); };
+var exclaim = function(x) { return x + '!'; };
+var shout = compose(exclaim, toUpperCase);
+
+shout("send in the clowns");
+```
+上面的compose就是一个最简单的组合函数， 当然组合函数并不限制于传入多少个函数参数，它最后只返回一个函数，我个人更喜欢将它认为像管道一样，将数据经过不同函数的逐渐加工，最后得到我们想要的结果
+```js
+const testFunc = compose(func1, func2, func3, func4)  
+testFunc(...args) 
+```
+在js中， 实现compose函数比较容易
+```js
+const compose = (...fns) => {
+    return (...args) => {
+        let res = args
+        for (let i = fns.length - 1; i > -1; i--) {
+            res = fns[i](res)
+        }
+        return res
+    }
+}
+```
+Redux的compose函数
+Redux的compose函数实现要比上面提到的简洁的多
+```js
+export default function compose(...funcs) {
+  if (funcs.length === 0) {
+    return arg => arg
+  }
+
+  if (funcs.length === 1) {
+    return funcs[0]
+  }
+
+  return funcs.reduce((a, b) => (...args) => a(b(...args)))
+}
+```
+这个实现咋看之下有点懵逼， 所以可以拆开来看一下
+composeFn = compose(fn1, fn2, fn3, fn4)
+那么reduce循环运行时， 第一次a就是fn1, b是fn2, 第二次a是(...args) => fn1(fn2(...args)), b是fn3, 第三次运行的时候则是a是(...args) => fn1(fn2(fn3(...args))), b是fn4， 最后返回了fn1(fn2(fn3(fn4(...args))))
+
+## mobx
+mobx:它通过运用透明的函数式响应编程（Transparent Functional Reactive Programming，TFRP）使状态管理变得简单和可扩展。
+
+## React.createClass与React.Component区别：
+
+① 函数this自绑定
+
+React.createClass创建的组件，其每一个成员函数的this都有React自动绑定，函数中的this会被正确设置。
+React.Component创建的组件，其成员函数不会自动绑定this，需要开发者手动绑定，否则this不能获取当前组件实例对象。
+② 组件属性类型propTypes及其默认props属性defaultProps配置不同
+
+React.createClass在创建组件时，有关组件props的属性类型及组件默认的属性会作为组件实例的属性来配置，其中defaultProps是使用getDefaultProps的方法来获取默认组件属性的
+React.Component在创建组件时配置这两个对应信息时，他们是作为组件类的属性，不是组件实例的属性，也就是所谓的类的静态属性来配置的。
+③ 组件初始状态state的配置不同
+
+React.createClass创建的组件，其状态state是通过getInitialState方法来配置组件相关的状态；
+React.Component创建的组件，其状态state是在constructor中像初始化组件属性一样声明的。
+
+## SSR 服务端渲染
+服务端渲染（Server-Side Rendering），是指由服务端完成页面的 HTML 结构拼接的页面处理技术，发送到浏览器，然后为其绑定状态与事件，成为完全可交互页面的过程。
+
+## 受控组件和非受控组件
+受控组件比如：一个Input输入框，如果值是根据setState变化而变化的value的话就是受控组件，如果不是根据setState变化而变化的话就是非受控组件
+
+## 组件通信的方式有哪些
+⽗组件向⼦组件通讯: ⽗组件可以向⼦组件通过传 props 的⽅式，向⼦组件进⾏通讯
+⼦组件向⽗组件通讯: props+回调的⽅式，⽗组件向⼦组件传递props进⾏通讯，此props为作⽤域为⽗组件⾃身的函 数，⼦组件调⽤该函数，将⼦组件想要传递的信息，作为参数，传递到⽗组件的作⽤域中
+兄弟组件通信: 找到这两个兄弟节点共同的⽗节点,结合上⾯两种⽅式由⽗节点转发信息进⾏通信
+跨层级通信: Context 设计⽬的是为了共享那些对于⼀个组件树⽽⾔是“全局”的数据，例如当前认证的⽤户、主题或⾸选语⾔，对于跨越多层的全局数据通过 Context 通信再适合不过
+发布订阅模式: 发布者发布事件，订阅者监听事件并做出反应,我们可以通过引⼊event模块进⾏通信
+全局状态管理⼯具: 借助Redux或者Mobx等全局状态管理⼯具进⾏通信,这种⼯具会维护⼀个全局状态中⼼Store,并根据不同的事件产⽣新的状态
+
+## redux-thunk和redux-saga有什么区别
+## 使用connect之后，无法使用forwardRef获取ref，要在connect添加第四个参数
+```js
+@connect(({ layout: { present: { pageOption, data } } }) => ({
+    pageOption,
+    allData: data,
+}), {}, null, { withRef: true })
+```
+## 使用redux，在reducer中，修改某一个变量为什么不能直接用state.a = payload.a这种方式修改，而要用展开运算符（...)或者Object.assign重新拷贝一个新的state再进行操作？
+在redux-devtools中,我们可以查看到redux下所有通过reducer更新state的记录,每一个记录都对应着内存中某一个具体的state,让用户可以追溯到每一次历史操作产生与执行时,当时的具体状态,这也是使用redux管理状态的重要优势之一.
+
+若不创建副本,redux的所有操作都将指向内存中的同一个state,我们将无从获取每一次操作前后,state的具体状态与改变,若没有副本,redux-devtools列表里所有的state都将被最后一次操作的结果所取代.我们将无法追溯state变更的历史记录.
+创建副本也是为了保证向下传入的this.props与nextProps能得到正确的值,以便我们能够利用前后props的改变情况以决定如何render组件
+
 
 
 

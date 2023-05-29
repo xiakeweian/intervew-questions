@@ -190,3 +190,33 @@ console.log('nihao')
 
 // }
 
+// 泛型函数
+function test<T>(arg:T):T {
+    return arg
+
+}
+//泛型接口
+interface GenericIdentityFn<T> {
+    (arg: T): T;
+}
+
+function identity<T>(arg: T): T {
+    return arg;
+}
+
+let myIdentity: GenericIdentityFn<number> = identity;
+
+//泛型类
+
+class GenericNumber<T> {
+    zeroValue: T;
+    add: (x: T, y: T) => T;
+}
+
+let myGenericNumber = new GenericNumber<number>();
+
+// const [selected, setSelected] = useState<DataProps[]>([]);
+//   const [value, setValue] = useState<Array<number | string>>(props.value);
+//   const [dataSource, setDataSource] = useState<DataProps[]>([]); // 数据源
+//   const { width, selectedWidth, titles, onChange } = props;
+//   const [expandData, setExpandData] = useState<DataProps[][]>();

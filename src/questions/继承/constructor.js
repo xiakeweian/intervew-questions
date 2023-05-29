@@ -20,6 +20,7 @@ function Parent(name) {
 }
 function Child(name, like) {
   Parent.call(this, name) // 核⼼ 拷⻉了⽗类的实例属性和⽅法
+  // Parent.apply(this, arguments)
   this.like = like
 }
 let boy1 = new Child('⼩红', 'apple')

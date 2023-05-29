@@ -1,39 +1,89 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Document</title>
-  </head>
-  <style>
-    .left {
-      width: 100px;
-      height: 200px;
-      background: red;
-      float: left;
-    }
 
-    .right {
-      height: 300px;
-      background: blue;
-      overflow: hidden;
-    }
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Document</title>
+</head>
+<style>
+  .left {
+    width: 100px;
+    height: 200px;
+    background: red;
+    float: left;
+  }
 
-    .box div {
-      width: 200px;
-      height: 200px;
-    }
-  </style>
+  .right {
+    height: 300px;
+    background: blue;
+    overflow: hidden;
+  }
 
-  <body>
-    <div class="left"></div>
-    <div class="right"></div>
+  .box div {
+    width: 200px;
+    height: 200px;
+    background: orange;
+    border: 1px solid #eee;
+  }
 
-    <h1>margin重叠</h1>
-    <div class="box">
-      <div class="box1"></div>
-      <div class="box2"></div>
-    </div>
-  </body>
+  .container {
+    border: 1px solid red;
+    overflow: hiidden;
+  }
+
+  .cube {
+    width: 100px;
+    height: 100px;
+    background: blue;
+    margin: 100px;
+
+  }
+
+  .box3,
+  .box4 {
+    width: 100px;
+    height: 100px;
+    margin: 100px;
+    background: blue;
+
+  }
+
+  .box4 {
+    background: red;
+  }
+
+  .box3-wrap,
+  .box4-wrap {
+    overflow: hidden;
+  }
+</style>
+
+<body>
+  <div class="left"></div>
+  <div class="right"></div>
+
+  <h1>margin重叠</h1>
+  <div class="box">
+    <div class="box1"></div>
+    <div class="box2"></div>
+  </div>
+  <div class="container">
+    <div class="cube"></div>
+  </div>
+  <br />
+  <!-- 防止margin重叠 -->
+  <div class="box3-wrap">
+    <div class="box3"></div>
+  </div>
+  <div class="box4-wrap">
+    <div class="box4"></div>
+  </div>
+
+
+
+
+</body>
+
 </html>
