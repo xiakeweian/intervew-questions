@@ -44,3 +44,14 @@ export function isEmojiCharacter (substring) {
     }
     return false
 }
+/**
+ * 判断是否是正确的手机号
+ * 手机号是数字，是整数，第一个是1，第二个是3-9，是11位
+ * @param {*} mobile 数字
+ * @returns 返回boolean
+ */
+export function isMobile (mobile) {
+
+    if (!mobile || mobile.length !== 11) return false
+    return /^1[3-9]\d{9}$/.test(mobile)
+}

@@ -9,7 +9,7 @@ import homeReducer, {
 } from '@/reducers/homeReducer'
 import { Button, Input } from 'antd'
 import List from './List'
-import TestEmo from '../TestEmo'
+import Test from '../Test'
 import './index.less'
 
 let i = 0
@@ -72,7 +72,7 @@ const ViewApp = () => {
         <div className='cube'></div>
       </div>
       <List />
-      <TestEmo />
+      <Test />
     </div>
   )
 }
