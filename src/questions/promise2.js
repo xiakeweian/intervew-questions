@@ -95,7 +95,7 @@ Promise.all = function (promises) {
             }
         }
 
-        for (i = 0 i < len i++) {
+        for (i = 0; i < len; i++) {
             promises[i].then(resolver(i), rejecter)
         }
     })

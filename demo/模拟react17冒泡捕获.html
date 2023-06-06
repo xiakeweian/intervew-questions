@@ -1,89 +1,88 @@
 <!DOCTYPE html>
 <html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>模拟react16冒泡捕获</title>
-</head>
+  </head>
 
-<body>
+  <body>
     <div id="root">
-        <div id="parent">
-            <div id="child">事件监听</div>
-        </div>
+      <div id="parent">
+        <div id="child">事件监听</div>
+      </div>
     </div>
 
     <script>
+      const root = document.getElementById('root')
+      const parent = document.getElementById('parent')
+      const child = document.getElementById('child')
 
-        const root = document.getElementById('root')
-        const parent = document.getElementById('parent')
-        const child = document.getElementById('child')
-
-        function dispatchEvent (event, useCapture) {
-            let paths = []
-            let current = event.target
-            while (current) {
-                paths.push(current)
-                current = current.parentNode
-
-            }
-            if (useCapture) {
-                for (let i = paths.length - 1; i >= 0; i--) {
-                    let handler = paths[i].onClickCapture
-                    handler && handler()
-                }
-            } else {
-                for (let i = 0; i < paths.length; i++) {
-                    let handler = paths[i].onClick
-                    handler && handler()
-                }
-            }
-
-
+      function dispatchEvent(event, useCapture) {
+        let paths = []
+        let current = event.target
+        while (current) {
+          paths.push(current)
+          current = current.parentNode
         }
-        // 注册react事件的事件委托
-        root.addEventListener('click', (event) => dispatchEvent(event, true), true) // 注册捕获监听
-        root.addEventListener('click', (event) => dispatchEvent(event, false)) // 注册冒泡监听
-        parent.addEventListener('click', () => {
-            console.log('原生事件：父元素 DOM 冒泡阶段！')
-        })
-        parent.addEventListener(
-            'click',
-            () => {
-                console.log('原生事件：父元素 DOM 捕获阶段！')
-            },
-            true
-        )
-        child.addEventListener('click', () => {
-            console.log('原生事件：子元素 DOM 冒泡阶段！')
-        })
-        child.addEventListener(
-            'click',
-            () => {
-                console.log('原生事件：子元素 DOM 捕获阶段！')
-            },
-            true
-        )
-        document.addEventListener(
-            'click',
-            (e) => {
-                console.log('原生事件：document DOM 捕获阶段！')
-            },
-            true
-        )
-        document.addEventListener('click', (e) => {
-            console.log('原生事件：document DOM 冒泡阶段！')
-        })
-        parent.onClick = function () { console.log('React 事件：父元素冒泡阶段！') }
-        child.onClick = function () { console.log('React 事件：子元素冒泡阶段！') }
-        parent.onClickCapture = function () { console.log('React 事件：父元素捕获阶段！') }
-        child.onClickCapture = function () { console.log('React 事件：子元素捕获阶段！') }
-
-
+        if (useCapture) {
+          for (let i = paths.length - 1; i >= 0; i--) {
+            let handler = paths[i].onClickCapture
+            handler && handler()
+          }
+        } else {
+          for (let i = 0; i < paths.length; i++) {
+            let handler = paths[i].onClick
+            handler && handler()
+          }
+        }
+      }
+      // 注册react事件的事件委托
+      root.addEventListener('click', (event) => dispatchEvent(event, true), true) // 注册捕获监听
+      root.addEventListener('click', (event) => dispatchEvent(event, false)) // 注册冒泡监听
+      parent.addEventListener('click', () => {
+        console.log('原生事件：父元素 DOM 冒泡阶段！')
+      })
+      parent.addEventListener(
+        'click',
+        () => {
+          console.log('原生事件：父元素 DOM 捕获阶段！')
+        },
+        true
+      )
+      child.addEventListener('click', () => {
+        console.log('原生事件：子元素 DOM 冒泡阶段！')
+      })
+      child.addEventListener(
+        'click',
+        () => {
+          console.log('原生事件：子元素 DOM 捕获阶段！')
+        },
+        true
+      )
+      document.addEventListener(
+        'click',
+        (e) => {
+          console.log('原生事件：document DOM 捕获阶段！')
+        },
+        true
+      )
+      document.addEventListener('click', (e) => {
+        console.log('原生事件：document DOM 冒泡阶段！')
+      })
+      parent.onClick = function () {
+        console.log('React 事件：父元素冒泡阶段！')
+      }
+      child.onClick = function () {
+        console.log('React 事件：子元素冒泡阶段！')
+      }
+      parent.onClickCapture = function () {
+        console.log('React 事件：父元素捕获阶段！')
+      }
+      child.onClickCapture = function () {
+        console.log('React 事件：子元素捕获阶段！')
+      }
     </script>
-
-</body>
-
+  </body>
 </html>

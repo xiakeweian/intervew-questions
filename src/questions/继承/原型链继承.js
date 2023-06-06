@@ -24,12 +24,10 @@
 // Child.prototype.say()
 // console.log(Child.prototype.constructor, 'ss')
 
-
 // 2. 借用构造函数
 // 借用父类构造函数来增强子类实例，
 // 优点:实例之间相互独立，不共享父类的引用属性,可实现多继承
 // 缺点：子类实例继承不了父类原型上的属性，父类的方法不能复用，由于方法在父类构造函数中定义，所以不能复用；
-
 
 // function Parent (name) {
 //     this.name = name
@@ -99,18 +97,16 @@
 
 // 方法5:寄生组合继承（完美继承）
 // 优点：1.可以传参；2.可以调用父类原型上的方法；3. 父类原型上的方法可以复用；4. 父子之间隔离，互不影响，不会影响父类实例化
-function Parent (name) {
-    this.name = name
-    this.arr = []
-
+function Parent(name) {
+  this.name = name
+  this.arr = []
 }
 Parent.prototype.say = function () {
-    console.log('hello')
+  console.log('hello')
 }
-function Child (name, like) {
-
-    Parent.call(this, name)
-    this.like = like
+function Child(name, like) {
+  Parent.call(this, name)
+  this.like = like
 }
 Child.prototype = Object.create(Parent.prototype)
 Child.prototype.constructor = Child

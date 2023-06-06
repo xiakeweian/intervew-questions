@@ -11,13 +11,6 @@ var app1 = express()
 app1.use(cors())
 // app1.use(cors({origin:['http://localhost:3000']}))
 app1.get('/', function (req, res) {
-    res.send('hello，cors')
+  res.send('hello，cors')
 })
 app1.listen(3001)
-
-
-
-
-
-
-

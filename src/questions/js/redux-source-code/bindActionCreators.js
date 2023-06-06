@@ -1,7 +1,7 @@
 /**
- * 
+ *
  * @param {*} actionCreators 接收actions对象，
- * @param {*} dispatch 
+ * @param {*} dispatch
  * @returns object
  */
 export default function bindActionCreators(actionCreators, dispatch) {

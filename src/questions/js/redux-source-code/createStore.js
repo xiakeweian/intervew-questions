@@ -1,14 +1,14 @@
 // 创建一个redux store, 初始化状态树，传入三个参数，这三个参数中，第一个reducer是必传项，preloadState和enhancer不是必传项，首先要对这三个参数进行类型判断，如果typeof reducer !== 'function'
 // 抛出错误，如果preloadState有传值但是类型是function或者enhancer不是function,这样也会抛出错误
-export default function createStore (reducer, preloadedState, enhancer) {
+export default function createStore(reducer, preloadedState, enhancer) {
   if (
     (typeof preloadedState === 'function' && typeof enhancer === 'function') ||
     (typeof enhancer === 'function' && typeof arguments[3] === 'function')
   ) {
     throw new Error(
       'It looks like you are passing several store enhancers to ' +
-      'createStore(). This is not supported. Instead, compose them ' +
-      'together to a single function.'
+        'createStore(). This is not supported. Instead, compose them ' +
+        'together to a single function.'
     )
   }
   // 这里判断主要是防止参数传递顺序错误，纠正传递错误
@@ -42,7 +42,7 @@ export default function createStore (reducer, preloadedState, enhancer) {
    * This prevents any bugs around consumers calling
    * subscribe/unsubscribe in the middle of a dispatch.
    */
-  function ensureCanMutateNextListeners () {
+  function ensureCanMutateNextListeners() {
     if (nextListeners === currentListeners) {
       nextListeners = currentListeners.slice()
     }
@@ -52,12 +52,12 @@ export default function createStore (reducer, preloadedState, enhancer) {
    * createStore向外暴露getState,可以通过store.getState()获取状态树数据，
    * @returns {any} 返回当前应用状态树
    */
-  function getState () {
+  function getState() {
     if (isDispatching) {
       throw new Error(
         'You may not call store.getState() while the reducer is executing. ' +
-        'The reducer has already received the state as an argument. ' +
-        'Pass it down from the top reducer instead of reading it from the store.'
+          'The reducer has already received the state as an argument. ' +
+          'Pass it down from the top reducer instead of reading it from the store.'
       )
     }
     return currentState
@@ -72,7 +72,7 @@ export default function createStore (reducer, preloadedState, enhancer) {
    * @param {Function} listener 回调函数.
    * @returns {Function} 返回一个删除监听器的函数
    */
-  function subscribe (listener) {
+  function subscribe(listener) {
     if (typeof listener !== 'function') {
       throw new Error('Expected the listener to be a function.')
     }
@@ -80,9 +80,9 @@ export default function createStore (reducer, preloadedState, enhancer) {
     if (isDispatching) {
       throw new Error(
         'You may not call store.subscribe() while the reducer is executing. ' +
-        'If you would like to be notified after the store has been updated, subscribe from a ' +
-        'component and invoke store.getState() in the callback to access the latest state. ' +
-        'See https://redux.js.org/api-reference/store#subscribelistener for more details.'
+          'If you would like to be notified after the store has been updated, subscribe from a ' +
+          'component and invoke store.getState() in the callback to access the latest state. ' +
+          'See https://redux.js.org/api-reference/store#subscribelistener for more details.'
       )
     }
 
@@ -91,7 +91,7 @@ export default function createStore (reducer, preloadedState, enhancer) {
     ensureCanMutateNextListeners()
     nextListeners.push(listener)
 
-    return function unsubscribe () {
+    return function unsubscribe() {
       if (!isSubscribed) {
         return
       }
@@ -99,7 +99,7 @@ export default function createStore (reducer, preloadedState, enhancer) {
       if (isDispatching) {
         throw new Error(
           'You may not unsubscribe from a store listener while the reducer is executing. ' +
-          'See https://redux.js.org/api-reference/store#subscribelistener for more details.'
+            'See https://redux.js.org/api-reference/store#subscribelistener for more details.'
         )
       }
 
@@ -123,18 +123,16 @@ export default function createStore (reducer, preloadedState, enhancer) {
    * Note that, if you use a custom middleware, it may wrap `dispatch()` to
    * return something else (for example, a Promise you can await).
    */
-  function dispatch (action) {
+  function dispatch(action) {
     if (!isPlainObject(action)) {
       throw new Error(
-        'Actions must be plain objects. ' +
-        'Use custom middleware for async actions.'
+        'Actions must be plain objects. ' + 'Use custom middleware for async actions.'
       )
     }
 
     if (typeof action.type === 'undefined') {
       throw new Error(
-        'Actions may not have an undefined "type" property. ' +
-        'Have you misspelled a constant?'
+        'Actions may not have an undefined "type" property. ' + 'Have you misspelled a constant?'
       )
     }
 
@@ -164,7 +162,7 @@ export default function createStore (reducer, preloadedState, enhancer) {
    * @param {Function} nextReducer The reducer for the store to use instead.
    * @returns {void}
    */
-  function replaceReducer (nextReducer) {
+  function replaceReducer(nextReducer) {
     if (typeof nextReducer !== 'function') {
       throw new Error('Expected the nextReducer to be a function.')
     }
@@ -180,7 +178,7 @@ export default function createStore (reducer, preloadedState, enhancer) {
    * For more information, see the observable proposal:
    * https://github.com/tc39/proposal-observable
    */
-  function observable () {
+  function observable() {
     const outerSubscribe = subscribe
     return {
       /**
@@ -191,12 +189,12 @@ export default function createStore (reducer, preloadedState, enhancer) {
        * be used to unsubscribe the observable from the store, and prevent further
        * emission of values from the observable.
        */
-      subscribe (observer) {
+      subscribe(observer) {
         if (typeof observer !== 'object' || observer === null) {
           throw new TypeError('Expected the observer to be an object.')
         }
 
-        function observeState () {
+        function observeState() {
           if (observer.next) {
             observer.next(getState())
           }
@@ -207,9 +205,9 @@ export default function createStore (reducer, preloadedState, enhancer) {
         return { unsubscribe }
       },
 
-      [$$observable] () {
+      [$$observable]() {
         return this
-      }
+      },
     }
   }
 
@@ -221,7 +219,6 @@ export default function createStore (reducer, preloadedState, enhancer) {
     subscribe,
     getState,
     replaceReducer,
-    [$$observable]: observable
+    [$$observable]: observable,
   }
 }
-

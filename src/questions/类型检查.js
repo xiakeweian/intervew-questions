@@ -8,7 +8,7 @@ let obj = {}
 let arr = []
 let set = new Set()
 let map = new Map()
-function fn () { }
+function fn() {}
 console.log(typeof num, 'number')
 console.log(typeof str, 'string')
 console.log(typeof boolean, 'boolean')

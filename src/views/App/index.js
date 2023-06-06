@@ -1,9 +1,15 @@
 import React, { useState, useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { ConnectedRouter } from 'react-router-redux'
-import homeReducer, { initState, incremented, decremented, incrementByAmount } from '@/reducers/homeReducer'
+import homeReducer, {
+  initState,
+  incremented,
+  decremented,
+  incrementByAmount,
+} from '@/reducers/homeReducer'
 import { Button, Input } from 'antd'
 import List from './List'
+import TestEmo from '../TestEmo'
 import './index.less'
 
 let i = 0
@@ -42,7 +48,6 @@ const ViewApp = () => {
     } else {
       dispatch(incrementByAmount(num))
     }
-
   }
 
   return (
@@ -51,17 +56,23 @@ const ViewApp = () => {
       {list.map((val) => val)}
 
       <div>{value}</div>
-      <Button onClick={() => handleClick(2)} plus='2'>加2</Button>
-      <Button onClick={() => handleClick(1)} plus='1'>加1</Button>
-      <Button onClick={() => handleClick(-1)} plus='-1'>减1</Button>
+      <Button onClick={() => handleClick(2)} plus='2'>
+        加2
+      </Button>
+      <Button onClick={() => handleClick(1)} plus='1'>
+        加1
+      </Button>
+      <Button onClick={() => handleClick(-1)} plus='-1'>
+        减1
+      </Button>
 
       <div className='img'></div>
 
-      <div className="container">
-        <div className="cube"></div>
+      <div className='container'>
+        <div className='cube'></div>
       </div>
       <List />
-
+      <TestEmo />
     </div>
   )
 }

@@ -9,7 +9,7 @@ class Test extends Component {
       count: 0,
       val: 0,
       number: 0,
-      counter: 0
+      counter: 0,
     }
     this.resetState = this.resetState.bind(this)
   }
@@ -81,30 +81,27 @@ class Test extends Component {
   //   }, 0)
   // }
 
-
-  componentDidMount () {
+  componentDidMount() {
     this.setState({
       count: this.state.count + 1,
     })
     this.setState({ val: this.state.val + 1 })
-    console.log(this.state.val, 'react18-1111')    // 第 1 次 log 0
+    console.log(this.state.val, 'react18-1111') // 第 1 次 log 0
 
     this.setState({ val: this.state.val + 1 })
-    console.log(this.state.val, 'react18-2222')    // 第 2 次 log 0
+    console.log(this.state.val, 'react18-2222') // 第 2 次 log 0
 
     setTimeout(() => {
       this.setState({ val: this.state.val + 1 })
-      console.log(this.state.val, 'react18-3333')  // 第 3 次 log 1
+      console.log(this.state.val, 'react18-3333') // 第 3 次 log 1
 
       this.setState({ val: this.state.val + 1 })
-      console.log(this.state.val, 'react18-4444')  // 第 4 次 log 1
+      console.log(this.state.val, 'react18-4444') // 第 4 次 log 1
     }, 0)
     // document.body.addEventListener('click', this.resetState, false)
-    document
-      .getElementById("btn")
-      .addEventListener("click", this.changeValue, false)
+    document.getElementById('btn').addEventListener('click', this.changeValue, false)
   }
-  resetState () {
+  resetState() {
     console.log(this, this.state, 'ggg')
     this.setState({ number: this.state.number + 1 })
     console.log(this.state.number) // 0
@@ -118,11 +115,14 @@ class Test extends Component {
 
   // }
   setCounter = (v) => {
-    this.setState({
-      counter: this.state.counter + v
-    }, () => {
-      console.log('同步的counter', this.state.counter)
-    })
+    this.setState(
+      {
+        counter: this.state.counter + v,
+      },
+      () => {
+        console.log('同步的counter', this.state.counter)
+      }
+    )
     console.log('异步的counter', this.state.counter)
   }
   changeValue = () => {
@@ -130,16 +130,17 @@ class Test extends Component {
     this.setCounter(1)
   }
 
-
-  render () {
-    return <div>
-      count:{this.state.count}
-      <div className="set-state-page" >
-        {/* <h2 onClick={this.changeValue}>setState page</h2> */}
-        <h2 id='btn'>setState page</h2>
-        {this.state.counter}
+  render() {
+    return (
+      <div>
+        count:{this.state.count}
+        <div className='set-state-page'>
+          {/* <h2 onClick={this.changeValue}>setState page</h2> */}
+          <h2 id='btn'>setState page</h2>
+          {this.state.counter}
+        </div>
       </div>
-    </div>
+    )
   }
 }
 
@@ -172,8 +173,6 @@ const Home = (props) => {
       </div>
       <hr />
       <Test />
-
-
     </section>
   )
 }

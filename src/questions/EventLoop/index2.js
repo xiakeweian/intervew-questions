@@ -2,44 +2,44 @@ console.log('1')
 
 // setTimeout1
 setTimeout(() => {
-    console.log('2')
-    new Promise(resolve => {
-        console.log('3')
-        resolve()
-    }).then(() => {
-        console.log('4')
-    })
+  console.log('2')
+  new Promise((resolve) => {
+    console.log('3')
+    resolve()
+  }).then(() => {
+    console.log('4')
+  })
 }, 0)
 
-new Promise(resolve => {
-    console.log('5')
-    resolve()
+new Promise((resolve) => {
+  console.log('5')
+  resolve()
 }).then(() => {
-    console.log('6')
-    setTimeout(() => {
-        console.log(14)
-    }, 0)
+  console.log('6')
+  setTimeout(() => {
+    console.log(14)
+  }, 0)
 })
 // setTimeout2
 setTimeout(() => {
-    console.log('7')
+  console.log('7')
 }, 0)
 // setTimeout3
 setTimeout(() => {
-    console.log('8')
-    new Promise(resolve => {
-        console.log('9')
-        resolve()
-    }).then(() => {
-        console.log('10')
-    })
+  console.log('8')
+  new Promise((resolve) => {
+    console.log('9')
+    resolve()
+  }).then(() => {
+    console.log('10')
+  })
 }, 0)
 
-new Promise(resolve => {
-    console.log('11')
-    resolve()
+new Promise((resolve) => {
+  console.log('11')
+  resolve()
 }).then(() => {
-    console.log('12')
+  console.log('12')
 })
 console.log('13')
 

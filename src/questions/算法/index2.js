@@ -10,8 +10,7 @@
 // const last = arr.pop()
 // console.log(last.length)
 
-
-// HJ1 计算某字符出现次数,不区分大小写 
+// HJ1 计算某字符出现次数,不区分大小写
 // 将字符串str全部转成小些，然后将需要比对的字符char也转成小些，然后获取字符串中该字符的个数
 // const str = 'ABCabc'
 // const char = 'A'
@@ -24,8 +23,6 @@
 //     }
 // }
 // console.log(sum, 'kk')
-
-
 
 // let line = 'abc'
 // function fn (line) {
@@ -45,7 +42,6 @@
 // }
 
 // console.log(fn('skdjfjlsjusshhe3232455'))
-
 
 // 十六进制转十进制 0xAA -> 170
 // function fn2 (line) {
@@ -100,7 +96,6 @@
 // const a2 = fn('2BAD16')
 // console.log(a2, 'ssssss')
 
-
 // function check(line) {
 //     const num = parseInt(line);
 //     const result = [];
@@ -136,7 +131,6 @@
 
 // }
 
-
 // const rl = require("readline").createInterface({ input: process.stdin });
 // var iter = rl[Symbol.asyncIterator]();
 // const readline = async () => (await iter.next()).value;
@@ -156,7 +150,6 @@
 //         console.log(arr[i])
 //     }
 // }()
-
 
 // const line = 9876673
 // const data = line.toString().split('').reverse()
@@ -202,7 +195,6 @@
 // }
 // console.log(`${x},${y}`)
 
-
 // // 字母排序
 // // 字母排序直接用sort
 // let arr = [
@@ -211,7 +203,7 @@
 //     'two', 'too',
 //     'up', 'boat',
 // ]
-// arr.sort() 
+// arr.sort()
 // 结果：[
 //   'boat', 'boot',
 //   'cap',  'card',
@@ -229,7 +221,7 @@
 
 // 3.不能有长度大于2的包含公共元素的子串重复 （注：其他符号不含空格或换行）
 
-// 数据范围：输入的字符串长度满足 1≤n≤100 
+// 数据范围：输入的字符串长度满足 1≤n≤100
 // function passwordCheck (line) {
 //     if (line.length <= 8 || line.length > 8 && checkMut(line)) {
 //         console.log('NG')
@@ -265,7 +257,6 @@
 //         }
 
 //     }
-
 
 // }
 // function checkMut (line) {
@@ -336,15 +327,11 @@
 //                         }
 //                     }
 
-
-
-
 //                 }
 //             }
 //         }
 //     })
 //     console.log(arr.join(''))
-
 
 // }
 
@@ -359,8 +346,6 @@
 //     console.log(current)
 
 // }
-
-
 
 // switchDrink(0)
 
@@ -392,7 +377,6 @@
 // }
 // deleteChar('aabcddd')
 
-
 // 合唱队
 // 字符串排序
 // const line = 'A Famous Saying: Much Ado About Nothing (2012/8).'
@@ -421,7 +405,6 @@
 //     }
 // }
 // console.log(sorted.join(""));
-
 
 // const line = '3 abc bca cab abc 1'
 // // const line = '6 cab ad abcd cba abc bca abc 1'
@@ -490,9 +473,6 @@
 
 // console.log(sushu)
 
-
-
-
 // function switchPassword (line, isPos) {
 
 //     let lower = /[a-z]/
@@ -530,7 +510,6 @@
 //                 }
 //             }
 
-
 //         } else if (number.test(line[i])) {
 //             if (isPos) {
 //                 if (line[i] == 9) {
@@ -549,7 +528,6 @@
 
 //         }
 
-
 //     }
 
 //     console.log(newData.join(''))
@@ -557,7 +535,6 @@
 // }
 // const line = 'BCD22456269EFwewHzZ'
 // switchPassword(line, false)
-
 
 // const line = 'I am a student'
 // const line = '$bo*y gi!r#l'
@@ -666,8 +643,6 @@
 // }
 // console.log(res.length)
 
-
-
 // HJ33 整数与IP地址间的转换
 
 // let line = '10.0.3.193'
@@ -678,8 +653,6 @@
 //     sum += parseInt(data[i]) * Math.pow(2, data.length - i - 1)
 // }
 // console.log(sum)
-
-
 
 // HJ34 图片整理
 // let line = 'Ihave1nose2hands10fingers'
@@ -723,8 +696,6 @@
 // }
 // console.log(inds.join(''))
 
-
-
 // HJ80 整型数组合并
 // const line = '3'
 // const str1 = '1 2 5'
@@ -735,7 +706,6 @@
 // let newData = [...new Set([...list1.concat(list2)])]
 // newData.sort((a, b) => a - b)
 // console.log(newData.join(''))
-
 
 // const line = '5 2'
 // const line2 = '1 3 5 7 2'
@@ -802,7 +772,6 @@
 //     }
 // }
 
-
 // leetcode 12整数转罗马字
 
 // 1,4,5,9,10,50,40,90,100,400,500,900,1000
@@ -851,8 +820,6 @@
 
 // }
 
-
-
 // HJ60 查找组成一个偶数最接近的两个素数
 // let num = Number(22)
 // let res = []
@@ -889,7 +856,6 @@
 //     return true
 // }
 
-
 // HJ59 找出字符串中第一个只出现一次的字符
 // const line = 'asdfsddfdsfdsgewwrwerwegbqapb'
 // let obj = {}
@@ -913,7 +879,6 @@
 // }
 // console.log(s)
 
-
 // HJ61 放苹果 主要看m分成n个数相加，有多少种情况
 // 如果有1个苹果或1个盘子，就只有一种情况
 // 如果0个盘子，则为0
@@ -934,7 +899,6 @@
 //     }
 // }
 // console.log(fn(m, n))
-
 
 // HJ62 查找输入整数二进制中1的个数,十进制转二进制
 // const line = 5
@@ -984,7 +948,6 @@
 // const flag = arr.every((item) => str_list.includes(item))
 // console.log(flag, 'kk')
 
-
 // HJ84 统计大写字母个数
 
 // let line = 'A 1a0M1N1150175017(&^%&$vabovbaoadd 123#$%#%#O'
@@ -996,7 +959,6 @@
 //     }
 // }
 // console.log(sum)
-
 
 // HJ100 等差数列
 // 2 5 8 11 14
@@ -1013,7 +975,7 @@
 // console.log(sum)
 
 // HJ99 自守数
-// 范围 1≤n≤10000 
+// 范围 1≤n≤10000
 // const line = '10000'
 // let sum = 0
 // for (let i = 0; i < Number(line) + 1; i++) {
@@ -1078,8 +1040,6 @@
 
 // HJ96 表示数字
 
-
-
 // const line = 'Jkdi234klowe90a3'
 // 方法1 replacee方法
 // line = line.replace(/\d+/g, (val) => '*' + val + '*')
@@ -1104,7 +1064,6 @@
 //     }
 // }
 // console.log(array.join(''))
-
 
 // HJ85 最长回文子串
 // const line = 'cdabbacc'
@@ -1131,9 +1090,7 @@
 // }
 // console.log(str)
 
-
 // HJ87 密码强度等级
-
 
 // 一、密码长度:
 // 5 分: 小于等于4 个字符, 10 分: 5 到7 字符 ,25 分: 大于等于8 个字符
@@ -1273,7 +1230,6 @@
 
 // console.log(max.toString().length)
 
-
 // HJ94 记票统计
 // const n = 4
 // const names = 'A B C D'
@@ -1351,7 +1307,6 @@
 // }
 // console.log(result)
 
-
 // HJ97 记负均正
 // const num = 11
 // const numStr = '1 2 3 4 5 6 7 8 9 0 -1 0 -3'
@@ -1385,7 +1340,6 @@
 // const num3 = '1'
 // let numArr = [num1, num2, num3].map(Number)
 
-
 // let negNum = 0
 // const posArr = []
 // let zeroNum = 0
@@ -1407,7 +1361,6 @@
 // const middleRes = middle === 0 ? 0 : middle.toFixed(1)
 // console.log(`${negNum}\n${middleRes}`)
 
-
 // HJ55 挑7
 // 包含七或者是7的倍数，然后去重
 // const line = 70
@@ -1418,7 +1371,6 @@
 //     } else if (i.toString().includes('7')) {
 //         arr.push(i)
 //     }
-
 
 // }
 // console.log(arr)
@@ -1435,10 +1387,6 @@
 // }
 
 // console.log(res)
-
-
-
-
 
 // 快速排序
 // 最重要的点就是在递归调用quickSort的时候要变化标杆
@@ -1463,9 +1411,6 @@
 // }
 // let arr = [1, 2, 5, 7, 3, 4, 8, 10, 7, 2799]
 // console.log(quickSort(arr))
-
-
-
 
 // 插入排序
 // 比较当前数字current和前一个数字arr[preIndex]，如果当前数字<前一个数字，当前数字要往前排，前一个数字要往后排
@@ -1583,7 +1528,6 @@
 // }
 // console.log(maxStr)
 
-
 // HJ65 查找两个字符串a,b中的最长公共子串
 
 // const line = 'abcdefghijklmnop'
@@ -1614,7 +1558,6 @@
 // } else {
 //     console.log(commonStr(line2, line))
 // }
-
 
 // HJ64 MP3光标位置
 // let songNum = 10
@@ -1659,8 +1602,6 @@
 
 // console.log(targets[target], arr)
 
-
-
 // HJ71 字符串通配符
 // *可以匹配0个或以上个字符
 // ?匹配一个字符
@@ -1682,9 +1623,6 @@
 // newReg += "$"
 // console.log(new RegExp(newReg).test(str))
 
-
-
-
 // leetcode 1936. 新增的最少台阶数
 // var addRungs = function (rungs, dist) {
 //     let n = 0
@@ -1697,35 +1635,35 @@
 //     }
 //     return num
 
-
-
 // }
 // let rungs = [1, 3, 5, 10], dist = 2
 // console.log(addRungs(rungs, dist))
 
 // leetcode 56. 合并区间
 var merge = function (intervals) {
-
-    let result = []
-    intervals.sort((a, b) => a[0] - b[0])
-    let start = intervals[0][0]
-    let end = intervals[0][1]
-    console.log(intervals)
-    for (let i = 1; i < intervals.length; i++) {
-        if (intervals[i][0] > end) {
-            result.push([start, end])
-            start = intervals[i][0]
-            end = intervals[i][1]
-        } else {
-            end = Math.max(end, intervals[i][1])
-
-        }
+  let result = []
+  intervals.sort((a, b) => a[0] - b[0])
+  let start = intervals[0][0]
+  let end = intervals[0][1]
+  console.log(intervals)
+  for (let i = 1; i < intervals.length; i++) {
+    if (intervals[i][0] > end) {
+      result.push([start, end])
+      start = intervals[i][0]
+      end = intervals[i][1]
+    } else {
+      end = Math.max(end, intervals[i][1])
     }
-    result.push([start, end])
-    return result
+  }
+  result.push([start, end])
+  return result
 }
-console.log(merge([[1, 4], [0, 4]]))
-
+console.log(
+  merge([
+    [1, 4],
+    [0, 4],
+  ])
+)
 
 // function insertionSort (arr) {
 //     for (let i = 1; i < arr.length; i++) {
@@ -1771,73 +1709,21 @@ console.log(merge([[1, 4], [0, 4]]))
 // for (let i = 0; i < newScores.length; i++) {
 //     let temp = newScores[i]
 
-
-
 // }
 
-
-
 // 合并两个有序数组
-function merge (A, m, B, n) {
-    // let newData = new Array(m + n).fill(0)
-    // newData = newData.map((item, i) => {
-    //     if (i <= A.length - 1) {
-    //         item = A[i]
-    //     }
-    //     return item
-    // })
-    // console.log(newData)
-    A = A.concat(B)
-    A.sort((a, b) => a - b)
-    console.log(A)
-    return A
-
+function merge(A, m, B, n) {
+  // let newData = new Array(m + n).fill(0)
+  // newData = newData.map((item, i) => {
+  //     if (i <= A.length - 1) {
+  //         item = A[i]
+  //     }
+  //     return item
+  // })
+  // console.log(newData)
+  A = A.concat(B)
+  A.sort((a, b) => a - b)
+  console.log(A)
+  return A
 }
-merge(
-    [1, 2, 3], 3, [2, 5, 6], 3)
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+merge([1, 2, 3], 3, [2, 5, 6], 3)

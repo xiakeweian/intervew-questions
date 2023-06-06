@@ -18,7 +18,6 @@ const homeSlice = createSlice({
     incrementByAmount: (state, action) => {
       state.value += action.payload
     },
-
   },
 })
 export const { incremented, decremented, incrementByAmount } = homeSlice.actions

@@ -6,7 +6,7 @@ class Event extends Component {
     this.parentRef = createRef()
     this.childRef = createRef()
   }
-  componentDidMount () {
+  componentDidMount() {
     console.log('React componentDidMount！')
     this.parentRef.current?.addEventListener('click', () => {
       console.log('原生事件：父元素 DOM 冒泡阶段！')
@@ -51,7 +51,7 @@ class Event extends Component {
   childClickCaptureFun = () => {
     console.log('React 事件：子元素捕获阶段！')
   }
-  render () {
+  render() {
     return (
       <div
         ref={this.parentRef}

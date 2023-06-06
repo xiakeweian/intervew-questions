@@ -17,5 +17,5 @@ import DesignPattern from './DesignPattern'
 
 // eslint-disable-next-line react/display-name
 export default () => {
-    return <div>问题入口</div>
+  return <div>问题入口</div>
 }

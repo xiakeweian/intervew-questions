@@ -1,79 +1,75 @@
 <!DOCTYPE html>
 <html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Document</title>
-
-</head>
-<style>
+  </head>
+  <style>
     .app {
-        position: relative;
+      position: relative;
     }
 
     #box {
-        width: 20px;
-        height: 20px;
-        background: orange;
-        position: absolute;
+      width: 20px;
+      height: 20px;
+      background: orange;
+      position: absolute;
     }
-</style>
+  </style>
 
-<body>
+  <body>
     <div class="app">
-        <div id="box"></div>
-        <div id="box2"></div>
+      <div id="box"></div>
+      <div id="box2"></div>
     </div>
 
     <script>
-        // var e = document.getElementById("box");
-        // let left = 0;
-        // let toRight = true
-        // function render () {
-        //     if (toRight) {
-        //         if (left >= 500) {
-        //             toRight = false;
-        //         }
+      // var e = document.getElementById("box");
+      // let left = 0;
+      // let toRight = true
+      // function render () {
+      //     if (toRight) {
+      //         if (left >= 500) {
+      //             toRight = false;
+      //         }
 
-        //         left++;
-        //     } else {
-        //         if (left <= 0) {
-        //             toRight = true;
-        //         }
-        //         left--;
-        //     }
+      //         left++;
+      //     } else {
+      //         if (left <= 0) {
+      //             toRight = true;
+      //         }
+      //         left--;
+      //     }
 
-        //     e.style.left = `${left}px`;
-        // }
+      //     e.style.left = `${left}px`;
+      // }
 
-        // setInterval(render, 1000 / 60);
+      // setInterval(render, 1000 / 60);
 
-        var e = document.getElementById("box");
-        let left = 0;
-        let toRight = true
-        function render2 () {
-            if (toRight) {
-                if (left >= 500) {
-                    toRight = false;
-                }
-                left++;
-            } else {
-                if (left <= 0) {
-                    toRight = true;
-                }
-                left--;
-            }
-            e.style.left = `${left}px`;
+      var e = document.getElementById('box')
+      let left = 0
+      let toRight = true
+      function render2() {
+        if (toRight) {
+          if (left >= 500) {
+            toRight = false
+          }
+          left++
+        } else {
+          if (left <= 0) {
+            toRight = true
+          }
+          left--
         }
+        e.style.left = `${left}px`
+      }
 
-        (function loop () {
-            render2();
-            requestAnimationFrame(loop)
-        })()
-
+      ;(function loop() {
+        render2()
+        requestAnimationFrame(loop)
+      })()
     </script>
-</body>
-
+  </body>
 </html>

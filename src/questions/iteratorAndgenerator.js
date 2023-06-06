@@ -228,7 +228,7 @@
 // console.log(list.flat(7), 'gg2')
 
 const obj = {}
-function flat (arr, newArr) {
+function flat(arr, newArr) {
   arr.map((item) => {
     if (item instanceof Array) {
       flat(item, newArr)
@@ -250,7 +250,7 @@ let newData = data.sort((a, b) => a - b)
 // console.log(data, newData, 'kkk')
 
 // 给迭代器传参数
-function* createIterator () {
+function* createIterator() {
   let first = yield 1
   let second = yield first + 2
   console.log(first, second)

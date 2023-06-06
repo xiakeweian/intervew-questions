@@ -30,9 +30,8 @@ module.exports = {
         changeOrigin: true, // 是否允许跨域
         // 发送请求时，请求路径重写：将 /api/xxx --> /xxx （去掉/api）
         pathRewrite: { '^/api': '' },
-      }
-    }
-
+      },
+    },
   },
   devtool: 'eval-cheap-module-source-map', // 开发环境推荐使用这个，因为这个可以锁定代码行数，单独打包sourceMap文件，且不包含列信息而且简化为只包含对应行
   // plugins: [

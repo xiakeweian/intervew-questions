@@ -26,8 +26,7 @@ import isPlainObject from './utils/isPlainObject'
 
 function getUndefinedStateErrorMessage(key, action) {
   const actionType = action && action.type
-  const actionDescription =
-    (actionType && `action "${String(actionType)}"`) || 'an action'
+  const actionDescription = (actionType && `action "${String(actionType)}"`) || 'an action'
 
   return (
     `Given ${actionDescription}, reducer "${key}" returned undefined. ` +
@@ -36,12 +35,7 @@ function getUndefinedStateErrorMessage(key, action) {
   )
 }
 
-function getUnexpectedStateShapeWarningMessage(
-  inputState,
-  reducers,
-  action,
-  unexpectedKeyCache
-) {
+function getUnexpectedStateShapeWarningMessage(inputState, reducers, action, unexpectedKeyCache) {
   const reducerKeys = Object.keys(reducers)
   const argumentName =
     action && action.type === ActionTypes.INIT
@@ -65,10 +59,10 @@ function getUnexpectedStateShapeWarningMessage(
   }
 
   const unexpectedKeys = Object.keys(inputState).filter(
-    key => !reducers.hasOwnProperty(key) && !unexpectedKeyCache[key]
+    (key) => !reducers.hasOwnProperty(key) && !unexpectedKeyCache[key]
   )
 
-  unexpectedKeys.forEach(key => {
+  unexpectedKeys.forEach((key) => {
     unexpectedKeyCache[key] = true
   })
 
@@ -85,7 +79,7 @@ function getUnexpectedStateShapeWarningMessage(
 }
 
 function assertReducerShape(reducers) {
-  Object.keys(reducers).forEach(key => {
+  Object.keys(reducers).forEach((key) => {
     const reducer = reducers[key]
     const initialState = reducer(undefined, { type: ActionTypes.INIT })
 
@@ -101,7 +95,7 @@ function assertReducerShape(reducers) {
 
     if (
       typeof reducer(undefined, {
-        type: ActionTypes.PROBE_UNKNOWN_ACTION()
+        type: ActionTypes.PROBE_UNKNOWN_ACTION(),
       }) === 'undefined'
     ) {
       throw new Error(
@@ -198,4 +192,3 @@ export default function combineReducers(reducers) {
     return hasChanged ? nextState : state
   }
 }
-

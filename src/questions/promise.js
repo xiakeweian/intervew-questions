@@ -109,79 +109,67 @@ const pFast = new Promise((resolve, reject) => {
 Promise.any([pErr, pSlow, pFast]).then((value) => {
   console.log(value)
   // pFast fulfils first
-})
-
-  (function (window) {
-
-    const PENDING = 'pending'
-    const RESOLVED = 'resolved'
-    const REJECTED = 'rejected'
-    function Promise (excutor) {
-
-      let self = this
-      self.status = PENDING
-      self.data = undefined
-      self.callbacks = []
-      function resolve (value) {
-
-        if (self.status !== PENDING) return
-        self.status = RESOLVED
-        self.data = value
-        if (self.callbacks.length > 0) {
-          setTimeout(() => {
-            self.callbacks.forEach((callbackObj) => {
-              callbackObj.onResolved(value)
-            })
+})(function (window) {
+  const PENDING = 'pending'
+  const RESOLVED = 'resolved'
+  const REJECTED = 'rejected'
+  function Promise(excutor) {
+    let self = this
+    self.status = PENDING
+    self.data = undefined
+    self.callbacks = []
+    function resolve(value) {
+      if (self.status !== PENDING) return
+      self.status = RESOLVED
+      self.data = value
+      if (self.callbacks.length > 0) {
+        setTimeout(() => {
+          self.callbacks.forEach((callbackObj) => {
+            callbackObj.onResolved(value)
           })
-        }
-      }
-
-      function reject (reason) {
-
-        if (self.status !== PENDING) return
-
-        // 将状态改为resolved
-        self.status = REJECTED;
-        // 保存value数据
-        self.data = reason;
-        // 如果有待执行callback函数，立即异步执行回调函数
-        if (self.callbacks.length > 0) {
-          setTimeout(() => { // 放入队列中执行所有成功的回调
-            self.callbacks.forEach(callbacksObj => {
-              callbacksObj.onRejected(reason);
-
-            })
-          })
-        }
-
-        try {
-          excutor(resolve, reject)
-        } catch (err) {
-          reject(err)
-        }
-
+        })
       }
     }
 
-    Promise.prototype.then = function (onResolved, onRejected) {
+    function reject(reason) {
+      if (self.status !== PENDING) return
 
-      onResolved = typeof onResolved === 'function' ? onResolved : value => value
-      onRejected = typeof onRejected === 'function' ? onRejected : reason => throw reason
-        let self = this
-        return new Promise((resolve, reject) => {
-          function handle (callback) {
-
-            try {
-              const result = callback(self.data);
-
-            } catch (err) {
-            }
-          }
+      // 将状态改为resolved
+      self.status = REJECTED
+      // 保存value数据
+      self.data = reason
+      // 如果有待执行callback函数，立即异步执行回调函数
+      if (self.callbacks.length > 0) {
+        setTimeout(() => {
+          // 放入队列中执行所有成功的回调
+          self.callbacks.forEach((callbacksObj) => {
+            callbacksObj.onRejected(reason)
+          })
         })
       }
-      Promise.prototype.catch = function (onRejected) {
-        let self = this;
-        return this.then(undefined, onRejected);
-      }
 
-    })()
+      try {
+        excutor(resolve, reject)
+      } catch (err) {
+        reject(err)
+      }
+    }
+  }
+
+  Promise.prototype.then = function (onResolved, onRejected) {
+    onResolved = typeof onResolved === 'function' ? onResolved : (value) => value
+    onRejected = typeof onRejected === 'function' ? onRejected : (reason) => throw reason
+    let self = this
+    return new Promise((resolve, reject) => {
+      function handle(callback) {
+        try {
+          const result = callback(self.data)
+        } catch (err) {}
+      }
+    })
+  }
+  Promise.prototype.catch = function (onRejected) {
+    let self = this
+    return this.then(undefined, onRejected)
+  }
+})()

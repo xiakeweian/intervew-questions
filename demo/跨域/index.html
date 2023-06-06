@@ -1,17 +1,16 @@
 <!DOCTYPE html>
 <html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <script src="https://cdn.bootcdn.net/ajax/libs/jquery/3.6.0/jquery.js"></script>
     <title>跨域</title>
-</head>
+  </head>
 
-<!-- 方法一CORS跨域 -->
+  <!-- 方法一CORS跨域 -->
 
-<!-- <body>
+  <!-- <body>
     <h2>hello，everyone</h2>
     <script>
         fetch('http://localhost:3001/api')
@@ -21,9 +20,9 @@
             })
     </script>
 </body> -->
-<!-- 方法2JSONP跨域 -->
-<!-- <h2>你好，jsonp跨域</h2> -->
-<!-- <script>
+  <!-- 方法2JSONP跨域 -->
+  <!-- <h2>你好，jsonp跨域</h2> -->
+  <!-- <script>
     var script = document.createElement('script');
     script.type = 'text/javascript';
 
@@ -37,7 +36,7 @@
         alert(JSON.stringify(res));
     }
 </script> -->
-<!-- <script>
+  <!-- <script>
 
     $.ajax({
         url: 'http://localhost:3001',
@@ -53,18 +52,15 @@
     }
 </script> -->
 
-
-<body>
+  <body>
     <h2>hello，everyone</h2>
     <script>
-        fetch('http://localhost:3001/')
-            .then((res) => res.text())
-            .then((data) => {
-                console.log(data, 'sss')
-                // alert(data)
-            })
+      fetch('http://localhost:3001/')
+        .then((res) => res.text())
+        .then((data) => {
+          console.log(data, 'sss')
+          // alert(data)
+        })
     </script>
-</body>
-
-
+  </body>
 </html>
