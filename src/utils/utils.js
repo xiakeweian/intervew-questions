@@ -55,3 +55,15 @@ export function isMobile (mobile) {
     if (!mobile || mobile.length !== 11) return false
     return /^1[3-9]\d{9}$/.test(mobile)
 }
+
+/**
+ * 传入数字将123344 -》 123,344
+ * @param {*} num 
+ * @returns 
+ */
+export const thousands = num => {
+    if (!num) return 0
+    const str = num?.toString() || 0
+    const reg = str.indexOf('.') > -1 ? /(\d)(?=(\d{3})+\.)/g : /(\d)(?=(?:\d{3})+$)/g
+    return str.replace(reg, '$1,')
+}
