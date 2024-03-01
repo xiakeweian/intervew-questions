@@ -2312,6 +2312,29 @@ React.Component创建的组件，其状态state是在constructor中像初始化�
 若不创建副本,redux的所有操作都将指向内存中的同一个state,我们将无从获取每一次操作前后,state的具体状态与改变,若没有副本,redux-devtools列表里所有的state都将被最后一次操作的结果所取代.我们将无法追溯state变更的历史记录.
 创建副本也是为了保证向下传入的this.props与nextProps能得到正确的值,以便我们能够利用前后props的改变情况以决定如何render组件
 
+## prefers-color-scheme新的css特性 
+用于检测用户是否有将操作系统的主题色设置为亮色【light】或者暗色【dark】，这俩个也是prefers-color-scheme重要属性。 
+
+```css
+:root {
+    --color-background: #1b1b1b;
+    --white-color-background: #fff;
+    color-scheme: light dark;
+}
+/* 监听操作系统主题模式 */
+@media (prefers-color-scheme: dark) {
+    body {
+        background-color: var(--color-background);
+    }
+}
+
+@media (prefers-color-scheme: light) {
+    body {
+        background-color: var(--white-color-background);
+    }
+}
+```
+
 
 
 
