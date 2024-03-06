@@ -2539,15 +2539,80 @@ function handleClick() {
 在react中通过currentRenderingFiber来标识当前渲染节点，每个组件都有一个对应的fiber节点，用来保存组件的相关数据信息。
 每次函数组件渲染时，currentRenderingFiber就被赋值为当前组件对应的fiber，所以实际上hook是通过currentRenderingFiber来获取状态信息的。
 
-## koa的洋葱模型
+## 数据精度问题
+后端返回的跟浏览器上显示的不一样，后台返回的是10976458979374929，浏览器显示是10976458979374928
+```js
+// 浏览器控制台输入10976458979374929，打印出来是10976458979374928
+console.log(10976458979374929);
+VM204:1 10976458979374928
+```
+
+其实 ES6 引入了Number.MAX_SAFE_INTEGER和Number.MIN_SAFE_INTEGER这两个常量，用来表示这个范围的上下限。
+Number.isSafeInteger()用来判断一个整数是否落在这个范围之内。
+Number.isSafeInteger(10976458979374929) false
+Number.isSafeInteger(10976458979374928) false
+Number.isSafeInteger(10976458979374927) false
+这些数据都超出了js的Number范围，看到的输出可能会有精度丢失的问题，后端返回数据没问题是因为java中的Long类型取值范围-2^63 + 1 到 2^63 - 1, 比JavaScript中大很多，所以后端能正常处理。
+解决办法：
+方式1： 数据库中存的就是数值型，修改数据库存的类型为字符串
+方式2：返回接口时转为字符串类型给前端
+但是如果后端不处理，前端怎么处理呢？
+方案1：正则替换
+如果我们使用的是axios请求数据，Axios 提供了自定义处理原始后端返回数据的 API：transformResponse , 可以这样处理：
+```js
+axios({  
+method: method,  
+url: url,  
+data: data,  
+transformResponse: [function (data) {  
+    // 将Long类型数据转换为字符串
+    const convertedJsonString = data.replace(/"(\w+)":(\d{15,})/g, '"$1":"$2"'); 
+    return JSON.parse(convertedJsonString);  
+}],  
+})
 
 
+// 假设后端返回的JSON数据如下：
+const responseData = {
+  id: 12345678901234567890, // 这是一个Long类型数据
+  name: "John Doe"
+};
 
+// 处理过的json数据
+console.log(responseData.id); // 这将输出字符串："12345678901234567890"
+console.log(typeof responseData.id); // 这将输出 "string"
+```
+方案2：json序列化处理
+我们可以借助json-bigint这个第三方包来处理。
+json-bigint中的parse方法会把超出 JS 安全整数范围的数字转为一个 BigNumber 类型的对象，对象数据是它内部的一个算法处理之后的，我们要做的就是在使用的时候转为字符串来使用。
 
+通过启用storeAsString选项,可以快速将BigNumber转为字符串，代码如下：
+```js
+  import JSONbig from "json-bigint";
+    axios({  
+    method: method,  
+    url: url,  
+    data: data,  
+    transformResponse: [function (data) {  
++        const JSONbigToString = JSONbig({ storeAsString: true });
++          // 将Long类型数据转换为字符串
++          return JSONbigToString.parse(data);  
+    }],  
+    })
+    
+    
+    // 假设后端返回的JSON数据如下：
+    const responseData = {
+      id: 12345678901234567890, // 这是一个Long类型数据
+      name: "John Doe"
+    };
+    
+    // 处理过的json数据
+    console.log(responseData.id); // 这将输出字符串："12345678901234567890"
+    console.log(typeof responseData.id); // 这将输出 "string"
 
-
-
-
+```
+不过最好是让后端处理，转成字符串
 
 
 
