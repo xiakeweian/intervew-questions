@@ -65,3 +65,5 @@ detectJSON：自定义json请求检测函数。默认值为null。
 2. 参数都有大小限制，但是限制大小不同
 3. koa-boddyparser中间件不会解析multipart body,由于这种消息体很复杂而且也很大。koa-body可以解析multipart body
 ## koa-static和koa-static-cache区别
+
+## koa的洋葱模型

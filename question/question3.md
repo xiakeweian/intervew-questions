@@ -1,4 +1,5 @@
 
+# 前端面试题汇总3
 ## 一、JavaScript基础
 
 ### 变量和类型
@@ -177,12 +178,41 @@ return newSNum;
 或者第三方库math.js
 ### 原型和原型链
 1. 理解原型设计模式以及JavaScript中的原型规则
-
+question2.md 八种常用设计模式
 
 2. instanceof的底层实现原理，手动实现一个instanceof
+instanceof用于判断某个实例是否属于某个构造函数，在继承关系中用来判断一个实例是否属于他的父类或者祖先类型的实例，即实例的__proto__是否等于原型的prototype
+```js
+var obj = new Object();
+obj instanceof Object // true
+```
+
+实现instanceof:
+```js
+function instance_of(L, R) {
+    var O = R.prototype; 
+    L = L.__proto__;
+    while (true) {    
+        if (L === null)      
+             return false;   
+        if (O === L) 
+             return true;   
+        L = L.__proto__;  
+    }
+}
+```
+①L表示对象实例，R表示构造函数或者父类型实例
+②取R的显式原型，取L的隐式原型
+③循环遍历，进行判断②中的两个值是否相等，相等返回true，不相等继续查找L的原型链
+
 4. 实现继承的几种方式以及他们的优缺点
+同allQuestion.md 中21
 5. 至少说出一种开源项目(如Node)中应用原型继承的案例
 6. 可以描述new一个对象的详细过程，手动实现一个new操作符
+* 创建一个新对象；
+* 将构造函数的作用域赋给新对象（因此 this 就指向了这个新对象）；
+* 执行构造函数中的代码（为这个新对象添加属性）；
+* 返回新对象;
 7. 理解es6 class构造以及继承的底层实现原理
 ### 作用域和闭包
 1. 理解词法作用域和动态作用域
