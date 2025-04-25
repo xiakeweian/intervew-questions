@@ -2616,6 +2616,56 @@ json-bigint中的parse方法会把超出 JS 安全整数范围的数字转为一
 ```
 不过最好是让后端处理，转成字符串
 
+## css文件名加上module,比如index.module.less原因以及作用
+在前端开发中，CSS 文件名加上 module 通常是为了启用 CSS Modules 功能。CSS Modules 是一种将 CSS 类名局部作用域化，在webpack配置中配置了
+```
+module.exports = {
+  module: {
+    rules: [
+      {
+        test: /\.module\.css$/,
+        use: [
+          'style-loader',
+          {
+            loader: 'css-loader',
+            options: {
+              modules: true
+            }
+          }
+        ]
+      }
+    ]
+  }
+};
+```
+这样，Webpack 会对所有以 .module.css 结尾的文件应用 CSS Modules 处理。CSS 文件名加上 module 是为了启用 CSS Modules 功能，带来避免样式冲突、提高可维护性、方便组件复用等诸多好处.
+使用：
+```
+/* component.module.css */
+.local-button {
+  composes: global-button; /* 复用全局类名 */
+  font-size: 16px;
+}
+
+```
+```
+import React from 'react';
+import styles from './component.module.css';
+
+const MyComponent = () => {
+  return (
+    <button className={styles.localButton}>点击我</button>
+  );
+};
+```
+
+**作用**：
+1. 避免全局污染，避免命名冲突，避免全局样式冲突；
+2. 提高代码可维护性；
+3. 方便组件复用；
+4. 与 JavaScript 更好地集成；
+
+
 
 
 

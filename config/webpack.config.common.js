@@ -75,24 +75,24 @@ module.exports = (env) => {
         },
         {
           test: /\.(css|less)$/,
-          use: env.production
-            ? [MiniCssExtractPlugin.loader, 'css-loader', 'postcss-loader', 'less-loader']
-            : ['style-loader', 'css-loader', 'postcss-loader', 'less-loader'],
           // use: env.production
-          //   ? [MiniCssExtractPlugin.loader, {
-          //     loader: 'css-loader',
-          //     options: {
-          //       modules: true, // 开启模块化
-          //       // localIdentName: '[path][name]-[local]-[hash:base64:5]'
-          //     }
-          //   }, 'postcss-loader', 'less-loader']
-          //   : ['style-loader', {
-          //     loader: 'css-loader',
-          //     options: {
-          //       modules: true, // 开启模块化
-          //       // localIdentName: '[path][name]-[local]-[hash:base64:5]'
-          //     }
-          //   }, 'postcss-loader', 'less-loader'],
+          //   ? [MiniCssExtractPlugin.loader, 'css-loader', 'postcss-loader', 'less-loader']
+          //   : ['style-loader', 'css-loader', 'postcss-loader', 'less-loader'],
+          use: env.production
+            ? [MiniCssExtractPlugin.loader, {
+              loader: 'css-loader',
+              options: {
+                modules: true, // 开启css模块化
+                // localIdentName: '[name]-[local]-[hash:base64:5]'
+              }
+            }, 'postcss-loader', 'less-loader']
+            : ['style-loader', {
+              loader: 'css-loader',
+              options: {
+                modules: true, // 开启css模块化
+                // localIdentName: '[path][name]-[local]-[hash:base64:5]'
+              }
+            }, 'postcss-loader', 'less-loader'],
         },
         {
           test: /\.(ts|tsx)$/,

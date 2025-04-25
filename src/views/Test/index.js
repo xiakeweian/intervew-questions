@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import { Input } from 'antd'
 import { isEmojiCharacter, isMobile, thousands } from '@/utils/utils'
+import styles from './index.module.less'
 const Test = () => {
     const [value, setValue] = useState('')
     const [mobile, setMobile] = useState('')
@@ -15,7 +16,7 @@ const Test = () => {
         console.log(isTrue, 'isTrue')
         setMobile(e.target.value)
     }
-    return <div>
+    return <div className={styles.text_wrap}>
         <h3>判断是否有emo表情</h3>
         <Input onChange={handleChange} value={value} style={{ width: 300 }} />
         <h3>判断手机号是否正确</h3>
