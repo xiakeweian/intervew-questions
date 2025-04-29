@@ -1,10 +1,10 @@
 const path = require('path')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const webpack = require('webpack') // 用于访问内置插件
-const MiniCssExtractPlugin = require('mini-css-extract-plugin')
-const CssMinimizerWebpackPlugin = require('css-minimizer-webpack-plugin')
 const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin
+const dotenv = require('dotenv')
 
+dotenv.config()
 module.exports = {
   // output: {
   //     publicPath: 'http://localhost:8080/'
@@ -16,7 +16,7 @@ module.exports = {
   devServer: {
     static: './dist',
     compress: true, // 增加的压缩头部，当为true的时候，请求过来的时候是压缩的，Content-Encoding: gzip
-    port: 9000,
+    port: process.env.PORT,
     host: '0.0.0.0', // 配置为0.0.0.0之后局域网内别的小伙伴也都可以访问你的服务
     historyApiFallback: true, // 配置为true，路由无论怎么写都不会为true
     hot: true, // 设置为true实现模块热替换，这是webpack-dev-server默认值，
